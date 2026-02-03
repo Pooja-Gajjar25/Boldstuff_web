@@ -1,0 +1,111 @@
+<div class="Ishi-notification-popup">
+  <div id="Ishi-notification-popup">
+    <div class="ishi-notification-wrapper">
+       {%- assign products = settings.someone_purchase_products -%}
+      {% assign product_limit = settings.products_to_show %}
+      {% assign dummy_name = settings.dumyname %}
+      {% assign dummy_time = settings.dumytime %}
+     
+        {% assign counter = 0 %}
+    
+        <button id="close-popup">{% render 'icons' with 'popup-close' %}</button>
+        {% for product in products  %}
+          <div class="product productpop_{{counter}}" style="display:none">
+            <li class="grid__item ">
+              {%
+                render 'Notify-Popup-Card-Crid',
+                product_card_product: product,
+                media_size: settings.image_ratio,
+                product_count: {{counter}},
+                show_secondary_image: settings.show_secondary_image,
+                show_vendor: settings.show_vendor,
+                dumyname:settings.dumyname,
+                dumytime: settings.dumytime,
+                close-popup
+              %}
+              {% assign counter = counter | plus: 1 %}
+            </li>
+          </div>
+        {% endfor %}
+      </div>
+  </div>
+</div>
+
+<script>
+  const slider_gap = '{{ settings.slider_secound }}';
+  const slider_gap_close = '{{ settings.slider_secound_close }}';
+  const item_to_show = '{{ settings.products_to_show }}';
+  const second = `${slider_gap}000`;
+  const second_close = `${slider_gap_close}000`;
+  console.log("slider_gap ==================> ", slider_gap);
+  console.log("second ==================> ", second);
+  var text = {{ settings.dumyname | json }};
+  const chooseColorLabelFifth = text.split(",");
+  var text = {{ settings.dumytime | json }};
+  const chooseColorLabelForth = text.split(",");
+  document.addEventListener('DOMContentLoaded', function () {
+    var popup = document.getElementById('Ishi-notification-popup');
+    var closeButton = document.getElementById('close-popup');
+    function showPopup() {
+      const rndInt = Math.floor(Math.random() * 10);
+      console.log("rndInt =====> ", rndInt);
+      for (let i = 0; i < chooseColorLabelFifth.length; i++) {
+        const customerNameElement = document.querySelectorAll(".customer_name")[i];
+        const dummyTimeElement = document.querySelectorAll(".Dummy_time")[i];
+        if (customerNameElement) {
+          customerNameElement.innerHTML = chooseColorLabelFifth[rndInt] || 'John (Texas) purchased';
+        }
+        if (dummyTimeElement) {
+          dummyTimeElement.innerHTML = chooseColorLabelForth[rndInt] || '10 hours ago';
+        }
+      }
+      popup.style.opacity = '1';
+      popup.classList.add('active');
+      popup.addEventListener('mouseover', function () {
+        popup.classList.add('hover-active');
+      });
+      popup.addEventListener('mouseout', function () {
+        popup.classList.remove('hover-active');
+      });
+      popup.classList.remove('hover-active');
+      var elems = document.getElementsByClassName('productpop_' + rndInt);
+      for (var i = 0; i < elems.length; i += 1) {
+        elems[i].style.display = 'block';
+      }
+      setTimeout(function (index) {
+        return function () {
+          hidePopup(index);
+        };
+      }(rndInt), second);
+    }
+    function hidePopup(index) {
+      var elems = document.getElementsByClassName('product');
+      for (var i = 0; i < elems.length; i += 1) {
+        elems[i].style.display = 'none';
+      }
+      popup.style.opacity = '0';
+      popup.classList.remove('active');
+      if (getTheCookie("notificationPopup") != "1") {
+        setTimeout(function () {
+          showPopup();
+        }, second_close);
+      }
+    }
+    function hidePopupOnce() {
+      var elems = document.getElementsByClassName('product');
+      for (var i = 0; i < elems.length; i += 1) {
+        elems[i].style.display = 'none';
+      }
+      popup.style.display = 'none';
+      popup.classList.remove('active');
+    }
+    popup.classList.remove('hover-active');
+    closeButton.addEventListener('click', function () {
+      setTheCookie("notificationPopup", "1", {{settings.notific_pop}});
+      hidePopupOnce();
+    });
+    if (getTheCookie("notificationPopup") != "1") {
+      showPopup();
+    }
+  });
+</script>

@@ -1,0 +1,231 @@
+<div class="main-collection-grid-wrapper page-width">
+  <div class="row">
+    {%- if settings.show_search -%}
+      <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 normal-sidebar sidebar_content">
+        {% render 'ishi-sidebar-content' %}
+      </div>
+    {%- endif -%}
+
+    <div class="normal_main_content {% if settings.show_search %}col-lg-9 col-md-12 col-sm-12 col-xs-12{% else %}col-12{% endif %}">
+      <div class="center search_page">
+        <div class="template-search__search">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="search">
+            <div class="field">
+              <input
+                class="search__input field__input"
+                id="Search-In-Template"
+                type="search"
+                name="q"
+                value="{{ search.terms | escape }}"
+                {% if search.performed %}
+                  autofocus
+                {% endif %}
+                placeholder="{{ 'general.search.search' | t }}"
+              >
+              <label class="field__label" for="Search-In-Template" aria-hidden="true">
+                {{- 'general.search.search' | t -}}
+              </label>
+              <input name="options[prefix]" type="hidden" value="last">
+              <button type="submit" class="search__button btn" aria-label="{{ 'general.search.search' | t }}">
+                {{ 'general.search.submit' | t }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+      {% render 'facets', results: search, enable_sorting: section.settings.enable_sorting %}
+
+      <div id="ProductGridContainer">
+        {%- paginate search.results by section.settings.products_per_page -%}
+          {%- if search.results.size == 0 -%}
+            <div class="collection collection--empty" id="product-grid" data-id="{{ section.id }}">
+              <div class="loading-overlay">
+                <div class="loading-overlay__spinner">
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    role="presentation"
+                    class="spinner"
+                    viewBox="0 0 66 66"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="title-wrapper center">
+                <div class="title alert-danger alert">
+                  {{ 'sections.facets.empty' | t }}
+                </div>
+              </div>
+            </div>
+          {%- else -%}
+            <div class="collection">
+              <div class="loading-overlay">
+                <div class="loading-overlay__spinner">
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    role="presentation"
+                    class="spinner"
+                    viewBox="0 0 66 66"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                  </svg>
+                </div>
+              </div>
+
+              <ul id="product-grid" data-id="{{ section.id }}" class="row">
+                {% assign i = 1 %}
+                {%- for product in search.results -%}
+                  <li class="grid__item col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                    {% render 'product-card-grid',
+                      product_card_product: product,
+                      media_size: settings.image_ratio,
+                      product_count: i,
+                      show_secondary_image: settings.show_secondary_image,
+                      show_vendor: settings.show_vendor
+                    %}
+                    {% assign i = i | plus: 1 %}
+                  </li>
+                {%- endfor -%}
+              </ul>
+
+              {%- if paginate.pages > 1 -%}
+                <div class="pagination-block row align-items-center">
+                  <p class="collection-product-count col-md-6" role="status">
+                    {% assign current_first_item = paginate.current_offset | plus: 1 %}
+                    {% if paginate.pages == paginate.current_page %}
+                      {% assign current_last_item = paginate.items %}
+                    {% else %}
+                      {% assign current_last_item = paginate.current_offset | plus: paginate.page_size %}
+                    {% endif %}
+                    {{ 'general.pagination.showing' | t }}
+                    {{ current_first_item }}-{{ current_last_item }}
+                    {{ 'general.pagination.of' | t }}
+                    {{ paginate.items }}
+                    {{ 'general.pagination.items' | t }}
+                  </p>
+                  <div class="col-md-6 pagination-view">
+                    {% render 'pagination', paginate: paginate, anchor: '', class: '' %}
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Search Results",
+  "tag": "section",
+  "class": "spaced-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 16,
+      "label": "t:sections.main-collection-product-grid.settings.products_per_page.label"
+    },
+    {
+      "type": "header",
+      "content": "Sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "sidebar_link",
+      "name": "Sidebar Link",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "sidebar_link",
+          "label": "Category Links"
+        }
+      ]
+    },
+    {
+      "type": "filter",
+      "name": "Filter",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Main Title",
+          "default": "Collection Title"
+        },
+        {
+          "id": "collection",
+          "type": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "range",
+          "id": "grid",
+          "label": "Products To Display",
+          "min": 2,
+          "max": 5,
+          "step": 1,
+          "default": 3
+        },
+        {
+          "type": "checkbox",
+          "id": "show_view_all",
+          "label": "Show 'View All'",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "banner",
+      "name": "Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "banner_link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "hover1",
+          "label": "Hover Effect",
+          "default": "fadeinnormal",
+          "options": [
+            { "value": "fadeinnormal", "label": "FadeIn Normal" },
+            { "value": "fadeinflip", "label": "FadeIn Flip" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

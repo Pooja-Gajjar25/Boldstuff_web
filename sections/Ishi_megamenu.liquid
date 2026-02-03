@@ -1,0 +1,494 @@
+<div data-section-id="{{ section.id }}" data-section-type="megamenu-header">
+  <div id="_desktop_top_menu" class="menu js-top-menu hidden-sm-down" role="navigation">
+    {% assign i = 1 %}
+    <ul class="top-menu" id="top-menu">
+      {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+      {% assign columnCounter = "" %}
+      {% assign navCounter = "" %}
+      {% assign isProduct = false %}
+      {% assign isBanner1 = false %}
+      {% assign isBanner2 = false %}
+      {% assign allowedColumn = 6 %}
+      {% if block.settings.navbar != blank %}
+      {% assign columnCounter = columnCounter | append : ', '| append: '1' %}
+      {% assign navCounter = navCounter | append : ', '| append: '1' %}
+      {% endif %}
+      {% if block.settings.navbar1 != blank %}
+      {% assign columnCounter = columnCounter | append : ', '| append: '2' %}
+      {% assign navCounter = navCounter | append : ', '| append: '2' %}
+      {% endif %}
+      {% if block.settings.navbar2 != blank %}
+      {% assign columnCounter = columnCounter | append : ', '| append: '3' %}
+      {% assign navCounter = navCounter | append : ', '| append: '3' %}
+      {% endif %}
+      {% if block.settings.navbar3 != blank %}
+      {% assign columnCounter = columnCounter | append : ', '| append: '4' %}
+      {% assign navCounter = navCounter | append : ', '| append: '4' %}
+      {% endif %}
+      {% if block.settings.navbar4 != blank %}
+      {% assign columnCounter = columnCounter | append : ', '| append: '5' %}
+      {% assign navCounter = navCounter | append : ', '| append: '5' %}
+      {% endif %}
+      {% if block.settings.navbar5 != blank %}
+      {% assign columnCounter = columnCounter | append : ', '| append: '6' %}
+      {% assign navCounter = navCounter | append : ', '| append: '6' %}
+      {% endif %}
+      {% if block.settings.blog_show_collection  %}
+      {% assign columnCounter = columnCounter | append : ', '| append: '7' %}
+      {% assign isProduct = true %}
+      {% endif %}
+      {% if block.settings.image1 != blank %}
+      {% assign columnCounter = columnCounter | append : ', '| append: '8' %}
+      {% assign isBanner1 = true %}
+      {% endif %}
+      {% if block.settings.image2 != blank %}
+      {% assign columnCounter = columnCounter | append : ', '| append: '9' %}
+      {% assign isBanner2 = true %}
+      {% endif %}
+      {% assign columnCounterDigit =  columnCounter | split: ',' | size | minus : 1 %}
+      {% assign navCounterDigit =  navCounter | split: ',' | size | minus : 1 %}
+      <li class="category{% if columnCounterDigit > 3 %} menularge{% endif %}">
+        {% if block.settings.title != blank %}
+        <span class="float-xs-right hidden-lg-up">
+          {% if block.settings.navbar != blank or block.settings.navbar1 != blank or block.settings.navbar2 != blank or block.settings.navbar3 != blank or block.settings.navbar4 != blank or block.settings.navbar5 != blank %}
+          <span data-href="#_n_child-one{{ i }}" data-toggle="collapse" class="ishi-collapse in navbar-toggler ishi-collapsed rotate" aria-expanded="false">
+            {% include 'icons' with 'caret' %}
+          </span>
+          {% endif %}
+        </span>
+        <a href="{{ block.settings.button_link }}" class="dropdown-item">
+          <h3 class="title">{{ block.settings.title | escape }}</h3>
+          {% if block.settings.blog_show_new %}
+          <span class="new"> {{ 'general.mainmenu.new' | t }}</span>
+          {% endif %}
+          {% if block.settings.blog_show_sale %}
+          <span class="sale">{{ 'general.mainmenu.sale' | t }}</span>
+          {% endif %}
+          {% if block.settings.blog_show_hot %}
+          <span class="hot">{{ 'general.mainmenu.hot' | t }}</span>
+          {% endif %}
+        </a>
+        {% endif %}
+        {% if block.settings.navbar != blank or block.settings.navbar1 != blank or block.settings.navbar2 != blank or block.settings.navbar3 != blank or block.settings.navbar4 != blank or block.settings.navbar5 != blank or block.settings.blog_show_collection or block.settings.image1 != blank or block.settings.image2 != blank %}
+        {% assign a = 0 %}
+        <div class="popover sub-menu js-sub-menu ishi-collapse desktop-collapse{% if columnCounterDigit < 2 %} col-1 spacesmall{% elsif columnCounterDigit < 3 %} col-2 spacesmall{% elsif columnCounterDigit < 4 %} col-3 spacesmall{% elsif columnCounterDigit < 5 %} col-4 spacesmall{% elsif columnCounterDigit < 6 %} col-5{% endif %}" id="_n_child-one{{ i }}">
+          <ul id="top-menu-child" class="top-menu mainmenu-dropdown panel-group">
+            {% if block.settings.navbar != blank %}
+            <li class="sub-category panel">
+              {%- assign navbar = block.settings.navbar -%}
+              {% if block.settings.navbar != blank %}
+              {% unless columnCounterDigit < 2 %}
+              <span class="float-xs-right hidden-lg-up">
+                {% if linklists[navbar].links != blank %}
+                <span data-href="#_n_grand-child-one{{ i }}" data-toggle="collapse" class="ishi-collapse in navbar-toggler ishi-collapsed rotate" aria-expanded="false" data-parent="#top-menu-child">
+                  {% include 'icons' with 'caret' %}
+                </span>
+                {% endif %}
+              </span>
+              <a href="{{ block.settings.button_link1 }}" class="dropdown-item dropdown-submenu">
+                <h3 class="inner-title">{{ linklists[navbar].title  }}</h3>
+              </a>
+              {% endunless %}
+              <div class="top-menu{% unless columnCounterDigit < 2 %} ishi-collapse desktop-collapse{% endunless %}" id="_n_grand-child-one{{ i }}">
+                <ul class="top-menu">
+                  {% for link in linklists[navbar].links %}
+                  <li class="category">
+                    <a href="{{ link.url }}" class="dropdown-item">{{ link.title }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% assign a = a | plus: 1 %}
+              {% endif %}
+            </li>
+            {% endif %}
+            {% if block.settings.navbar1 != blank %}
+            <li class="sub-category panel" >
+              {%- assign navbar1 = block.settings.navbar1 -%}
+              {% if block.settings.navbar1 != blank %}
+              {% unless columnCounterDigit < 2 %}
+              <span class="float-xs-right hidden-lg-up">
+                {% if linklists[navbar1].links != blank %}
+                <span data-href="#_n_grand-child-two{{ i }}" data-toggle="collapse" class="ishi-collapse in navbar-toggler ishi-collapsed rotate" aria-expanded="false" data-parent="#top-menu-child">
+                  {% include 'icons' with 'caret' %}
+                </span>
+                {% endif %}
+              </span>
+              <a href="{{ block.settings.button_link2 }}" class="dropdown-item dropdown-submenu">
+                <h3 class="inner-title">{{ linklists[navbar1].title  }}</h3>
+              </a>
+              {% endunless %}
+              <div class="top-menu{% unless columnCounterDigit < 2 %} ishi-collapse desktop-collapse{% endunless %}" id="_n_grand-child-two{{ i }}">
+                <ul class="top-menu">
+                  {% for link in linklists[navbar1].links %}
+                  <li class="category">
+                    <a href="{{ link.url }}" class="dropdown-item">{{ link.title }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% assign a = a | plus: 1 %}
+              {% endif %}
+            </li>
+            {% endif %}
+            {% if block.settings.navbar2 != blank %}
+            <li class="sub-category panel">
+              {%- assign navbar2 = block.settings.navbar2 -%}
+              {% if block.settings.navbar2 != blank %}
+              {% unless columnCounterDigit < 2 %}
+              <span class="float-xs-right hidden-lg-up">
+                {% if linklists[navbar2].links != blank %}
+                <span data-href="#_n_grand-child-three{{ i }}" data-toggle="collapse" class="ishi-collapse in navbar-toggler ishi-collapsed rotate" aria-expanded="false" data-parent="#top-menu-child">
+                  {% include 'icons' with 'caret' %}
+                </span>
+                {% endif %}
+              </span>
+              <a href="{{ block.settings.button_link3 }}" class="dropdown-item dropdown-submenu">
+                <h3 class="inner-title">{{ linklists[navbar2].title  }}</h3>
+              </a>
+              {% endunless %}
+              <div class="top-menu {% unless columnCounterDigit < 2 %} ishi-collapse desktop-collapse{% endunless %}" id="_n_grand-child-three{{ i }}">
+                <ul class="top-menu">
+                  {% for link in linklists[navbar2].links %}
+                  <li class="category">
+                    <a href="{{ link.url }}" class="dropdown-item">{{ link.title }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% assign a = a | plus: 1 %}
+              {% endif %}
+            </li>
+            {% endif %}
+            {% if block.settings.navbar3 != blank %}
+            <li class="sub-category panel">
+              {%- assign navbar3 = block.settings.navbar3 -%}
+              {% if block.settings.navbar3 != blank %}
+              {% unless columnCounterDigit < 2 %}
+              <span class="float-xs-right hidden-lg-up">
+                {% if linklists[navbar3].links != blank %}
+                <span data-href="#_n_grand-child-four{{ i }}" data-toggle="collapse" class="ishi-collapse in navbar-toggler ishi-collapsed rotate" aria-expanded="false" data-parent="#top-menu-child">
+                  {% include 'icons' with 'caret' %}
+                </span>
+                {% endif %}
+              </span>
+              <a href="{{ block.settings.button_link4 }}" class="dropdown-item dropdown-submenu">
+                <h3 class="inner-title">{{ linklists[navbar3].title  }}</h3>
+              </a>
+              {% endunless %}
+              <div class="top-menu {% unless columnCounterDigit < 2 %} ishi-collapse desktop-collapse{% endunless %}" id="_n_grand-child-four{{ i }}">
+                <ul class="top-menu">
+                  {% for link in linklists[navbar3].links %}
+                  <li class="category">
+                    <a href="{{ link.url }}" class="dropdown-item">{{ link.title }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% assign a = a | plus: 1 %}
+              {% endif %}
+            </li>
+            {% endif %}
+            {% if block.settings.navbar4 != blank %}
+            <li class="sub-category panel">
+              {%- assign navbar4 = block.settings.navbar4 -%}
+              {% if block.settings.navbar4 != blank %}
+              {% unless columnCounterDigit < 2 %}
+              <span class="float-xs-right hidden-lg-up">
+                {% if linklists[navbar4].links != blank %}
+                <span data-href="#_n_grand-child-five{{ i }}" data-toggle="collapse" class="ishi-collapse in navbar-toggler ishi-collapsed rotate" aria-expanded="false" data-parent="#top-menu-child">
+                  {% include 'icons' with 'caret' %}
+                </span>
+                {% endif %}
+              </span>
+              <a href="{{ block.settings.button_link5 }}" class="dropdown-item dropdown-submenu">
+                <h3 class="inner-title">{{ linklists[navbar4].title  }}</h3>
+              </a>
+              {% endunless %}
+              <div class="top-menu {% unless columnCounterDigit < 2 %} ishi-collapse desktop-collapse{% endunless %}" id="_n_grand-child-five{{ i }}">
+                <ul class="top-menu">
+                  {% for link in linklists[navbar4].links %}
+                  <li class="category">
+                    <a href="{{ link.url }}" class="dropdown-item">{{ link.title }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% assign a = a | plus: 1 %}
+              {% endif %}
+            </li>
+            {% endif %}
+            {% if block.settings.navbar5 != blank %}
+            <li class="sub-category panel">
+              {%- assign navbar5 = block.settings.navbar5 -%}
+              {% if block.settings.navbar5 != blank %}
+              {% unless columnCounterDigit < 2 %}
+              <span class="float-xs-right hidden-lg-up">
+                {% if linklists[navbar5].links != blank %}
+                <span data-href="#_n_grand-child-six{{ i }}" data-toggle="collapse" class="ishi-collapse in navbar-toggler ishi-collapsed rotate" aria-expanded="false" data-parent="#top-menu-child">
+                  {% include 'icons' with 'caret' %}
+                </span>
+                {% endif %}
+              </span>
+              <a href="{{ block.settings.button_link6 }}" class="dropdown-item dropdown-submenu">
+                <h3 class="inner-title">{{ linklists[navbar5].title  }}</h3>
+              </a>
+              {% endunless %}
+              <div class="top-menu {% unless columnCounterDigit < 2 %} ishi-collapse desktop-collapse{% endunless %}" id="_n_grand-child-six{{ i }}">
+                <ul class="top-menu">
+                  {% for link in linklists[navbar5].links %}
+                  <li class="category">
+                    <a href="{{ link.url }}" class="dropdown-item">{{ link.title }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% assign a = a | plus: 1 %}
+              {% endif %}
+            </li>
+            {% endif %}
+            {% assign remainingColumns = allowedColumn | minus : navCounterDigit %}
+            {% if block.settings.blog_show_collection and remainingColumns > 0 %}
+            {% assign navCounterDigit = navCounterDigit | plus : 1 %}
+            <li class="sub-category product_container hidden-lg-down">
+              {% if block.settings.collection-title != blank %}
+              <a href="{{ block.settings.collection-titlelink }}" class="dropdown-item dropdown-submenu">
+                <h3 class="inner-title">{{ block.settings.collection-title | escape }}</h3>
+              </a>
+              {% endif %}
+              {% if block.settings.product != blank %}
+              {%- assign product = all_products[block.settings.product] -%}
+              <div class="grid__item grid__item--Ishi_megamenu">
+                {% render 'menu-productcard',
+                product_card_product: product,
+                media_size: settings.image_ratio
+                %}
+              </div>
+              {% else %}
+              {% render 'product-card-placeholder' %}
+              {% endif %}
+            </li>
+            {% endif %}
+            {% assign remainingColumns = allowedColumn | minus : navCounterDigit %}
+            {% if block.settings.image1 != blank and remainingColumns > 0 %}
+            {% assign navCounterDigit = navCounterDigit | plus : 1 %}
+            <li class="sub-category img-container hidden-lg-down">
+
+              <a {% if block.settings.bannerlink1 != blank %}href="{{ block.settings.bannerlink1 }}"{% else %}role="link" aria-disabled="true"{% endif %} class="link">
+                <img 
+                     class="feature-row__image lazyload"
+                     data-src="{{ block.settings.image1 | img_url: 'master' }}"
+                     alt="Menu Banner Image">
+              </a>
+            </li>
+            {% endif %}
+            {% assign remainingColumns = allowedColumn | minus : navCounterDigit %}
+            {% if block.settings.image2 != blank and remainingColumns > 0 %}
+            {% assign navCounterDigit = navCounterDigit | plus : 1 %}
+            <li class="sub-category img-container hidden-lg-down">
+              <a {% if block.settings.bannerlink2 != blank %}href="{{ block.settings.bannerlink2 }}"{% else %}role="link" aria-disabled="true"{% endif %} class="link">
+                <img 
+                     class="feature-row__image lazyload"
+                     data-src="{{ block.settings.image2 | img_url: 'master' }}"
+                     alt="Menu Banner Image">
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        {% endif %}
+        {% assign i = i | plus: 1 %}
+      </li>
+      {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Mega Menu",
+  "settings": [
+  
+  ],
+
+  "blocks": [
+  {
+    "type": "text_block",
+    "name": "Menu Item",
+    "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Top Heading"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Top Heading Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_new",
+      "label": "Show New Tag",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_sale",
+      "label": "Show Sale Tag",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_hot",
+      "label": "Show Hot Tag",
+      "default": false
+    },
+    {
+        "type": "header",
+        "content": "Column-1 Settings"
+    },
+    {
+      "type": "link_list",
+      "id": "navbar",
+      "label": "Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link1",
+      "label": "Link"
+    },
+    {
+        "type": "header",
+        "content": "Column-2 Settings"
+    },
+    {
+      "type": "link_list",
+      "id": "navbar1",
+      "label": "Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link2",
+      "label": "Link"
+    },
+    {
+        "type": "header",
+        "content": "Column-3 Settings"
+    },
+    {
+      "type": "link_list",
+      "id": "navbar2",
+      "label": "Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link3",
+      "label": "Link"
+    },
+    {
+        "type": "header",
+        "content": "Column-4 Settings"
+    },
+    {
+      "type": "link_list",
+      "id": "navbar3",
+      "label": "Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link4",
+      "label": "Link"
+    },
+	{
+        "type": "header",
+        "content": "Column-5 Settings"
+    },
+    {
+      "type": "link_list",
+      "id": "navbar4",
+      "label": "Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link5",
+      "label": "Link"
+    },
+    {
+        "type": "header",
+        "content": "Column-6 Settings"
+    },
+    {
+      "type": "link_list",
+      "id": "navbar5",
+      "label": "Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link6",
+      "label": "Link"
+    },
+    {
+        "type": "header",
+        "content": "Product Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_collection",
+      "label": "Enable Product",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "collection-title",
+      "label": "Title"
+    },
+    {
+      "type": "url",
+      "id": "collection-titlelink",
+      "label": "Link"
+    },
+    {
+      "id": "product",
+      "type": "product",
+      "label": "Select Your Product"
+    },
+     {
+        "type": "header",
+        "content": "Banner Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "image1",
+      "label": "Image 1"
+    },
+    {
+      "type": "url",
+      "id": "bannerlink1",
+      "label": "Link 1",
+      "info": "Optional"
+    },
+    {
+      "type": "image_picker",
+      "id": "image2",
+      "label": "Image 2"
+    },
+    {
+      "type": "url",
+      "id": "bannerlink2",
+      "label": "Link 2",
+      "info": "Optional"
+    }
+    ]
+  }
+  ]
+
+}
+{% endschema %} 
+
+
+
+

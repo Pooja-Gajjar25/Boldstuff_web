@@ -1,0 +1,398 @@
+{% assign relatedTag = false %}
+{% assign latest_item = cart.items.first %}
+{% if latest_item %}
+  {% if latest_item.product.tags.size > 0 %}
+    {% for tag in latest_item.product.tags %}
+      {% if tag contains 'related_' %}
+        {% assign relatedTag = true %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endif %}
+
+
+{% assign motivatorProduct = all_products[settings.product] %}
+{%- assign check_gift = false -%}
+  {%- for item in cart.items -%}
+    {% if item.id == motivatorProduct.selected_or_first_available_variant.id %}
+      {%- assign check_gift = true -%}
+    {% endif %}
+{% endfor %}
+
+<cart-notification>
+  <div class="cart-notification-wrapper cart_info">
+    <div id="cart-notification" class="cart-notification">
+      <div id="cart-notification-closer">
+        <span>
+          {{ 'sections.header.drawer-title' | t }}
+        </span>
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon" viewBox="0 0 15 15">
+          <path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path>
+        </svg>
+      </div>
+      <div class="reassurance-list owl-carousel owl-theme">
+        <div class="reassurance">
+          {% if settings['reassurance-image1'] != blank %}
+            <div class="reassurance-img">
+              <img
+                class="lazyload"
+                data-src="{{settings.reassurance-image1 | img_url: 'master' }}"
+                alt="Reassurance Image"
+              >
+            </div>
+          {% endif %}
+          {% if settings['reassurance-title1'] != blank or settings['reassurance-desc1'] != blank %}
+            <div class="reassurance-text">
+              {% if settings['reassurance-title1'] != blank %}
+                <div class="reassurance-title">{{ settings['reassurance-title1'] | escape }}</div>
+              {% endif %}
+              {% if settings['reassurance-desc1'] != blank %}
+                <div class="reassurance-desc">{{ settings['reassurance-desc1'] | escape }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="reassurance">
+          {% if settings['reassurance-image2'] != blank %}
+            <div class="reassurance-img">
+              <img
+                class="lazyload"
+                data-src="{{settings.reassurance-image2 | img_url: 'master' }}"
+                alt="Reassurance Image"
+              >
+            </div>
+          {% endif %}
+          {% if settings['reassurance-title2'] != blank or settings['reassurance-desc2'] != blank %}
+            <div class="reassurance-text">
+              {% if settings['reassurance-title2'] != blank %}
+                <div class="reassurance-title">{{ settings['reassurance-title2'] | escape }}</div>
+              {% endif %}
+              {% if settings['reassurance-desc2'] != blank %}
+                <div class="reassurance-desc">{{ settings['reassurance-desc2'] | escape }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="reassurance">
+          {% if settings['reassurance-image3'] != blank %}
+            <div class="reassurance-img">
+              <img
+                class="lazyload"
+                data-src="{{settings.reassurance-image3 | img_url: 'master' }}"
+                alt="Reassurance Image"
+              >
+            </div>
+          {% endif %}
+          {% if settings['reassurance-title3'] != blank or settings['reassurance-desc3'] != blank %}
+            <div class="reassurance-text">
+              {% if settings['reassurance-title3'] != blank %}
+                <div class="reassurance-title">{{ settings['reassurance-title3'] | escape }}</div>
+              {% endif %}
+              {% if settings['reassurance-desc3'] != blank %}
+                <div class="reassurance-desc">{{ settings['reassurance-desc3'] | escape }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="reassurance">
+          {% if settings['reassurance-image4'] != blank %}
+            <div class="reassurance-img">
+              <img
+                class="lazyload"
+                data-src="{{settings.reassurance-image4 | img_url: 'master' }}"
+                alt="Reassurance Image"
+              >
+            </div>
+          {% endif %}
+          {% if settings['reassurance-title4'] != blank or settings['reassurance-desc4'] != blank %}
+            <div class="reassurance-text">
+              {% if settings['reassurance-title4'] != blank %}
+                <div class="reassurance-title">{{ settings['reassurance-title4'] | escape }}</div>
+              {% endif %}
+              {% if settings['reassurance-desc4'] != blank %}
+                <div class="reassurance-desc">{{ settings['reassurance-desc4'] | escape }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="slimScrollDiv{% if cart == empty %} cart-empty-notification{% endif %}">
+        <div id="cart-notification-default">
+          {% unless cart == empty %}
+             {% assign shipping_amount = settings.shipping_amount | times: 100 %}
+            {% if settings.show_shipping_price %}
+              {% assign motivatorProduct = all_products[settings.product] %}
+              {% assign final_amount_price = shipping_amount | minus: cart.total_price %}
+            {% else %}
+              {% if check_gift %}
+                {% assign final_amount_price = shipping_amount | minus: cart.total_price | plus: motivatorProduct.price %}
+              {% else %}
+                {% assign final_amount_price = shipping_amount | minus: cart.total_price %}
+              {% endif %}
+            {% endif %}
+            {% assign shipping_amount_price = final_amount_price | money %}
+            {% assign progressBarWidth = final_amount_price | divided_by: settings.shipping_amount %}
+            {% assign finalProgressBarWidth = 100 | minus: progressBarWidth %}
+            {%- if settings.shipping_amount > 0 -%}
+              <div class="shipping_amount_html">
+                <span class="cart_empty_shipping_text">
+                  {%- if cart.total_price < shipping_amount %}
+                    <h2 class="cart-notification__heading caption-large free-shipping-success">
+                      {{ 'general.cart.free_shipping_indicator_infolabel' | t: shipping_amount: shipping_amount_price }}
+                      <p>{{ 'general.cart.free_shipping_indicator_infolabel2' | t }}</p>
+                    </h2>
+                  {% else %}
+                    <h2 class="cart-notification__heading caption-large free-shipping-succes-eligible">
+                      <span>
+                        {{ 'general.cart.free_shipping_indicator_congratulations' | t }}
+                        <p>{{ 'general.cart.free_shipping_indicator_successlabel' | t }}</p>
+                      </span>
+                    </h2>
+                  {% endif -%}
+                  <div
+                    class="progress{% if cart.item_count == 0 %} progress-hidden{% endif %}"
+                    data-text-enabled="false"
+                    data-shipping-progress
+                  >
+                    <div class="progress_shipping" role="progressbar">
+                      <div
+                        class="progress-meter"
+                        style="width: {{ finalProgressBarWidth }}%; transition: .9s;"
+                        data-free-shipping-progress-meter
+                      >
+                        <div class="progress-truck-wrapper">
+                          {% render 'icons' with 'icon-shipping-truck' %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            {%- endif -%}
+          {%- endunless -%}
+          {%- if cart != empty -%}
+            {%- for item in cart.items -%}
+              {% unless item.id == motivatorProduct.selected_or_first_available_variant.id %} 
+                <div id="cart-notification-product-{{ item.id }}" class="cart-notification-product">
+                <a href="{{ item.product.url }}" class="cart-notification-item">
+                  {% if item.image %}
+                    <img
+                      class="cart-notification-product__image lazyload"
+                      data-src="{{ item.image | img_url: '140x' }}"
+                      alt="{{ item.image.alt | escape }}"
+                      width="120"
+                      height="{{ 120 | divided_by: item.image.aspect_ratio | ceil }}"
+                      loading="lazy"
+                    >
+                  {% endif %}
+                  <div class="cart-notification-product__info">
+                    <h3 class="cart-notification-product__name h4">{{ item.product.title | escape }}</h3>
+                    {%- unless item.product.has_only_default_variant -%}
+                      <div class="cart-notification-product__option h4">
+                        {%- for option in item.options_with_values -%}
+                          <span>{{ option.value }} </span>
+                          {%- unless forloop.last == true -%}/{%- endunless -%}
+                        {%- endfor -%}
+                      </div>
+                    {%- endunless -%}
+                    <div class="cart-notification-product__qty-price h4 check">
+                      {{ item.quantity }} X {{ item.original_price | money }}
+                    </div>
+                    <quantity-input class="quantity">
+                      <button
+                        class="quantity__button no-js-hidden minicart-quantity__button"
+                        name="minus"
+                        type="button"
+                        data-variantid="{{ item.id }}"
+                      >
+                        <span class="visually-hidden">
+                          {{- 'products.product.quantity.decrease' | t: product: item.product.title | escape -}}
+                        </span>
+                        &minus;
+                      </button>
+                      <input
+                        class="quantity__input"
+                        type="number"
+                        name="updates[]"
+                        value="{{ item.quantity }}"
+                        min="0"
+                        aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+                        id="Quantity-{{ item.index | plus: 1 }}"
+                        data-index="{{ item.index | plus: 1 }}"
+                      >
+                      <button
+                        class="quantity__button no-js-hidden minicart-quantity__button"
+                        name="plus"
+                        type="button"
+                        data-variantid="{{ item.id }}"
+                      >
+                        <span class="visually-hidden">
+                          {{- 'products.product.quantity.increase' | t: product: item.product.title | escape -}}
+                        </span>
+                        &plus;
+                      </button>
+                    </quantity-input>
+                    {%- for property in item.properties -%}
+                      {%- assign property_first_char = property.first | slice: 0 -%}
+                      {%- if property.last != blank and property_first_char != '_' -%}
+                        <div class="cart-notification-product__lineitem">
+                          <span>{{ property.first }}: </span>
+                          <span>
+                            {%- if property.last contains '/uploads/' -%}
+                              {{ property.last | split: '/' | last }}
+                            {%- else -%}
+                              {{ property.last }}
+                            {%- endif -%}
+                          </span>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                    {%- if item.selling_plan_allocation != null -%}
+                      <div class="cart-notification-product__option h4">
+                        {{ item.selling_plan_allocation.selling_plan.name }}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </a>
+                <span class="cart-remove-js" data-variantid="{{ item.id }}">
+                  {% render 'icons' with 'remove' %}
+                </span>
+              </div>
+              {% endunless %}
+            {%- endfor -%}
+
+          {%- else -%}
+            <div class="cart-notification__header cart-empty">
+              {%- if settings.shipping_amount > 0 -%}
+      {% assign shipping_amount = settings.shipping_amount | times: 100 %}
+                {% if settings.show_shipping_price %}
+                  {% assign motivatorProduct = all_products[settings.product] %}
+                  {% assign final_amount_price = shipping_amount | minus: cart.total_price | plus: motivatorProduct.price %}
+                {% else %}
+                  {% assign final_amount_price = shipping_amount | minus: cart.total_price %}
+                {% endif %}
+                {% assign shipping_amount_price = final_amount_price | money %}
+                {% assign progressBarWidth = final_amount_price | divided_by: settings.shipping_amount %}
+                {% assign finalProgressBarWidth = 100 | minus: progressBarWidth %}
+                <div class="shipping_amount_html">
+                  <span class="cart_empty_shipping_text">
+                    <h2 class="cart-notification__heading caption-large free-shipping-success">
+                      {{ 'general.cart.free_shipping_indicator_infolabel' | t: shipping_amount: shipping_amount_price }}
+                      <p>{{ 'general.cart.free_shipping_indicator_infolabel2' | t }}</p>
+                    </h2>
+                    <div
+                      class="progress{% if cart.item_count == 0 %} progress-hidden{% endif %}"
+                      data-text-enabled="false"
+                      data-shipping-progress
+                    >
+                      <div class="progress_shipping" role="progressbar">
+                        <div
+                          class="progress-meter"
+                          style="width: {{ finalProgressBarWidth }}%; transition: .9s;"
+                          data-free-shipping-progress-meter
+                        >
+                          <div class="progress-truck-wrapper">
+                            {% render 'icons' with 'icon-shipping-truck' %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              {%- endif -%}
+              <h2 class="cart-notification__heading caption-large">
+                <span class="cart_empty_title"> {{ 'general.cart.cart_empty' | t }}</span>
+              </h2>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div id="cart-notification-product"></div>
+      <div class="preloader" style="display:none;"></div>
+      <div class="cart-upsell-shipping-inner">
+      {% if settings.Show_You_me != blank %} 
+      <div id="cart-upsell" class="Cart_Upsell{% if settings.toggleButton == 'show-vertical' %} vertical-slider-upsell{% else %} horizontol-slider-upsell{% endif %}">
+        {%- if cart != empty -%}
+          <div id="cart-upsell-slider" class="shopify-section">
+            <h2 class="cart-collection-slider-title">{{ 'general.cart.cart_slide_title' | t }}</h2>
+            <div class="cart-notification-slider owl-carousel owl-theme owl-loaded owl-drag" id="{% if settings.toggleButton == 'show-vertical' %}cart-notification-slider{% endif %}" >
+              {% if relatedTag == true %}
+                {% if latest_item %}
+                  {% for tag in latest_item.product.tags %}
+                    {% if tag contains 'related_' %}
+                      {% assign recommendedProduct = tag | split: 'related_' %}
+                      {% assign producthandel = recommendedProduct | last %}
+                      {% assign relatedProduct = all_products[producthandel] %}
+                      <div class="products">
+                        <li class="grid__item ">
+                          {%
+                            render 'cartpopup-grid',
+                            product_card_product: relatedProduct,
+                            media_size: settings.image_ratio,
+                            product_count: {{counter}},
+                            show_vendor: settings.show_vendor
+                          %}
+                          {% assign counter = counter | plus: 1 %}
+                        </li>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              {% else %}
+                {% assign collection = collections[settings.populr_colletion] %}
+                {% if collection %}
+                  {% for product in collection.products limit: settings.products_to_show %}
+                    <div class="products">
+                      <li class="grid__item ">
+                        {%
+                          render 'cartpopup-grid',
+                          product_card_product: product,
+                          media_size: settings.image_ratio,
+                          product_count: {{counter}},
+                          show_vendor: settings.show_vendor
+                        %}
+                        {% assign counter = counter | plus: 1 %}
+                      </li>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+      {% endif %}
+        
+      <div id="cart-drawer-gift">
+        {%- assign check_gift = false -%}
+        {%- for item in cart.items -%}
+          {% if item.id == motivatorProduct.selected_or_first_available_variant.id %}
+            {%- assign check_gift = true -%}
+          {% endif %}
+        {% endfor %}
+        {% render 'Motivator-Product', motivatorProduct: motivatorProduct, check_gift: check_gift %}
+      </div>
+      </div>
+      <div id="cart-notification-button">
+        {%- if cart != empty -%}
+          <div class="cart-footer">
+            <span class="subtotal">
+              {{ 'sections.cart.headings.total' | t }}
+            </span>
+            <span class="total_price">
+              {{ cart.total_price | money }}
+            </span>
+          </div>
+          <p>{{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}</p>
+          <div class="cart-notification__links">
+            <a href="{{ routes.cart_url }}" class="button button--secondary"> {{ 'general.cart.view' | t }}</a>
+            <a href="/checkout" class="button">{{ 'sections.cart.checkout' | t }}</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="cart-overlay"></div>
+  </div>
+</cart-notification>
+

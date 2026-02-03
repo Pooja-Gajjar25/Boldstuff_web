@@ -1,0 +1,282 @@
+{% comment %}
+  Renders a product card for collection/search grid
+  Accepts:
+  - product_card_product: {Object} Product Liquid object (optional)
+  - media_size: {String} The setting of 'image_ratio'. Can be 'adapt', 'square', or 'portrait'. Default is 'adapt'.
+  - show_secondary_image: {Boolean} Show the secondary image on hover. Default: false.
+  - show_vendor: {Boolean} Show the product vendor. Default: false.
+{% endcomment %}
+
+<div class="boldstuff-card-wrapper">
+  {%- liquid
+    assign target = product_card_product.selected_or_first_available_variant
+    assign compare_at_price = target.compare_at_price
+    assign price = target.price | default: 0
+    assign money_price = price | money
+    if settings.currency_code_enabled
+      assign money_price = price | money_with_currency
+    endif
+  -%}
+
+  <div class="boldstuff-card">
+    <div class="card-image-wrapper">
+      <a href="{{ product_card_product.url }}" class="card-image-link">
+        {%- if product_card_product.featured_media -%}
+          <div class="media media--transparent media--{{ media_size }} media--hover-effect">
+            <img
+              src="{{ product_card_product.featured_media | image_url: width: 600 }}"
+              alt="{{ product_card_product.featured_media.alt | escape }}"
+              loading="lazy"
+              width="600"
+              height="800"
+              class="motion-reduce primary-image"
+            >
+            {%- if product_card_product.media[1] != null and show_secondary_image -%}
+              <img
+                src="{{ product_card_product.media[1] | image_url: width: 600 }}"
+                alt="{{ product_card_product.media[1].alt | escape }}"
+                loading="lazy"
+                width="600"
+                height="800"
+                class="motion-reduce secondary-image"
+              >
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </a>
+
+      {%- if product_card_product.tags contains 'Best Seller' or product_card_product.tags contains 'BEST SELLER' -%}
+        <div class="card-badge">BEST SELLER</div>
+      {%- endif -%}
+    </div>
+
+    <div class="card-info">
+      <h3 class="card-title">
+        <a href="{{ product_card_product.url }}">
+          <span class="brand">BOLDSTUFF</span>
+          <span class="title-suffix">
+            {%- assign title_parts = product_card_product.title | split: ' ' -%}
+            {%- for part in title_parts -%}
+              {%- if forloop.first == false %}{{ part }} {% endif -%}
+            {%- endfor -%}
+          </span>
+        </a>
+      </h3>
+
+      <div class="card-price">
+        <span class="current-price">{{ money_price }}</span>
+        {%- if compare_at_price > price -%}
+          <s class="original-price">{{ compare_at_price | money }}</s>
+        {%- endif -%}
+      </div>
+
+      <div class="card-quick-actions">
+        {%- if settings.show_quickview -%}
+          <div class="quickview-wrapper">
+            <quickview-opener
+              class="product-popup-modal__opener btn-quickview"
+              data-handle="{{ product_card_product.handle }}"
+              data-modal="#qvPopupModal"
+            >
+              <button class="quickview-button" type="button">Quick View</button>
+            </quickview-opener>
+          </div>
+        {%- endif -%}
+
+        <div class="card-variants">
+          {%- for variant in product_card_product.variants limit: 2 -%}
+            <span class="variant-box {% if forloop.first %}active{% endif %}">{{ variant.title }}</span>
+          {%- endfor -%}
+        </div>
+      </div>
+      <div class="card-divider"></div>
+
+      <div class="card-add-to-cart">
+        {%- form 'product',
+          product_card_product,
+          id: product_form_id,
+          class: 'form',
+          novalidate: 'novalidate',
+          data-type: 'add-to-cart-form'
+        -%}
+          <input type="hidden" name="id" value="{{ product_card_product.selected_or_first_available_variant.id }}">
+          <button type="submit" name="add" class="btn-add-to-cart">
+            <span class="cart-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
+            </span>
+            Add to Cart
+          </button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .boldstuff-card-wrapper {
+    background: #1a1a1c;
+    border-radius: 4px;
+    overflow: hidden;
+    height: 100%;
+    transition: transform 0.3s;
+  }
+  .boldstuff-card-wrapper:hover {
+    transform: translateY(-5px);
+  }
+  .boldstuff-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #232325;
+  }
+  .card-image-wrapper {
+    position: relative;
+    aspect-ratio: 1/1.2;
+    overflow: hidden;
+  }
+  .card-image-link {
+    display: block;
+    height: 100%;
+  }
+  .card-image-wrapper .media {
+    height: 100%;
+  }
+  .card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .card-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #d48c44;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+  }
+  .card-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    margin: 5px -15px 0;
+  }
+  .card-info {
+    padding: 15px 15px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+  }
+  .card-title {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .card-title .brand {
+    font-weight: 800;
+    color: #fff;
+  }
+  .card-title .title-suffix {
+    font-weight: 400;
+    color: #bbb;
+    font-size: 12px;
+  }
+  .card-price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .current-price {
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .original-price {
+    color: #888;
+    font-size: 12px;
+    text-decoration: line-through;
+  }
+  .card-quick-actions {
+    display: flex;
+    gap: 6px;
+    background: transparent;
+    margin-top: auto;
+  }
+  .quickview-wrapper {
+    flex: 2;
+    background: #18606c;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .quickview-button {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 8px 5px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  .card-variants {
+    flex: 1;
+    display: flex;
+    gap: 4px;
+  }
+  .variant-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2a2a2c;
+    border: 1px solid #3a3a3c;
+    color: #fff;
+    font-size: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    min-height: 32px;
+  }
+  .variant-box.active {
+    background: #18606c;
+    border-color: #18606c;
+  }
+  .btn-add-to-cart {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.3s;
+  }
+  .btn-add-to-cart:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .cart-icon svg {
+    opacity: 0.8;
+  }
+</style>

@@ -1,0 +1,440 @@
+<div class="card-wrapper">
+  <div class="card card--product" tabindex="-1">
+    <div class="card__inner ">
+      <a href="{{ productData.url | default: '#' }}" class="full-unstyled-link">
+        {%- if productData.featured_media -%}
+          {%- liquid
+            assign featured_media_aspect_ratio = productData.featured_media.aspect_ratio
+
+            if productData.featured_media.aspect_ratio == null
+              assign featured_media_aspect_ratio = 1
+            endif
+          -%}
+          <div
+            class="thumbnail media media--transparent media--{{ media_size }} media--hover-effect"
+            {% if media_size == 'adapt' and productData.featured_media %}
+              style="padding-bottom: {{ 1 | divided_by: featured_media_aspect_ratio | times: 100 }}%;"
+            {% endif %}
+          >
+            <img
+              src="{{ productData.featured_media | img_url: '101x' }}"
+              alt="{{ productData.featured_media.alt | escape }}"
+              width="{{ productData.featured_media.width }}"
+              height="{{ productData.featured_media.height }}"
+              class="motion-reduce lazyload  primary-image upsell-product-image"
+            >
+          </div>
+          {%- if productData.available == false and settings.show_soldout -%}
+            <span class="outstock-overlay">{{ 'products.product.sold_out' | t }}</span>
+          {%- endif -%}
+        {%- else -%}
+          <div class="card__content">
+            <h2 class="card__text h2">{{ productData.title }}</h2>
+          </div>
+        {%- endif -%}
+        <div class="card-information">
+          <div class="card-information__wrapper">
+            {%- if show_vendor -%}
+              <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
+              <div class="caption-with-letter-spacing vendor">{{ productData.vendor }}</div>
+            {%- endif -%}
+            <span class="card-information__text h5">
+              <a href="{{ productData.url | default: '#' }}" class="full-unstyled-link">
+                {{ productData.title | escape }}
+              </a>
+            </span>
+            {% comment %} TODO: metafield {% endcomment %}
+            <span class="caption-large light">{{ block.settings.description | escape }}</span>
+
+            {% render 'price', product: productData, price_class: '' %}
+            {%- assign truncate_desc = settings.show_description | plus: 0 -%}
+            {%- if truncate_desc > 0 and productData.description.size > 0 -%}
+              <div class="product-desc">
+                {{ productData.description | strip_html | truncate: truncate_desc }}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </a>
+
+      {% if template.name != 'cart' and template.name != '404' %}
+        {%- if settings.show_quickview or settings.show_wishlist or settings['show_cart-'] %}
+          <span class="mobile-review">
+        {% endif %}
+      {% endif %}
+
+      {% if template.name != 'cart' and template.name != '404' %}
+        {%- if settings.show_quickview or settings.show_wishlist or settings['show_cart-'] %}
+          </span>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  <div class="popup-variant">
+    {% assign variantCount = productData.variants | size %}
+    {% if variantCount > 0 and productData.variants.first.title != 'Default Title' %}
+      <div class="variants-swatch">
+        <div class="sizname">
+          <strong></strong>
+          <div class="Selected_variant size"></div>
+        </div>
+        {% assign product = productData %}
+        {% assign color_label = 'color,colour,couleur,colore,farbe,색,色,färg,farve' | split: ',' %}
+        {% assign size_label = 'size' %}
+        {% assign colorCount = 1 %}
+        {% assign sizeCount = 1 %}
+        {% assign optionCount = '' %}
+        {% for option in product.options_with_values %}
+          {% assign option_downcase = option.name | downcase %}
+          {% assign option_index = forloop.index0 %}
+          {% assign values = '' %}
+          {% for value in option.values %}
+            {% assign optionCount = forloop.length %}
+          {% endfor %}
+          {% if color_label contains option_downcase or size_label contains option_downcase %}
+            {% for variant in product.variants %}
+              {% assign value = variant.options[option_index] %}
+              {% unless values contains value %}
+                {% assign variant_value = value | downcase %}
+                {% assign values = values | join: ',' %}
+                {% assign values = values | append: ',' | append: value %}
+                {% assign values = values | split: ',' %}
+                {% if color_label contains option_downcase %}
+                  {% assign color_swatch_name = value | handle | append: '.png' %}
+                  {% assign color_swatch_image = images[color_swatch_name] %}
+                  {% if colorCount <= 3 %}
+                    <div class="color_swatch">
+                      <label
+                        class="swatch-label Add-on {% if forloop.first %}active{% endif %}"
+                        data-value="{{ value }}"
+                        data-variant-id="{{ variant.id }}"
+                        data-variant-img="{{ variant.image.src }}"
+                      >
+                        <span
+                          class="swatch-color"
+                          style="{% if color_swatch_image != blank %}background-image: url({{ color_swatch_image | img_url: '64x64' }});{% else %}background-color: {{ value }};{% endif %}"
+                        ></span>
+                        <span class="tool-tip">{{ value | capitalize }}</span>
+                      </label>
+                    </div>
+                  {% else %}
+                    {% if colorCount >= 4 %}
+                      <div class="group-swatch" style="display: none">
+                    {% endif %}
+                    <div class="color_swatch">
+                      <label
+                        class="swatch-label Add-on "
+                        data-value="{{ value }}"
+                        data-variant-id="{{ variant.id }}"
+                        data-variant-img="{{ variant.image.src }}"
+                      >
+                        <span
+                          class="swatch-color"
+                          style="{% if color_swatch_image != blank %}background-image: url({{ color_swatch_image | img_url: '64x64' }});{% else %}background-color: {{ value }};{% endif %}"
+                        ></span>
+                        <span class="tool-tip">{{ value | capitalize }}</span>
+                      </label>
+                    </div>
+                    {% if colorCount >= 4 %}</div>{% endif %}
+                    {% if colorCount == optionCount %}
+                      <div class="item-swatch-more item">
+                        <a href="{{ variant.url }}">
+                          <button type="button" class="number-showmore" title="More Color">
+                            <span class="swatch-plus">+</span>
+                            <span class="swatch-minus">-</span>
+                            <span class="text-number">{{ colorCount | minus: 3 }}</span>
+                          </button>
+                        </a>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                  {% assign colorCount = colorCount | plus: 1 %}
+                {% elsif size_label contains option_downcase %}
+                  {% if sizeCount <= 3 %}
+                    <div class="size_selector">
+                      <label
+                        class="selector-label Add-on {% if forloop.first %}active{% endif %}"
+                        data-value="{{ value }}"
+                        data-variant-id="{{ variant.id }}"
+                        data-variant-img="{{ variant.image.src | image_url }}"
+                      >
+                        <span class="tool-tip">{{ value }}</span>
+                      </label>
+                    </div>
+                  {% else %}
+                    {% if sizeCount >= 4 %}
+                      <div class="group-swatch" style="display: none">
+                    {% endif %}
+                    <div class="size_selector">
+                      <label
+                        class="selector-label Add-on"
+                        data-value="{{ value }}"
+                        data-variant-id="{{ variant.id }}"
+                        data-variant-img="{{ variant.image.src | image_url }}"
+                      >
+                        <span class="tool-tip">{{ value }}</span>
+                      </label>
+                    </div>
+                    {% if sizeCount >= 4 %}</div>{% endif %}
+                    {% if sizeCount == optionCount %}
+                      <div class="item-swatch-more item">
+                        <a href="{{ variant.url }}">
+                          <button type="button" class="number-showmore" title="More Sizes">
+                            <span class="swatch-plus">+</span>
+                            <span class="swatch-minus">-</span>
+                            <span class="text-number">{{ sizeCount | minus: 3 }}</span>
+                          </button>
+                        </a>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                  {% assign sizeCount = sizeCount | plus: 1 %}
+                {% endif %}
+              {% endunless %}
+              {% assign count = count | plus: 1 %}
+            {% endfor %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% assign variantCount = productData.variants | size %}
+    {% if variantCount > 0 and productData.variants.first.title != 'Default Title' %}
+      <div class="variants-swatch">
+      
+        <div class="colrname">
+          <strong></strong>
+          <div class="Selected_variant color"><span></span></div>
+        </div>
+        {% assign product = productData %}
+        {%- assign color_label = 'color,colour,couleur,colore,farbe,색,色,färg,farve' | split: ',' -%}
+        {% assign colorCount = 1 %}
+        {% assign optionCount = '' %}
+        {%- for option in product.options_with_values -%}
+          {%- liquid
+            assign option_downcase = option.name | downcase
+          -%}
+          {% assign optionCounter = forloop.length %}
+          {% if color_label contains option_downcase %}
+            {%- assign option_index = forloop.index0 -%}
+            {%- assign values = '' -%}
+            {%- for value in option.values -%}
+              {% assign optionCount = forloop.length %}
+            {% endfor %}
+            {%- for variant in product.variants -%}
+              {%- assign value = variant.options[option_index] %}
+              {%- unless values contains value -%}
+                {% assign variant_value = value | downcase %}
+                {%- liquid
+                  assign values = values | join: ','
+                  assign values = values | append: ',' | append: value
+                  assign values = values | split: ','
+                  assign color_image = value | handle | append: '.' | append: 'png' | file_img_url: 'master' | prepend: 'https:'
+                  assign color_swatch_fallback = value | split: ' ' | last | handle
+                  assign color_count = color_count | plus: 1
+                -%}
+                {%- assign color_swatch_name = value | handle | append: '.png' -%}
+                {%- assign color_swatch_image = images[color_swatch_name] -%}
+                {% if colorCount <= 3 %}
+                  <div class="color_swatch">
+                    <label
+                      class="swatch-label Add-on {% if forloop.first %}active{% endif %}"
+                      data-value="{{value}}"
+                      data-variant-id="{{ variant.id }}"
+                    >
+                      <span
+                          class="color-box"
+                          data-image="{{ variant.image.src | product_img_url: 'master' }}"
+                          style="{% if color_swatch_image != blank %}background-image: url({{ color_swatch_image | img_url: '64x64' }});{% else %}background-color: {{ color_swatch_fallback }}; {% endif %}"
+                        ></span>
+                      <!-- <span class="tool-tip"> {{ value | capitalize }}</span> -->
+                    </label>
+                  </div>
+                {% else %}
+                  {% if colorCount >= 4 %}
+                    <div class="group-swatch" style="display: none">
+                  {% endif %}
+                  <div class="color_swatch">
+                    <label
+                      class="swatch-label Add-on"
+                      data-value="{{value}}"
+                      data-variant-id="{{ variant.id }}"
+                    >
+                      <span
+                          class="color-box"
+                          data-image="{{ variant.image.src | product_img_url: 'master' }}"
+                          style="{% if color_swatch_image != blank %}background-image: url({{ color_swatch_image | img_url: '64x64' }});{% else %}background-color: {{ color_swatch_fallback }}; {% endif %}"
+                        ></span>
+                      <!-- <span class="tool-tip"> {{ value | capitalize }}</span> -->
+                    </label>
+                  </div>
+                  {% if colorCount >= 4 %}</div>{% endif %}
+                  {% if colorCount == optionCount %}
+                    <div class="item-swatch-more item">
+                      <a href="{{ variant.url }}">
+                        <button type="button" class="number-showmore" title="More Color">
+                          <span class="swatch-plus">+</span>
+                          <span class="swatch-minus">-</span>
+                          <span class="text-number">{{ colorCount | minus: 3 }}</span>
+                        </button>
+                      </a>
+                    </div>
+                  {% endif %}
+                {% endif %}
+                {% assign colorCount = colorCount | plus: 1 %}
+              {%- endunless -%}
+              {%- assign count = count | plus: 1 -%}
+            {%- endfor -%}
+            {% break %}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+  {% if template.name != 'cart' and template.name != '404' %}
+    <div class="thumbnail-buttons">
+      <div class="buy-btn-space" style="margin-bottom: {{block.settings.buy_buttons_margin}}px;">
+        {% unless product.available %}
+          <div id="sold-out">
+            {% form 'customer', id: product_form_id %}
+              {% if form.posted_successfully? %}
+                <p class="accent-text alert alert-success">{{ 'products.product.success-message' | t }}</p>
+              {% else %}
+                <p class="notify-msg first">
+                  {{ 'products.product.soldout-notify-message' | t: title: product.title }}
+                </p>
+              {% endif %}
+              {% if form.errors %}
+                <div class="error feedback accent-text">
+                  <p>{{ 'products.product.error-message' | t }}</p>
+                </div>
+              {% endif %}
+              {% unless form.posted_successfully? %}
+                <div class="notify-price">
+                  <div id="notify-me-wrapper" class="clearfix field">
+                    {% if customer %}
+                      <input
+                        id="soldout--{{ section.id }}"
+                        type="hidden"
+                        name="contact[email]"
+                        value="{{ customer.email }}"
+                        class="field__input"
+                      >
+                    {% else %}
+                      <input
+                        id="soldout--{{ section.id }}"
+                        required="required"
+                        type="email"
+                        name="contact[email]"
+                        placeholder="{{ 'products.product.soldout_placeholder' | t }}"
+                        class="field__input styled-input{% if form.errors contains 'email' %} error{% endif %}"
+                        value="{{ contact.fields.email }}"
+                      >
+                      <label class="field__label" for="soldout--{{ section.id }}">
+                        {{ 'newsletter.label' | t }}
+                      </label>
+                    {% endif %}
+
+                    <input type="hidden" id="customer_tags" name="contact[tags]" value="{{ product.title }}">
+                    <input
+                      type="hidden"
+                      name="contact[body]"
+                      value="{{ 'products.product.notify-message' | t: title: product.title }}"
+                    >
+                    <input class="btn styled-submit" type="submit" value="{{ 'products.product.send' | t }}">
+                  </div>
+                </div>
+                <p class="notify-msg">
+                  {{ 'products.product.notify-message2' | t }}
+                </p>
+              {% endunless %}
+            {% endform %}
+          </div>
+        {% endunless %}
+        <div {{ block.shopify_attributes }}>
+          <product-form class="product-form">
+            <div class="product-form__error-message-wrapper alert alert-danger" role="alert" hidden>
+              {% include 'icons' with 'error' %}
+              <span class="product-form__error-message"></span>
+            </div>
+            {%- form 'product',
+              product,
+              id: product_form_id,
+              class: 'form',
+              novalidate: 'novalidate',
+              data-type: 'add-to-cart-form'
+            -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+              <div class="product-form__buttons">
+                <button
+                  class="button button--full-width ajax-cart-btn" type="submit"
+                  {% if product.selected_or_first_available_variant.available == false %}
+                    disabled
+                  {% endif %}
+                >
+                  {%- if product.selected_or_first_available_variant.available -%}
+                    {{ 'products.product.add_to_cart' | t }}
+                  {%- else -%}
+                    {{ 'products.product.sold_out' | t }}
+                  {%- endif -%}
+                </button>
+
+                {{ form | payment_button }}
+              </div>
+            {%- endform -%}
+          </product-form>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+<style>
+ 
+</style>
+<script>
+    $(document).ready(function (){
+     $('.size_selector .selector-label').on('click', function() {
+       var upsellVariantImg = $(this).attr('data-variant-img');
+         $(this).parents('.card-wrapper').find('.upsell-product-image').attr('src', upsellVariantImg);
+         $(this).parents('.card-wrapper').find('.upsell-product-image').attr('srcset', upsellVariantImg);
+      });
+    });
+
+   $(document).ready(function () {
+      var defaultColorValue = $('.color_swatch .swatch-label').first().data('value');
+      var defaultSizeValue = $('.size_selector .selector-label').first().data('value');
+
+      var colorTooltipContent = '<strong>Color:</strong><span>' + defaultColorValue + '</span>';
+      var sizeTooltipContent = '<strong>Size:</strong><span>' + defaultSizeValue + '</span>';
+
+      $('.variants-swatch .Selected_variant.color').html(colorTooltipContent);
+      $('.variants-swatch .Selected_variant.size').html(sizeTooltipContent);
+
+      $('.color_swatch .swatch-label').on('click', function() {
+          var colorValue = $(this).data('value');
+          var tooltipContent = '<strong>Color:</strong><span>' + colorValue + '</span>';
+          $(this).parents('.variants-swatch').find('.Selected_variant.color').html(tooltipContent);
+      });
+
+      $('.size_selector .selector-label').on('click', function() {
+          var sizeValue = $(this).data('value');
+          var tooltipContent = '<strong>Size:</strong><span>' + sizeValue + '</span>';
+          $(this).parents('.variants-swatch').find('.Selected_variant.size').html(tooltipContent);
+      });
+
+    $(document).on('click', '.popup-inner-product .product-form__submit.button.button--full-width', function() {
+    $(this).closest('.popup').find('.popup-content .close-btn').trigger('click');
+});
+
+     
+     $('.size_selector .selector-label').on('click', function() {
+      console.log("Clicked on size selector label");
+      $('.size_selector .selector-label').removeClass('active');
+      $(this).addClass('active');
+      var upsellVariantImg = $(this).attr('data-variant-img');
+      $(this).parents('.card-wrapper').find('.upsell-product-image').attr('src', upsellVariantImg);
+      $(this).parents('.card-wrapper').find('.upsell-product-image').attr('srcset', upsellVariantImg);
+    });
+    
+  });
+</script>

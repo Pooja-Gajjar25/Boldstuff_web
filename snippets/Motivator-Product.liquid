@@ -1,0 +1,39 @@
+{% if settings.sow_motivater != blank %}
+{%- if cart != empty -%}
+   <div id="gift__wrapper" class="main_shipping_protection shopify-section">
+      <div class="shipping_protection_flex">
+        <div class="icons_shipping_protection">
+          <img
+            class="emoji-img"
+            src="{{ motivatorProduct.featured_image | img_url:'master' }}"
+          >
+        </div>
+        <div class="text_for_shipping_protection">
+          <div class="shipping-details">
+             <h2 class="shipping-title">{{ motivatorProduct.title }}</h2>     
+          </div>
+           <p>
+            {{ motivatorProduct.description }}
+          </p> 
+        </div>
+          <div class="toggle_shipping_protection">
+           <div class="price_shipping_protection">
+              <span class="price_compare">{{ motivatorProduct.compare_at_price  | money }}</span>
+              <span class="price_orignal">{{ motivatorProduct.price | money  }}</span>
+            </div>
+             <div class="switch-container">
+                  <label class="switch-track" for="toggleSwitch">
+                      <input type="checkbox" id="toggleSwitch" class="switch-checkbox click_gift" {% if check_gift %}
+                checked
+              {% endif %} data-variant="{{ motivatorProduct.selected_or_first_available_variant.id }}" data-handle="{{ motivatorProduct.handle }}">
+                      <div class="switch-checkmark">
+                        <!-- <svg width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.86554 1.46252L3.36866 8.88752L0.58429 6.10315" stroke="white" stroke-width="0.928125" stroke-linecap="round" stroke-linejoin="round"></path></svg> -->
+                      </div>
+                  </label>
+              </div>
+        </div>
+      </div>
+    </div>
+{%- endif -%}
+{%- endif -%}
+

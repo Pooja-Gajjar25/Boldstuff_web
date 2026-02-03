@@ -1,0 +1,101 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {
+        "image": "shopify://shop_images/Contact_banner.png",
+        "hometitle": "404",
+        "subtitle": "UH OH! You're lost.",
+        "description": "The page you are looking for does not exist. How you got here is a mystery. But you can click the button below to go back to the homepage.",
+        "button_label": "HOME",
+        "button_link": "/",
+        "section_bottom_spacing_desktop": 70,
+        "section_bottom_spacing_mobile": 30
+      }
+    },
+    "16306439902ee3d8ec": {
+      "type": "Ishi_collection_list",
+      "blocks": {
+        "16306439901aa7b65a-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "fragrances"
+          }
+        },
+        "16306439901aa7b65a-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "glow"
+          }
+        },
+        "16306439901aa7b65a-2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "make-up"
+          }
+        },
+        "16306439901aa7b65a-3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "new-glow"
+          }
+        }
+      },
+      "block_order": [
+        "16306439901aa7b65a-0",
+        "16306439901aa7b65a-1",
+        "16306439901aa7b65a-2",
+        "16306439901aa7b65a-3"
+      ],
+      "settings": {
+        "subtitle": "New Season",
+        "hometitle": "Top Collection",
+        "swipe_on_mobile": false,
+        "show_view_all": true,
+        "show_collection_item": true,
+        "grid": "4",
+        "section_bottom_spacing_desktop": 70,
+        "section_bottom_spacing_mobile": 30
+      }
+    },
+    "16306442910dc5ba42": {
+      "type": "Ishi_featured_product_style1",
+      "blocks": {
+        "1630644291e3c5c719-0": {
+          "type": "product_tab",
+          "settings": {
+            "title": "",
+            "collection": "glow",
+            "show_view_all": true
+          }
+        }
+      },
+      "block_order": [
+        "1630644291e3c5c719-0"
+      ],
+      "settings": {
+        "subtitle": "New Season",
+        "hometitle": "Trending Products",
+        "products_to_show": 4,
+        "grid": "4",
+        "swipe_on_mobile": false,
+        "section_bottom_spacing_desktop": 70,
+        "section_bottom_spacing_mobile": 30
+      }
+    }
+  },
+  "order": [
+    "main",
+    "16306439902ee3d8ec",
+    "16306442910dc5ba42"
+  ]
+}

@@ -1,0 +1,395 @@
+{% comment %}
+  Boldstuff Sidebar Filter Section
+  Replicates the provided UI design with Schema settings and responsive behavior.
+{% endcomment %}
+
+<div class="bs-filter-section" id="bs-filter-{{ section.id }}">
+  <div class="bs-filter-container">
+    <div class="bs-filter-header">
+      <h3 class="bs-filter-heading">{{ section.settings.title | default: 'Filters' }}</h3>
+    </div>
+
+    <form class="bs-filter-form">
+      {% comment %} Capacity Filter {% endcomment %}
+        <div class="bs-filter-group">
+          <h4 class="bs-filter-group-title">Capacity</h4>
+          <div class="bs-filter-options-list">
+            {%- assign capacity_tags = '' -%}
+            {%- for product in collection.products -%}
+              {%- for tag in product.tags -%}
+                {%- if tag contains 'L' -%}
+                  {%- unless capacity_tags contains tag -%}
+                    {%- assign capacity_tags = capacity_tags | append: tag | append: ',' -%}
+                  {%- endunless -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endfor -%}
+            {%- assign unique_capacity = capacity_tags | split: ',' | uniq -%}
+            {%- for cap in unique_capacity -%}
+              {%- unless cap == '' -%}
+                <label class="bs-checkbox-container">
+                  <input type="checkbox" name="capacity" value="{{ cap }}">
+                  <span class="bs-checkbox-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </span>
+                  <span class="bs-checkbox-label">{{ cap }}</span>
+                </label>
+              {%- endunless -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+      {% comment %} Color Filter {% endcomment %}
+        <div class="bs-filter-group">
+          <h4 class="bs-filter-group-title">Color</h4>
+          <div class="bs-filter-swatches">
+            {%- assign color_tags = '' -%}
+            {%- for product in collection.products -%}
+              {%- for tag in product.tags -%}
+                {%- if tag contains 'color_' -%}
+                  {%- unless color_tags contains tag -%}
+                    {%- assign color_tags = color_tags | append: tag | append: ',' -%}
+                  {%- endunless -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endfor -%}
+            {%- assign unique_colors = color_tags | split: ',' | uniq -%}
+            {%- for color in unique_colors -%}
+              {%- unless color == '' -%}
+                {%- assign color_name = color | remove: 'color_' -%}
+                <label class="bs-swatch-container">
+                  <input type="checkbox" name="color" value="{{ color_name }}">
+                  <span class="bs-swatch bs-swatch--{{ color_name }}"></span>
+                </label>
+              {%- endunless -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+      {% comment %} Price Filter {% endcomment %}
+      <div class="bs-filter-group">
+        <h4 class="bs-filter-group-title">Price</h4>
+        <div class="bs-price-range">
+          <div class="bs-price-field">
+            <span class="bs-currency-symbol">₹</span>
+            <input type="number" placeholder="500" value="500">
+          </div>
+          <span class="bs-price-separator"></span>
+          <div class="bs-price-field">
+            <span class="bs-currency-symbol">₹</span>
+            <input type="number" placeholder="2,000" value="2000">
+          </div>
+        </div>
+
+        <button type="button" class="bs-clear-btn">
+          {{ section.settings.button_label | default: 'Clear Filters' }}
+        </button>
+      </div>
+
+      {% comment %} Use Case Filter {% endcomment %}
+        <div class="bs-filter-group no-border">
+          <h4 class="bs-filter-group-title">Use Case</h4>
+          <div class="bs-filter-options-list">
+            {%- assign usecase_tags = '' -%}
+            {%- for product in collection.products -%}
+              {%- for tag in product.tags -%}
+                {%- if tag contains 'usecase_' -%}
+                  {%- unless usecase_tags contains tag -%}
+                    {%- assign usecase_tags = usecase_tags | append: tag | append: ',' -%}
+                  {%- endunless -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endfor -%}
+            {%- assign unique_usecases = usecase_tags | split: ',' | uniq -%}
+            {%- for usecase in unique_usecases -%}
+              {%- unless usecase == '' -%}
+                {%- assign usecase_name = usecase | remove: 'usecase_' -%}
+                <label class="bs-checkbox-container">
+                  <input type="checkbox" name="use_case" value="{{ usecase_name }}">
+                  <span class="bs-checkbox-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </span>
+                  <span class="bs-checkbox-label">{{ usecase_name }}</span>
+                </label>
+              {%- endunless -%}
+            {%- endfor -%}
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
+
+<style>
+  /* Scoped styles for the filter section */
+  #bs-filter-{{ section.id }} {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    padding: 20px;
+    /* Optional: If user sets a Background Image via schema */
+    {% if section.settings.bg_image %}
+    background-image: url('{{ section.settings.bg_image | image_url: width: 800 }}');
+    background-size: cover;
+    background-position: center;
+    {% endif %}
+  }
+
+  /* Container matching the card look */
+  .bs-filter-container {
+    background-color: #1A1A23; /* Dark background from screenshot */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 300px; /* Sidebar width constraint */
+    width: 100%;
+    margin: 0 auto; /* Center on mobile if full width */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .bs-filter-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+  }
+
+  .bs-filter-heading {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  .bs-filter-group {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+  }
+
+  .bs-filter-group.no-border {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .bs-filter-group-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: #fff;
+  }
+
+  /* Checkbox Styling */
+  .bs-filter-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bs-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .bs-checkbox-container input {
+    display: none; /* Hide native checkbox */
+  }
+
+  .bs-checkbox-box {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+
+  .bs-checkbox-box svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: #1A1A23; /* Checkmark matches bg color usually, or white? Screenshot seems to check with cyan tick or just filled. */
+  }
+
+  /* In screenshot, the box IS the color when checked. */
+  /* Checked State */
+  .bs-checkbox-container input:checked + .bs-checkbox-box {
+    background-color: transparent;
+    border-color: #2A9D8F; /* Cyan/Teal color */
+  }
+  /* Wait, usually the tick is visible. In screenshot,
+     checked box has a tick. We'll make the tick the accent color
+     or box accent with dark tick?
+     Screenshot: Box border becomes teal, tick is teal inside?
+     Or filled teal?
+     Actually it looks like Outline Box, Checkmark inside is teal.
+  */
+  .bs-checkbox-container input:checked + .bs-checkbox-box svg {
+    opacity: 1;
+    transform: scale(1);
+    color: #2A9D8F; /* Teal tick */
+  }
+
+  .bs-checkbox-container input:checked + .bs-checkbox-box {
+    border-color: #2A9D8F;
+  }
+
+  .bs-checkbox-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  /* Color Swatches */
+  .bs-filter-swatches {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .bs-swatch-container {
+    cursor: pointer;
+    position: relative;
+  }
+
+  .bs-swatch-container input {
+    display: none;
+  }
+
+  .bs-swatch {
+    display: block;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent; /* default border */
+    position: relative;
+    transition: all 0.2s ease;
+  }
+
+  .bs-swatch::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      transition: border-color 0.2s;
+  }
+
+  .bs-swatch-container input:checked + .bs-swatch::after {
+    border-color: #555; /* Selection ring color */
+  }
+
+  /* Specific Colors */
+  .bs-swatch--black { background-color: #000000; border: 1px solid #333; }
+  .bs-swatch--darkgrey { background-color: #333333; }
+  .bs-swatch--silver { background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 100%); }
+  .bs-swatch--teal { background-color: #2A9D8F; }
+  .bs-swatch--orange { background-color: #E76F51; }
+
+  /* Price Range */
+  .bs-price-range {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .bs-price-field {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 8px 10px;
+    flex: 1;
+  }
+
+  .bs-currency-symbol {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-right: 4px;
+  }
+
+  .bs-price-field input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    font-weight: 500;
+  }
+
+  .bs-price-separator {
+    width: 10px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+  }
+
+  .bs-clear-btn {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.08); /* Dark button bg */
+    border: none;
+    color: #ffffff;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .bs-clear-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .bs-filter-container {
+      max-width: 100%; /* Full width on mobile if needed */
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Sidebar Filter",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Section Background Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Filters"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Clear Filters"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sidebar Filter"
+    }
+  ]
+}
+{% endschema %}

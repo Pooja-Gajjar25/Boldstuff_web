@@ -1,0 +1,571 @@
+<div class="boldstuff-hero-banner">
+  <div class="boldstuff-section-divider"></div>
+  <div class="hero-banner__wrapper">
+    {% if section.settings.hero_image != blank %}
+      <div class="hero-banner__image-container">
+        <img
+          src="{{ section.settings.hero_image | image_url: width: 1920 }}"
+          alt="{{ section.settings.hero_title }}"
+          width="1920"
+          height="800"
+          class="hero-banner__image hidden-xs-down"
+        >
+        {% if section.settings.hero_image_mobile != blank %}
+          <img
+            src="{{ section.settings.hero_image_mobile | image_url: width: 768 }}"
+            alt="{{ section.settings.hero_title }}"
+            width="768"
+            height="600"
+            class="hero-banner__image hidden-xs-up"
+          >
+        {% else %}
+          <img
+            src="{{ section.settings.hero_image | image_url: width: 768 }}"
+            alt="{{ section.settings.hero_title }}"
+            width="768"
+            height="600"
+            class="hero-banner__image hidden-xs-up"
+          >
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="page-width">
+      <div class="hero-banner__content">
+        {% if section.settings.hero_title != blank %}
+          <h1 class="hero-banner__title">
+            {{ section.settings.hero_title }}
+          </h1>
+        {% endif %}
+
+        {% if section.settings.hero_description != blank %}
+          <p class="hero-banner__description">
+            {{ section.settings.hero_description }}
+          </p>
+        {% endif %}
+
+        {% if section.settings.primary_button_label != blank or section.settings.secondary_button_label != blank %}
+          <div class="hero-banner__buttons">
+            {% if section.settings.primary_button_label != blank %}
+              <a
+                href="{{ section.settings.primary_button_link }}"
+                class="hero-banner__button hero-banner__button--primary"
+              >
+                {{ section.settings.primary_button_label }}
+              </a>
+            {% endif %}
+            {% if section.settings.secondary_button_label != blank %}
+              <a
+                href="{{ section.settings.secondary_button_link }}"
+                class="hero-banner__button hero-banner__button--secondary"
+              >
+                {{ section.settings.secondary_button_label }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Feature Icons Bar -->
+    {% if section.blocks.size > 0 %}
+      <div class="hero-banner__features">
+        <div class="page-width">
+          <div class="hero-banner__features-inner">
+            {% for block in section.blocks %}
+              {% if block.type == 'feature' %}
+                <div class="hero-banner__feature-item" {{ block.shopify_attributes }}>
+                  {% if block.settings.feature_icon != blank %}
+                    <div class="hero-banner__feature-icon">
+                      <img
+                        src="{{ block.settings.feature_icon | image_url: width: 60 }}"
+                        alt="{{ block.settings.feature_text }}"
+                        width="60"
+                        height="60"
+                      >
+                    </div>
+                  {% endif %}
+                  {% if block.settings.feature_text != blank %}
+                    <span class="hero-banner__feature-text">{{ block.settings.feature_text }}</span>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .boldstuff-section-divider {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+
+  .boldstuff-section-divider::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* Hero Banner Styles */
+  #shopify-section-{{ section.id }} {
+    margin-bottom: {{ section.settings.section_bottom_spacing_desktop }}px;
+  }
+
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} {
+      margin-bottom: {{ section.settings.section_bottom_spacing_mobile }}px;
+    }
+  }
+
+  .boldstuff-hero-banner {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-banner__wrapper {
+    position: relative;
+    min-height: 500px;
+  }
+
+  @media (max-width: 767px) {
+    .hero-banner__wrapper {
+      min-height: 400px;
+    }
+  }
+
+  @media (max-width: 543px) {
+    .hero-banner__wrapper {
+      min-height: 350px;
+    }
+  }
+
+  .hero-banner__image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .hero-banner__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-banner__image-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%);
+    z-index: 1;
+  }
+
+  @media (max-width: 767px) {
+    .hero-banner__image-container::after {
+      background: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .hero-banner__content {
+    position: relative;
+    z-index: 2;
+    padding: 100px 0 140px;
+    max-width: 600px;
+  }
+
+  @media (max-width: 991px) {
+    .hero-banner__content {
+      padding: 80px 0 120px;
+      max-width: 500px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-banner__content {
+      padding: 60px 0 100px;
+      max-width: 100%;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 543px) {
+    .hero-banner__content {
+      padding: 40px 0 80px;
+    }
+  }
+
+  .hero-banner__title {
+    font-family: var(--font-title-family);
+    font-size: 60px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 20px;
+    letter-spacing: -1px;
+  }
+
+  .hero-banner__title strong,
+  .hero-banner__title b {
+    color: #ff6b35;
+  }
+
+  @media (max-width: 1199px) {
+    .hero-banner__title {
+      font-size: 50px;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .hero-banner__title {
+      font-size: 42px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-banner__title {
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+  }
+
+  @media (max-width: 543px) {
+    .hero-banner__title {
+      font-size: 28px;
+      line-height: 1.3;
+    }
+  }
+
+  .hero-banner__description {
+    font-family: var(--font-body-family);
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 30px;
+    max-width: 500px;
+  }
+
+  @media (max-width: 767px) {
+    .hero-banner__description {
+      font-size: 15px;
+      margin: 0 auto 25px;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 543px) {
+    .hero-banner__description {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .hero-banner__buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 767px) {
+    .hero-banner__buttons {
+      justify-content: center;
+    }
+  }
+
+  .hero-banner__button {
+    display: inline-block;
+    padding: 14px 32px;
+    font-family: var(--font-body-family);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 543px) {
+    .hero-banner__button {
+      padding: 12px 24px;
+      font-size: 14px;
+    }
+  }
+
+  .hero-banner__button--primary {
+    background-color: #ff6b35;
+    color: #ffffff;
+    border: 2px solid #ff6b35;
+  }
+
+  .hero-banner__button--primary:hover {
+    background-color: #e55a28;
+    border-color: #e55a28;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  }
+
+  .hero-banner__button--secondary {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+  }
+
+  .hero-banner__button--secondary:hover {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+  }
+
+  /* Feature Icons Bar */
+  .hero-banner__features {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    background-color: #202024;
+    backdrop-filter: blur(10px);
+    padding: 20px 0;
+  }
+
+  @media (max-width: 767px) {
+    .hero-banner__features {
+      padding: 15px 0;
+    }
+  }
+
+  .hero-banner__features-inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+  }
+
+  @media (max-width: 767px) {
+    .hero-banner__features-inner {
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  .hero-banner__feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ffffff;
+  }
+
+  @media (max-width: 543px) {
+    .hero-banner__feature-item {
+      gap: 8px;
+      flex: 0 0 calc(50% - 10px);
+      justify-content: center;
+    }
+  }
+
+  .hero-banner__feature-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 543px) {
+    .hero-banner__feature-icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .hero-banner__feature-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+  }
+
+  .hero-banner__feature-text {
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 767px) {
+    .hero-banner__feature-text {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 543px) {
+    .hero-banner__feature-text {
+      font-size: 11px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "tag": "section",
+  "class": "hero-banner-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Desktop Image",
+      "info": "Recommended size: 1920px x 800px"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_mobile",
+      "label": "Mobile Image",
+      "info": "Optional. Recommended size: 768px x 600px"
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "html",
+      "id": "hero_title",
+      "label": "Title",
+      "default": "Hydrate <b>Boldly.</b><br>Anywhere, Every Day.",
+      "info": "Use <b> tag for orange accent text"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_description",
+      "label": "Description",
+      "default": "Premium insulated steel bottles built for hot Indian summers and cold mornings."
+    },
+    {
+      "type": "header",
+      "content": "Primary Button"
+    },
+    {
+      "type": "text",
+      "id": "primary_button_label",
+      "label": "Button Label",
+      "default": "Shop All Water Bottles"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Secondary Button"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_label",
+      "label": "Button Label",
+      "default": "View Bestsellers"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_bottom_spacing_desktop",
+      "label": "Desktop Bottom Spacing",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "section_bottom_spacing_mobile",
+      "label": "Mobile Bottom Spacing",
+      "min": 0,
+      "max": 60,
+      "step": 10,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "feature_icon",
+          "label": "Icon Image",
+          "info": "Recommended size: 60px x 60px. Will be displayed in white."
+        },
+        {
+          "type": "text",
+          "id": "feature_text",
+          "label": "Feature Text",
+          "default": "Feature Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "6-Hour Hot & Cold Retention"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Premium Insulated Stainless Steel"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Leakproof & Travel-Ready"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

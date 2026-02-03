@@ -1,0 +1,99 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "boldstuff_banner": {
+      "type": "boldstuff-collection-banner",
+      "blocks": {
+        "leakproof": {
+          "type": "feature",
+          "settings": {
+            "icon_name": "truck",
+            "icon_svg": "",
+            "text": "Leakproof"
+          }
+        },
+        "insulated_1": {
+          "type": "feature",
+          "settings": {
+            "icon_name": "shield-check",
+            "icon_svg": "",
+            "text": "24hr Insulated"
+          }
+        },
+        "insulated_2": {
+          "type": "feature",
+          "settings": {
+            "icon_name": "drop",
+            "icon_svg": "",
+            "text": "24hr Insulated"
+          }
+        },
+        "durable": {
+          "type": "feature",
+          "settings": {
+            "icon_name": "shield",
+            "icon_svg": "",
+            "text": "Durable steel"
+          }
+        }
+      },
+      "block_order": [
+        "leakproof",
+        "insulated_1",
+        "insulated_2",
+        "durable"
+      ],
+      "settings": {
+        "bg_image": "shopify://shop_images/d62a455d7271a08a8695b69644a2b25c32e84f4c.png",
+        "title": "Insulated water Bottles",
+        "description": "Stay hydrated with our durable insulated water bottles designed to keep your drinks hot or cold for hours, perfect for gym, office, and everyday use.",
+        "show_breadcrumbs": true,
+        "show_rating": true,
+        "rating_value": "4.8",
+        "rating_count": "10,000",
+        "show_sort": true
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "blocks": {
+        "boldstuff_filters_ui": {
+          "type": "custom_filter",
+          "settings": {
+            "title": "Filters",
+            "button_label": "Clear Filters"
+          }
+        }
+      },
+      "block_order": [
+        "boldstuff_filters_ui"
+      ],
+      "settings": {
+        "products_per_page": 12,
+        "enable_sorting": true
+      }
+    },
+    "boldstuff_sidebar_filter_mK3awH": {
+      "type": "boldstuff-sidebar-filter",
+      "disabled": true,
+      "name": "Sidebar Filter",
+      "settings": {
+        "title": "Filters",
+        "button_label": "Clear Filters"
+      }
+    }
+  },
+  "order": [
+    "boldstuff_banner",
+    "product-grid",
+    "boldstuff_sidebar_filter_mK3awH"
+  ]
+}

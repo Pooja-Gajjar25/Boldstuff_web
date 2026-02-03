@@ -1,0 +1,412 @@
+<div class="boldstuff-footer section-{{ section.id }}-padding" id="boldstuff-footer-{{ section.id }}">
+  <div class="page-width">
+    <div class="boldstuff-footer__container">
+      {%- comment -%} Left Column: Logo & Description {%- endcomment -%}
+      <div class="boldstuff-footer__brand">
+        {%- if section.settings.logo_image != blank -%}
+          <img
+            src="{{ section.settings.logo_image | image_url: width: 200 }}"
+            alt="{{ shop.name }}"
+            class="boldstuff-footer__logo"
+            width="150"
+            height="auto"
+          >
+        {%- else -%}
+          <h2 class="boldstuff-footer__logo-text"><span class="bold">BOLD</span><span class="stuff">STUFF</span></h2>
+        {%- endif -%}
+
+        {%- if section.settings.description_heading != blank -%}
+          <h3 class="boldstuff-footer__description-heading">{{ section.settings.description_heading }}</h3>
+        {%- endif -%}
+
+        {%- if section.settings.description_text != blank -%}
+          <div class="boldstuff-footer__description-text">
+            {{ section.settings.description_text }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Middle Columns: Link Lists {%- endcomment -%}
+      <div class="boldstuff-footer__links">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'link_list' -%}
+            <div class="boldstuff-footer__link-column">
+              {%- if block.settings.heading != blank -%}
+                <h4 class="boldstuff-footer__link-heading">{{ block.settings.heading }}</h4>
+              {%- endif -%}
+              <ul class="boldstuff-footer__link-list list-unstyled">
+                {%- for link in linklists[block.settings.menu].links -%}
+                  <li>
+                    <a href="{{ link.url }}" class="boldstuff-footer__link">{{ link.title }}</a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Right Column: Socials & Copyright {%- endcomment -%}
+      <div class="boldstuff-footer__meta">
+        <div class="boldstuff-footer__social-icons">
+          {%- if settings.social_facebook_link != blank -%}
+            <a href="{{ settings.social_facebook_link }}" class="social-icon"
+              ><i class="fa fa-facebook" aria-hidden="true"></i
+            ></a>
+          {%- endif -%}
+          {%- if settings.social_instagram_link != blank -%}
+            <a href="{{ settings.social_instagram_link }}" class="social-icon"
+              ><i class="fa fa-instagram" aria-hidden="true"></i
+            ></a>
+          {%- endif -%}
+          {%- if settings.social_twitter_link != blank -%}
+            <a href="{{ settings.social_twitter_link }}" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+          {%- endif -%}
+          {%- if settings.social_pinterest_link != blank -%}
+            <a href="{{ settings.social_pinterest_link }}" class="social-icon"
+              ><i class="fa fa-pinterest-p" aria-hidden="true"></i
+            ></a>
+          {%- endif -%}
+        </div>
+
+        <div class="boldstuff-footer__copyright">
+          {{ section.settings.copyright_text | replace: '[year]', '2024' }}
+        </div>
+      </div>
+      <div class="boldstuff-footer__bottom-line"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #boldstuff-footer-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    {% if section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}');
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    color: #ffffff;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    position: relative;
+  }
+
+  /* Decorative Top Line */
+  #boldstuff-footer-{{ section.id }}::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+  }
+  #boldstuff-footer-{{ section.id }}::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .boldstuff-footer__bottom-line {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    margin: 40px auto 0;
+  }
+
+  .boldstuff-footer__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  /* Brand Section */
+  .boldstuff-footer__brand {
+    flex: 1 1 300px;
+  }
+  .boldstuff-footer__logo-text {
+    font-size: 36px;
+    font-weight: 800;
+    margin: 0 0 35px 0;
+    letter-spacing: 0.02em;
+    font-family: inherit;
+    text-transform: uppercase;
+  }
+  .boldstuff-footer__logo-text .bold { color: #ffffff; }
+  .boldstuff-footer__logo-text .stuff { color: #ff5c35; }
+
+  .boldstuff-footer__description-heading {
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0 0 15px 0;
+    color: #ffffff;
+    letter-spacing: 0.01em;
+  }
+  .boldstuff-footer__description-text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.82);
+    max-width: 360px;
+  }
+
+  /* Link Columns */
+  .boldstuff-footer__links {
+    display: flex;
+    flex: 2 1 auto;
+    justify-content: space-around;
+    gap: 40px;
+    padding-top: 5px;
+  }
+  .boldstuff-footer__link-heading {
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0 0 25px 0;
+    color: #ffffff;
+    text-transform: capitalize;
+  }
+  .boldstuff-footer__link-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .boldstuff-footer__link-list li {
+    margin-bottom: 15px;
+  }
+  .boldstuff-footer__link {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.2s ease;
+    display: block;
+  }
+  .boldstuff-footer__link:hover {
+    color: #ffffff;
+    transform: translateX(3px);
+  }
+
+  /* Meta Section */
+  .boldstuff-footer__meta {
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .boldstuff-footer__social-icons {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 50px;
+  }
+  .boldstuff-footer__social-icons .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    transition: opacity 0.2s ease;
+  }
+  .boldstuff-footer__social-icons .social-icon:hover {
+    opacity: 0.7;
+  }
+  .boldstuff-footer__social-icons .social-icon i,
+  .boldstuff-footer__social-icons .social-icon svg {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: #ffffff;
+    fill: #ffffff;
+  }
+
+  .boldstuff-footer__copyright {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: right;
+    margin-top: auto;
+  }
+
+  @media (max-width: 1024px) {
+    .boldstuff-footer__container {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+      gap: 60px;
+    }
+    .boldstuff-footer__brand {
+      flex: 1 1 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .boldstuff-footer__links {
+      flex: 1 1 100%;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .boldstuff-footer__meta {
+      flex: 1 1 100%;
+      align-items: center;
+    }
+    .boldstuff-footer__copyright {
+      text-align: center;
+    }
+    .boldstuff-footer__social-icons {
+      margin-bottom: 30px;
+    }
+    .boldstuff-footer__description-text {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #boldstuff-footer-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+    .boldstuff-footer__link-column {
+      width: clamp(140px, 45%, 220px);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Boldstuff Footer",
+  "tag": "footer",
+  "class": "boldstuff-footer-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Brand Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image"
+    },
+    {
+      "type": "text",
+      "id": "description_heading",
+      "label": "Description Heading",
+      "default": "Built for Everyday Headlife"
+    },
+    {
+      "type": "textarea",
+      "id": "description_text",
+      "label": "Description Text",
+      "default": "From the hustle to calls to everything wired, sweet freestyle comfort for those who hustle."
+    },
+    {
+      "type": "header",
+      "content": "Copyright Settings"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "default": "©[year] boldstuff. All rights reserved."
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Link Column",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Boldstuff Footer",
+      "blocks": [
+        {
+          "type": "link_list",
+          "settings": { "heading": "Shop" }
+        },
+        {
+          "type": "link_list",
+          "settings": { "heading": "Support" }
+        },
+        {
+          "type": "link_list",
+          "settings": { "heading": "Legal" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

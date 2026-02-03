@@ -1,0 +1,435 @@
+<div class="main-collection-grid-wrapper page-width">
+  <div class="row">
+    {%- if settings.show_collection -%}
+      <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 normal-sidebar sidebar_content">
+        {% render 'ishi-sidebar-content' %}
+      </div>
+    {%- endif -%}
+
+    <div class="normal_main_content {% if settings.show_collection %}col-lg-9 col-md-12 col-sm-12 col-xs-12{% else %}col-12{% endif %}">
+      <div class="collection-top-bar">
+        <div class="breadcrumb-wrapper">
+          <nav class="breadcrumb" aria-label="breadcrumbs">
+            <a href="{{ routes.root_url }}">Home</a>
+            <span class="divider">/</span>
+            <span>{{ collection.title }}</span>
+          </nav>
+        </div>
+      </div>
+
+      <div id="ProductGridContainer">
+        {%- paginate collection.products by section.settings.products_per_page -%}
+          {%- if collection.products.size == 0 -%}
+            <div class="collection collection--empty" id="product-grid" data-id="{{ section.id }}">
+              <div class="loading-overlay">
+                <div class="loading-overlay__spinner">
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    role="presentation"
+                    class="spinner"
+                    viewBox="0 0 66 66"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="title-wrapper center">
+                <div class="title alert-danger alert">
+                  {{ 'sections.facets.empty' | t }}
+                </div>
+                <a class="btn" href="{{ collection.url }}">{{ 'sections.facets.clear_all' | t }}</a>
+              </div>
+            </div>
+          {%- else -%}
+            <div class="collection">
+              <div class="loading-overlay">
+                <div class="loading-overlay__spinner">
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    role="presentation"
+                    class="spinner"
+                    viewBox="0 0 66 66"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                  </svg>
+                </div>
+              </div>
+
+              <ul id="product-grid" data-id="{{ section.id }}" class="row">
+                {% assign i = 1 %}
+                {%- for product in collection.products -%}
+                  <li class="grid__item col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                    {% render 'product-card-grid',
+                      product_card_product: product,
+                      media_size: settings.image_ratio,
+                      product_count: i,
+                      show_secondary_image: settings.show_secondary_image,
+                      show_vendor: settings.show_vendor
+                    %}
+                    {% assign i = i | plus: 1 %}
+                  </li>
+                {%- endfor -%}
+
+                {%- if paginate.current_page == paginate.pages
+                  or collection.products.size < section.settings.products_per_page
+                -%}
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'promotion_card' -%}
+                      <li class="grid__item col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                        <div class="promotion-card">
+                          <a href="{{ block.settings.link | default: '#' }}">
+                            <img
+                              src="{{ block.settings.image | image_url: width: 800 }}"
+                              alt="{{ block.settings.title }}"
+                              width="800"
+                              height="1000"
+                            >
+                            <div class="promotion-title">{{ block.settings.title }}</div>
+                          </a>
+                        </div>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+              </ul>
+
+              {%- if paginate.pages > 1 -%}
+                <div class="pagination-block row align-items-center">
+                  <p class="collection-product-count col-md-6" role="status">
+                    {% assign current_first_item = paginate.current_offset | plus: 1 %}
+                    {% if paginate.pages == paginate.current_page %}
+                      {% assign current_last_item = paginate.items %}
+                    {% else %}
+                      {% assign current_last_item = paginate.current_offset | plus: paginate.page_size %}
+                    {% endif %}
+                    {{ 'general.pagination.showing' | t }}
+                    {{ current_first_item }}-{{ current_last_item }}
+                    {{ 'general.pagination.of' | t }}
+                    {{ paginate.items }}
+                    {{ 'general.pagination.items' | t }}
+                  </p>
+                  <div class="col-md-6 pagination-view">
+                    {% render 'pagination', paginate: paginate, anchor: '', class: '' %}
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .main-collection-grid-wrapper {
+    background: #1f2027;
+    color: #fff;
+    padding: 30px;
+  }
+  .main-collection-grid-wrapper .row {
+    margin: 0;
+  }
+
+  /* Sidebar Styling */
+  .sidebar_content {
+    background: #1f2027;
+    padding: 30px 20px !important;
+    border-right: 1px solid #2a2a2c;
+  }
+  .sidebar-title {
+    color: #fff !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px !important;
+    border-bottom: 1px solid #2a2a2c;
+    padding-bottom: 10px;
+  }
+
+  /* Facets / Filters */
+  .facets__disclosure {
+    margin-bottom: 25px;
+  }
+  .facets__summary span {
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .facet-checkbox {
+    color: #fff !important;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .facet-checkbox input {
+    width: 16px;
+    height: 16px;
+    background: transparent;
+    border: 1px solid #444;
+    border-radius: 2px;
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    cursor: pointer;
+  }
+  .facet-checkbox input:checked {
+    background: #1c7d8c;
+    border-color: #1c7d8c;
+  }
+  .facet-checkbox input:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 10px;
+  }
+
+  /* Color Swatches */
+  .color_swatch .filter-color {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 2px solid #333;
+  }
+
+  /* Price Range */
+  .facets__price {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .field {
+    flex: 1;
+    position: relative;
+    background: #232325;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  .field__input {
+    background: transparent !important;
+    border: none !important;
+    color: #fff !important;
+    width: 100%;
+    padding: 0 !important;
+    font-size: 13px;
+  }
+  .field__currency {
+    color: #888;
+    margin-right: 5px;
+  }
+
+  /* Buttons */
+  .btn.clear-all {
+    background: #232325;
+    color: #fff;
+    border: 1px solid #333;
+    width: 100%;
+    padding: 12px;
+    font-weight: 600;
+    margin-top: 10px;
+    text-transform: capitalize;
+  }
+
+  /* Grid Content */
+  .normal_main_content {
+    background: #1f2027;
+    padding: 0 !important;
+  }
+
+  .collection-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    background: transparent;
+    padding: 10px 0;
+    border-bottom: 1px solid #2a2a2c;
+  }
+  #main-collection-filters,
+  .collection-filters,
+  .facets,
+  .facets__form {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+  .collection-view,
+  .collection-product-count,
+  .facets__heading,
+  .mobile-facets__wrapper {
+    display: none !important;
+  }
+  .facets__form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .collection-filters__label {
+    color: #888 !important;
+    margin-right: 15px !important;
+    font-size: 13px !important;
+    text-transform: none !important;
+    display: inline-block !important;
+  }
+  .collection-filters__field .select {
+    display: inline-block;
+  }
+
+  /* Sort By Styling */
+  .select__select {
+    background: transparent !important;
+    color: #fff !important;
+    border: none !important;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  /* Promotion Cards */
+  .promotion-card {
+    position: relative;
+    aspect-ratio: 1/1.2;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .promotion-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .promotion-card:hover img {
+    transform: scale(1.1);
+  }
+  .promotion-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+
+  #product-grid li {
+    padding: 0 10px;
+    margin-bottom: 20px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-product-grid.name",
+  "class": "collection-grid-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 16,
+      "label": "t:sections.main-collection-product-grid.settings.products_per_page.label"
+    },
+    {
+      "type": "header",
+      "content": "Sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "sidebar_link",
+      "name": "Sidebar Link",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "sidebar_link",
+          "label": "Category Links"
+        }
+      ]
+    },
+    {
+      "type": "filter",
+      "name": "Filter",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "promotion_card",
+      "name": "Promotion Card",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Stay Hydrated"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "custom_filter",
+      "name": "Custom Filter (UI Only)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Filter Title",
+          "default": "Filters"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Clear Button Label",
+          "default": "Clear Filters"
+        },
+        {
+          "type": "image_picker",
+          "id": "bg_image",
+          "label": "Background Image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

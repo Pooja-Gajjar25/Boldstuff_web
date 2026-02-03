@@ -1,0 +1,100 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "cart-items": {
+      "type": "main-cart-items",
+      "settings": {}
+    },
+    "cart-footer": {
+      "type": "main-cart-footer",
+      "blocks": {
+        "subtotal": {
+          "type": "subtotal",
+          "settings": {}
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "subtotal",
+        "buttons"
+      ],
+      "settings": {
+        "show_cart_note": true,
+        "enable_cartpage": true,
+        "reassurance-image1": "shopify://shop_images/serviceicon111.png",
+        "reassurance-title1": "Free Delivery",
+        "reassurance-desc1": "Lorem Ipsum dummy",
+        "reassurance-image2": "shopify://shop_images/serviceicon2_7ff46959-38d3-4c45-8a4c-cb33a332d499.png",
+        "reassurance-title2": "Way To Buy",
+        "reassurance-desc2": "Lorem Ipsum dummy",
+        "reassurance-image3": "shopify://shop_images/serviceicon3_43931611-a27b-4571-bb97-48753a8ede9b.png",
+        "reassurance-title3": "Personal Session",
+        "reassurance-desc3": "Lorem Ipsum dummy",
+        "reassurance-image4": "shopify://shop_images/serviceicon4_7490b3b9-bedb-4642-b2e4-75847081693a.png",
+        "reassurance-title4": "Gift Voucher",
+        "reassurance-desc4": "Lorem Ipsum dummy"
+      }
+    },
+    "collection-list": {
+      "type": "Ishi_collection_list",
+      "blocks": {
+        "1629090086526308ce-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "new-glow"
+          }
+        },
+        "1629090086526308ce-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "fragrances"
+          }
+        },
+        "1629090086526308ce-2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "make-up"
+          }
+        },
+        "1629090086526308ce-3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "special-glow"
+          }
+        }
+      },
+      "block_order": [
+        "1629090086526308ce-0",
+        "1629090086526308ce-1",
+        "1629090086526308ce-2",
+        "1629090086526308ce-3"
+      ],
+      "settings": {
+        "subtitle": "The Products",
+        "hometitle": "Trending Collections",
+        "swipe_on_mobile": false,
+        "show_view_all": false,
+        "show_collection_item": true,
+        "grid": "4",
+        "section_bottom_spacing_desktop": 70,
+        "section_bottom_spacing_mobile": 30
+      }
+    }
+  },
+  "order": [
+    "cart-items",
+    "cart-footer",
+    "collection-list"
+  ]
+}

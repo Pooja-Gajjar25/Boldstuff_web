@@ -1,0 +1,554 @@
+<div class="featured-bottles-section">
+  <div class="boldstuff-section-divider"></div>
+  <div class="page-width">
+    {% if section.settings.section_title != blank %}
+      <div class="featured-bottles__header">
+        <h2 class="featured-bottles__title">{{ section.settings.section_title }}</h2>
+      </div>
+    {% endif %}
+
+    <div class="featured-bottles__grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'product_card' %}
+          {% assign product_item = block.settings.product %}
+          {% assign image = block.settings.product_image | default: product_item.featured_image %}
+          {% assign title = block.settings.product_name | default: product_item.title %}
+
+          <div class="featured-bottle-card" {{ block.shopify_attributes }}>
+            {% if image != blank %}
+              <div class="featured-bottle-card__image-wrapper">
+                <img
+                  src="{{ image | image_url: width: 400 }}"
+                  alt="{{ title }}"
+                  width="400"
+                  height="400"
+                  class="featured-bottle-card__image"
+                  loading="lazy"
+                >
+              </div>
+            {% endif %}
+
+            <div class="featured-bottle-card__content">
+              {% if title != blank %}
+                <h3 class="featured-bottle-card__name">
+                  {{ title }}
+                  {% if block.settings.product_size != blank %}
+                    <span class="featured-bottle-card__size">{{ block.settings.product_size }}</span>
+                  {% endif %}
+                </h3>
+              {% endif %}
+
+              <div class="featured-bottle-card__price">
+                {% if block.settings.product_price != blank %}
+                  ₹{{ block.settings.product_price }}
+                {% elsif product_item != blank %}
+                  {{ product_item.price | money }}
+                {% endif %}
+              </div>
+
+              {% if block.settings.feature_1 != blank or block.settings.feature_2 != blank %}
+                <ul class="featured-bottle-card__features">
+                  {% if block.settings.feature_1 != blank %}
+                    <li class="featured-bottle-card__feature">
+                      <span class="featured-bottle-card__check-icon">
+                        {% if block.settings.feature_icon != blank %}
+                          <img
+                            src="{{ block.settings.feature_icon | image_url: width: 40 }}"
+                            alt=""
+                            loading="lazy"
+                            width="16"
+                            height="16"
+                          >
+                        {% else %}
+                          <svg
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M4 10.5L8 14.5L16 6.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        {% endif %}
+                      </span>
+                      {{ block.settings.feature_1 }}
+                    </li>
+                  {% endif %}
+                  {% if block.settings.feature_2 != blank %}
+                    <li class="featured-bottle-card__feature">
+                      <span class="featured-bottle-card__check-icon">
+                        {% if block.settings.feature_icon != blank %}
+                          <img
+                            src="{{ block.settings.feature_icon | image_url: width: 40 }}"
+                            alt=""
+                            loading="lazy"
+                            width="16"
+                            height="16"
+                          >
+                        {% else %}
+                          <svg
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M4 10.5L8 14.5L16 6.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        {% endif %}
+                      </span>
+                      {{ block.settings.feature_2 }}
+                    </li>
+                  {% endif %}
+                </ul>
+              {% endif %}
+
+              {% if block.settings.button_text != blank %}
+                {% if product_item != blank and product_item.available %}
+                  <form method="post" action="{{ routes.cart_add_url }}" class="featured-bottle-card__form">
+                    <input type="hidden" name="id" value="{{ product_item.selected_or_first_available_variant.id }}">
+                    <button type="submit" class="featured-bottle-card__button">
+                      {{ block.settings.button_text }}
+                    </button>
+                  </form>
+                {% elsif block.settings.product_url != blank %}
+                  <a href="{{ block.settings.product_url }}" class="featured-bottle-card__button">
+                    {{ block.settings.button_text }}
+                  </a>
+                {% else %}
+                  <button type="button" class="featured-bottle-card__button">
+                    {{ block.settings.button_text }}
+                  </button>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .boldstuff-section-divider {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+
+  .boldstuff-section-divider::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* Featured Bottles Section */
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    {% if section.settings.section_background_image != blank %}
+      background-image: url('{{ section.settings.section_background_image | image_url: width: 2000 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% endif %}
+  }
+
+  .featured-bottles-section {
+    position: relative;
+    padding: {{ section.settings.section_padding_desktop }}px 0;
+  }
+
+  @media (max-width: 767px) {
+    .featured-bottles-section {
+      padding: {{ section.settings.section_padding_mobile }}px 0;
+    }
+  }
+
+  .featured-bottles__header {
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 767px) {
+    .featured-bottles__header {
+      margin-bottom: 30px;
+    }
+  }
+
+  .featured-bottles__title {
+    font-family: var(--font-title-family);
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 0;
+  }
+
+  @media (max-width: 767px) {
+    .featured-bottles__title {
+      font-size: 24px;
+    }
+  }
+
+  .featured-bottles__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  @media (max-width: 991px) {
+    .featured-bottles__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 543px) {
+    .featured-bottles__grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  /* Product Card */
+  .featured-bottle-card {
+    background-color: #dcdcdc;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .featured-bottle-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .featured-bottle-card__image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    background-color: #f5f5f5;
+    overflow: hidden;
+  }
+
+  .featured-bottle-card__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .featured-bottle-card__content {
+    padding: 20px;
+  }
+
+  @media (max-width: 543px) {
+    .featured-bottle-card__content {
+      padding: 16px;
+    }
+  }
+
+  .featured-bottle-card__name {
+    font-family: var(--font-title-family);
+    font-size: 20px;
+    line-height: 1.3;
+    font-weight: 800;
+    color: #000000;
+    margin: 0 0 5px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  @media (max-width: 543px) {
+    .featured-bottle-card__name {
+      font-size: 16px;
+    }
+  }
+
+  .featured-bottle-card__size {
+    font-family: var(--font-body-family);
+    font-size: 13px;
+    font-weight: 600;
+    color: #000000;
+    display: inline-block;
+  }
+
+  @media (max-width: 543px) {
+    .featured-bottle-card__size {
+      font-size: 13px;
+    }
+  }
+
+  .featured-bottle-card__price {
+    font-family: var(--font-title-family);
+    font-size: 26px;
+    line-height: 1;
+    font-weight: 800;
+    color: #000000;
+    margin: 0 0 15px;
+  }
+
+  @media (max-width: 543px) {
+    .featured-bottle-card__price {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+  }
+
+  .featured-bottle-card__features {
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+  }
+
+  @media (max-width: 543px) {
+    .featured-bottle-card__features {
+      margin-bottom: 16px;
+    }
+  }
+
+  .featured-bottle-card__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-family: var(--font-body-family);
+    font-size: 13px;
+    line-height: 1.5;
+    color: #666666;
+    margin-bottom: 6px;
+  }
+
+  .featured-bottle-card__feature:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 543px) {
+    .featured-bottle-card__feature {
+      font-size: 12px;
+    }
+  }
+
+  .featured-bottle-card__check-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: #ff6b35;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .featured-bottle-card__check-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .featured-bottle-card__button {
+    display: block;
+    width: 75%;
+    padding: 10px 15px;
+    background-color: #ff6b35;
+    color: #ffffff;
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .featured-bottle-card__button:hover {
+    background-color: #e55a28;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  }
+
+  @media (max-width: 543px) {
+    .featured-bottle-card__button {
+      padding: 10px 16px;
+      font-size: 13px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Featured Bottles",
+  "tag": "section",
+  "class": "featured-bottles-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Featured Bottles"
+    },
+    {
+      "type": "image_picker",
+      "id": "section_background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_desktop",
+      "label": "Desktop Padding",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 60,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_mobile",
+      "label": "Mobile Padding",
+      "min": 0,
+      "max": 80,
+      "step": 10,
+      "default": 40,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product Card",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product Information"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "header",
+          "content": "Manual Overrides"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Image (Override)"
+        },
+        {
+          "type": "image_picker",
+          "id": "feature_icon",
+          "label": "Feature List Icon (Tick)"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Name (Override)",
+          "default": "BOLDSTUFF 1.5L"
+        },
+        {
+          "type": "text",
+          "id": "product_size",
+          "label": "Product Size/Type",
+          "default": "Water Bottle"
+        },
+        {
+          "type": "text",
+          "id": "product_price",
+          "label": "Price (Override)",
+          "info": "Leave blank to use dynamic price"
+        },
+        {
+          "type": "header",
+          "content": "Features"
+        },
+        {
+          "type": "text",
+          "id": "feature_1",
+          "label": "Feature 1",
+          "default": "Keeps Hot & Cold 6+Hours"
+        },
+        {
+          "type": "text",
+          "id": "feature_2",
+          "label": "Feature 2",
+          "default": "Leakproof & Durable"
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Add to Cart"
+        },
+        {
+          "type": "url",
+          "id": "product_url",
+          "label": "Product Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Bottles",
+      "blocks": [
+        {
+          "type": "product_card",
+          "settings": {
+            "product_name": "BOLDSTUFF 1.5L",
+            "product_size": "Water Bottle",
+            "feature_1": "Keeps Hot & Cold 6+Hours",
+            "feature_2": "Leakproof & Durable",
+            "button_text": "Add to Cart"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "product_name": "BOLDSTUFF 2L",
+            "product_size": "Water Bottle",
+            "feature_1": "Keeps Hot & Cold 6+Hours",
+            "feature_2": "Leakproof & Durable",
+            "button_text": "Add to Cart"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "product_name": "BOLDSTUFF 3L",
+            "product_size": "Water Bottle",
+            "feature_1": "Keeps Hot & Cold 6+Hours",
+            "feature_2": "Leakproof & Durable",
+            "button_text": "Add to Cart"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

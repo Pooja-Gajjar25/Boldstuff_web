@@ -1,0 +1,245 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_banner_boldstuff": {
+      "type": "hero-banner",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "feature_icon": "shopify://shop_images/images-removebg-preview_1.png",
+            "feature_text": "6-Hour Hot & Cold Retention"
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "feature_icon": "shopify://shop_images/download-removebg-preview_1.png",
+            "feature_text": "Premium Insulated Stainless Steel"
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "feature_icon": "shopify://shop_images/1c8e3f434d080f1d9d55002657c7e1cf7c6536ce.png",
+            "feature_text": "Leakproof & Travel-Ready"
+          }
+        }
+      },
+      "block_order": ["feature_1", "feature_2", "feature_3"],
+      "settings": {
+        "hero_image": "shopify://shop_images/black-theme-gym-related-landscape-backgroud-image.png",
+        "hero_title": "Hydrate <b>Boldly.</b><br>Anywhere, Every Day.",
+        "hero_description": "Premium insulated steel bottles built for hot Indian summers and cold mornings.",
+        "primary_button_label": "Shop All Water Bottles",
+        "primary_button_link": "shopify://collections/all",
+        "secondary_button_label": "View Bestsellers",
+        "secondary_button_link": "shopify://collections/all",
+        "section_bottom_spacing_desktop": 0,
+        "section_bottom_spacing_mobile": 0
+      }
+    },
+    "featured_bottles_section": {
+      "type": "featured-bottles",
+      "blocks": {
+        "bottle_1": {
+          "type": "product_card",
+          "settings": {
+            "product": "hydramax-pro-water-bottle",
+            "product_image": "shopify://shop_images/5f3c0bd3dad5e14dd8e4763140b5ff1dcb2e1810.png",
+            "feature_icon": "shopify://shop_images/Icon.png",
+            "product_name": "BOLDSTUFF 1.5L",
+            "product_size": "Water Bottle",
+            "product_price": "999",
+            "feature_1": "Keeps Hot & Cold 6+Hours",
+            "feature_2": "Leakproof & Durable",
+            "button_text": "Add to Cart",
+            "product_url": "#"
+          }
+        },
+        "bottle_2": {
+          "type": "product_card",
+          "settings": {
+            "product": "boldstuff-2l-water-bottle",
+            "product_image": "shopify://shop_images/e3e1bd54bd52e797ae4b9288bafa5a3841c124fb.png",
+            "feature_icon": "shopify://shop_images/Icon.png",
+            "product_name": "BOLDSTUFF 2L",
+            "product_size": "Water Bottle",
+            "product_price": "1,199",
+            "feature_1": "Keeps Hot & Cold 6+Hours",
+            "feature_2": "Leakproof & Durable",
+            "button_text": "Add to Cart",
+            "product_url": "#"
+          }
+        },
+        "bottle_3": {
+          "type": "product_card",
+          "settings": {
+            "product": "boldstuff-2l-water-bottle-copy",
+            "product_image": "shopify://shop_images/5f3c0bd3dad5e14dd8e4763140b5ff1dcb2e1810.png",
+            "feature_icon": "shopify://shop_images/Icon.png",
+            "product_name": "BOLDSTUFF 3L",
+            "product_size": "Water Bottle",
+            "product_price": "1,499",
+            "feature_1": "Keeps Hot & Cold 6+Hours",
+            "feature_2": "Leakproof & Durable",
+            "button_text": "Add to Cart",
+            "product_url": "#"
+          }
+        }
+      },
+      "block_order": ["bottle_1", "bottle_2", "bottle_3"],
+      "settings": {
+        "section_title": "Featured Bottles",
+        "section_background_image": "shopify://shop_images/c4fdb7fbced4bd0c24bd3d04b1379370870ef6a0.png",
+        "background_color": "#1a1a1a",
+        "section_padding_desktop": 60,
+        "section_padding_mobile": 40
+      }
+    },
+    "why_choose_boldstuff": {
+      "type": "boldstuff-why-choose",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "text": "Built for performance in every season"
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "text": "Thermosteel insulation for hours"
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "text": "Travel-friendly & leakproof"
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "text": "Durable & easy to clean"
+          }
+        }
+      },
+      "block_order": ["feature_1", "feature_2", "feature_3", "feature_4"],
+      "settings": {
+        "title": "Why Choose [BOLDSTUFF] Bottles?",
+        "image": "shopify://shop_images/Untitled_design_2.png",
+        "feature_icon": "shopify://shop_images/images_1.png",
+        "trust_label": "Rated",
+        "stars_image": "shopify://shop_images/1df1532763ba0cbb0bdfc39ac7c35ce15ca9fcf2.png",
+        "trust_platform": "on Amazon",
+        "trust_info": "rated by over 10,000 happy customers",
+        "bg_image": "shopify://shop_images/Screenshot_2026-02-02_at_3.20.21_PM.png",
+        "bg_color": "#111111",
+        "overlay_color": "#000000",
+        "overlay_opacity": 20,
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 60
+      }
+    },
+    "boldstuff_testimonials": {
+      "type": "boldstuff-testimonials",
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Longer Hour time",
+            "text": "Aut moa spere inpotables.",
+            "author": "Amit S."
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Go Longer Without refills",
+            "text": "Orguzral prinds and seslators.",
+            "author": "Phys R."
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Ultimate Hydration on the go",
+            "text": "Helps prevent dehydration durduring travel.",
+            "author": "Rahul M."
+          }
+        }
+      },
+      "block_order": ["testimonial_1", "testimonial_2", "testimonial_3"],
+      "settings": {
+        "title": "What our Customers say",
+        "stars_image": "shopify://shop_images/1df1532763ba0cbb0bdfc39ac7c35ce15ca9fcf2.png",
+        "button_label": "Shop Now",
+        "button_link": "shopify://collections/all",
+        "bg_image": "shopify://shop_images/eacfdb899370abab919eba6efa0fb5c894ad85dd.png",
+        "bg_color": "#111111",
+        "overlay_color": "#000000",
+        "overlay_opacity": 20,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "boldstuff_footer": {
+      "type": "boldstuff-footer",
+      "blocks": {
+        "shop": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Shop",
+            "menu": "shop"
+          }
+        },
+        "support": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Support",
+            "menu": "footer-menu-2"
+          }
+        },
+        "legal": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Legal",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": ["shop", "support", "legal"],
+      "settings": {
+        "description_heading": "Built for Everyday Headlife",
+        "description_text": "From the hustle to calls ti everything wired, sweet freestyle comfort for those who hustle.",
+        "copyright_text": "©[year] boldstuff. All rights reserved.",
+        "bg_image": "shopify://shop_images/28e3f34c973afc33a0db85f0ce6e9dd3dcf007b2.png",
+        "bg_color": "#111111",
+        "padding_top": 80,
+        "padding_bottom": 40,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 40
+      }
+    }
+  },
+  "order": [
+    "hero_banner_boldstuff",
+    "featured_bottles_section",
+    "why_choose_boldstuff",
+    "boldstuff_testimonials",
+    "boldstuff_footer"
+  ]
+}

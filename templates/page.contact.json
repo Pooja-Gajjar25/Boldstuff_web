@@ -1,0 +1,57 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "contact-banner": {
+      "type": "contact-banner",
+      "settings": {
+        "image": "shopify://shop_images/Contact_banner.png",
+        "heading": "GET IN TOUCH",
+        "subheading": "We'd Love to Hear From You, Lets Get In Touch!",
+        "show_address": true,
+        "address": "Address",
+        "show_phone": true,
+        "phone": "Phone",
+        "show_email": true,
+        "email": "Email",
+        "additional_information": "Additional Information",
+        "info": "<p>We are open: Monday - Saturday, 10AM - 5PM and closed on sunday sorry for that.</p>",
+        "show_followus": true,
+        "social": "Social",
+        "section_bottom_spacing_desktop": 70,
+        "section_bottom_spacing_mobile": 30
+      }
+    },
+    "iframe": {
+      "type": "iframe",
+      "settings": {
+        "subtitle": "",
+        "hometitle": "",
+        "google_map_code": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d112173.0227855024!2d77.1389451881658!3d28.527485061500744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1606909721649!5m2!1sen!2sin\" style=\"border:0;\" width=\"100%\" height=\"400\" frameborder=\"0\"></iframe>",
+        "section_bottom_spacing_desktop": 30,
+        "section_bottom_spacing_mobile": 0
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "formheading": "LEAVE US A MESSAGE",
+        "formsubheading": "-Good For Nature, Good For You-",
+        "section_bottom_spacing_desktop": 70,
+        "section_bottom_spacing_mobile": 30
+      }
+    }
+  },
+  "order": [
+    "contact-banner",
+    "iframe",
+    "form"
+  ]
+}

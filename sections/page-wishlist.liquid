@@ -1,0 +1,153 @@
+<div class="jas-container page-width">
+  <div class="table-wrapper">
+    <table class="wishlist_table">
+      <!--
+        <thead>
+          <tr>
+            <th class="product-remove"><span class="nobr">{{ 'products.wishlist.delete' | t }}</span></th>
+            <th class="product-thumbnail"><span class="nobr">{{ 'products.wishlist.image' | t }}</span></th>
+            <th class="product-name"><span class="nobr">{{ 'products.wishlist.productname' | t }}</span></th>
+            <th class="product-price"> <span class="nobr">{{ 'products.wishlist.unitprice' | t }}</span></th>
+            <th class="product-add-to-cart"><span class="nobr">{{ 'products.wishlist.action' | t }}</span></th>
+          </tr>
+        </thead>
+      -->
+      <tbody class="wishlist-box"></tbody>
+    </table>
+    <div class="wishlist-item-clear" style="display:none">
+      <a href="#" class="remove remove_from_wishlist product-remove-js" title="Remove this product">
+        {% include 'icons' with 'remove' -%}
+      </a>
+    </div>
+    <div class="wishlist-item" style="display:none">
+      <a class="wishlist-item-link" href="#">
+        <img class="img-responsive" src="#" alt="">
+      </a>
+      <div class="quickview-btn product-btn">
+        <quickview-opener
+          class="product-popup-modal__opener no-js-hidden btn-info quick-view"
+          data-handle="{{ product_card_product.handle }}"
+          data-modal="#qvPopupModal"
+        >
+          <div
+            class="product-popup-modal__button link"
+            type="button"
+            aria-haspopup="dialog"
+            data-href="#qvPopupModal"
+            data-toggle="popover"
+            aria-expanded="false"
+          >
+            {% render 'icons' with 'quickview' %}
+          </div>
+        </quickview-opener>
+      </div>
+      <span class="shopify-product-reviews-badge"></span>
+    </div>
+    <span class="table-wishlist-1__product-price" style="display:none">#</span>
+    <span class="table-wishlist-1__product-comperprice" style="display:none">#</span>
+    <!-- /img -->
+    <div class="wishlist-item-name" style="display:none">
+      <a class="wishlist-item-link" href="#">#</a>
+    </div>
+    <div class="wishlist-item-continue" style="display:none">
+      <a class="button wishlist-item-link btn" href="#" rel="nofollow">#</a>
+    </div>
+  </div>
+</div>
+<script>
+    $(function() {
+      //try
+     // {
+        if(getTheCookie("wishlist") != null && getTheCookie("wishlist") != '__' && getTheCookie("wishlist") != '') {
+          var str = String(getTheCookie("wishlist")).split("__");
+          for(var i=0; i<str.length; i++) {
+            if(str[i] != ''){
+              jQuery.getJSON('/products/' + str[i] + '.js', function (product) {
+              	addProductToTable(product);
+              });
+            }
+          }
+        } else {
+          emptyWishlist();
+        }
+      //}
+      //catch (err) {} // ignore errors reading cookies
+      function addProductToTable(product) {
+        console.log(product);
+        var $cloneitem = $(".wishlist-item").clone();
+        $cloneitem.find(".wishlist-item-link").attr("href", product.url);
+        $cloneitem.find(".product-popup-modal__opener").attr("data-handle", product.handle);
+        $cloneitem.find(".img-responsive").attr("src", product.featured_image);
+        var $cloneitemname = $(".wishlist-item-name").clone();
+        $cloneitemname.find(".wishlist-item-link").attr("href", product.url);
+        $cloneitemname.find(".product-popup-modal__opener").attr("data-handle", product.handle);
+        $cloneitemname.find(".wishlist-item-link").text(product.title);
+        var $cloneitemreview = $(".shopify-product-reviews-badge").clone();
+        var $cloneitemprice = $(".table-wishlist-1__product-price").clone();
+         $cloneitemprice.html('<span class="money">'+ convertToMoney(product.price) +'</span>');
+        // var $cloneitemcomperprice = $(".table-wishlist-1__product-comperprice").clone();
+
+          // if (product.compare_at_price !== 0) {
+          //   var comparePrice = convertToMoney(product.compare_at_price);
+          //   $cloneitemcomperprice.html('<span class="compare-price money">' + comparePrice + '</span>');
+          // } else {
+          //   $cloneitemcomperprice.hide(); // If compare_at_price is zero, hide the cloned compare price element
+          // }
+
+        var $cloneitemcomperprice = $(".table-wishlist-1__product-comperprice").clone();
+        $cloneitemcomperprice.html('<span class="compare-price money">'+ convertToMoney(product.compare_at_price) +'</span>');
+        var comparePriceElement = $cloneitemcomperprice.find('.compare-price.money');
+        var comparePriceText = comparePriceElement.text().trim();
+        var numericValue = parseFloat(comparePriceText.replace(/[^\d.-]/g, ''));
+        if (numericValue !== 0) {
+          comparePriceElement.show();
+        }
+        else{
+          comparePriceElement.hide();
+        }
+        var $cloneitemclear = $(".wishlist-item-clear").clone();
+        var $cloneitemcontinue = $(".wishlist-item-continue").clone();
+        $cloneitemcontinue.find(".wishlist-item-link").attr("href", product.url);
+        $cloneitemcontinue.find(".product-popup-modal__opener").attr("data-handle", product.handle);
+        var $cloneitemstock = $(".wishlist-stock").clone();
+        if (product.available) {
+          $cloneitemstock.find(".wishlist-in-stock").text(window.in_stock);
+          $cloneitemcontinue.find(".wishlist-item-link").text('{{ 'products.wishlist.view_product' | t }}');
+         } else {
+          $cloneitemstock.find(".wishlist-in-stock").addClass("wishlist-out-of-stock").text(window.out_of_stock);
+          $cloneitemcontinue.find(".wishlist-item-link").text('{{ 'products.wishlist.view_product' | t }}');
+        }
+
+     $('.wishlist-box').append("<div class='"+product.handle+"'>" +
+      "<div class='product-remove'>"+$cloneitemclear.html()+"</div>"+
+      "<div class='product-thumbnail'>"+$cloneitem.html()+
+      "<div class='shopify-product-reviews-badge' data-id='"+ product.id +"'>"+$cloneitemreview.html()+"</div>"+"</div>"+
+       "<div class='card-information'>"+"<div class='card-information__text h5 product-name'>"+$cloneitemname.html()+"</div>"+
+      "<div class='wishlist-product-price product-price'> "+$cloneitemcomperprice.html() +$cloneitemprice.html()+
+      "</div>"+"</div> </div>");
+
+       $('.wishlist-box').find("."+product.handle).find('.product-remove-js').click(function(event) {
+          event.preventDefault();
+          $(this).unbind();
+          var item = $(this).parent().parent();
+          var str = getTheCookie("wishlist");
+          str = str.replace(item.attr("class"), '');
+          str = str.replace('____', '__');
+          setTheCookie("wishlist", str, 14);
+          item.fadeOut(500);
+          setTimeout(removeItemFromWishlist, 500, item);
+        });
+      }
+      function emptyWishlist(){
+        $(".wishlist_table").remove();
+        $(".table-wrapper").append("<div class='center alert alert-info empty-wishlist'>{{ 'products.wishlist.wishlist_empty' | t }}</div>");
+      }
+      function removeItemFromWishlist(item) {
+        item.remove();
+        if(getTheCookie("wishlist") == '__' || getTheCookie("wishlist") == ''){
+          emptyWishlist();
+        }
+      }
+  });
+</script>
+

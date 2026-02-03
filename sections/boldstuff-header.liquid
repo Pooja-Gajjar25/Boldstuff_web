@@ -1,0 +1,472 @@
+{% comment %}
+  Boldstuff Header Section
+  Designed to match the provided requirements and UI from the BOLDSTUFF screenshot.
+{% endcomment %}
+
+{% style %}
+  :root {
+    --header-bg-color: #000000;
+    --header-accent-color: {{ section.settings.accent_color | default: '#ff5722' }};
+    --header-text-color: #ffffff;
+    --header-border-color: #333333;
+  }
+
+  .boldstuff-header {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    z-index: 1000;
+    position: relative;
+  }
+
+  .boldstuff-section-divider {
+    width: 60%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+    box-shadow: 0 0 15px rgba(255,255,255,0.4);
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    z-index: 99;
+  }
+
+  .boldstuff-section-divider::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* Announcement Bar */
+  .header-announcement-bar {
+    background-color: #111;
+    color: #fff;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .header-announcement-bar .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    flex-wrap: wrap;
+  }
+
+  .announcement-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .announcement-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+  }
+
+  /* Top Bar */
+  .header-top-bar {
+    background-color: var(--header-bg-color);
+    color: var(--header-text-color);
+    padding: 8px 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--header-border-color);
+  }
+
+  .header-top-bar .container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .top-bar-item {
+    margin-left: 20px;
+    color: var(--header-text-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s;
+  }
+
+  .top-bar-item:hover {
+    color: var(--header-accent-color);
+  }
+
+  /* Main Header */
+  .header-main-bar {
+    background: rgba(0, 0, 0, 0.85); /* Dark background matching the theme */
+    {% if section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% endif %}
+    backdrop-filter: blur(10px);
+    padding: 18px 0;
+    color: var(--header-text-color);
+    position: relative;
+  }
+
+  .header-main-bar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  /* Logo Styling to match Image 1 */
+  .header-logo .logo-text {
+    font-size: 26px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .header-logo .logo-text span {
+    color: var(--header-accent-color);
+    margin-left: 2px;
+  }
+
+  .header-logo img {
+    max-height: 45px;
+    display: block;
+    width: auto;
+  }
+
+  /* Navigation with vertical separators */
+  .header-nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+  }
+
+  .header-nav-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-nav-link {
+    color: var(--header-text-color);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 12px;
+    position: relative;
+    transition: color 0.3s;
+    letter-spacing: 0.5px;
+  }
+
+  .header-nav-link:hover, .header-nav-link.active {
+    color: var(--header-text-color);
+  }
+
+  .header-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 12px;
+    right: 12px;
+    height: 2.5px;
+    background-color: var(--header-accent-color);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .header-nav-link.active::after {
+    transform: scaleX(1);
+  }
+
+  .nav-separator {
+    color: #444;
+    font-size: 14px;
+    font-weight: 300;
+    opacity: 0.6;
+  }
+
+  /* Actions (Search, Cart) */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .search-pill-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.03);
+    margin-right: 5px;
+  }
+
+  .search-pill-wrapper input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 12px;
+    outline: none;
+    width: 120px;
+  }
+
+  .search-pill-wrapper i {
+    font-size: 12px;
+    color: #fff;
+    margin-right: 8px;
+  }
+
+  .action-icon {
+    font-size: 18px;
+    color: var(--header-text-color);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s;
+  }
+
+  .action-icon:hover {
+    color: var(--header-accent-color);
+  }
+
+  .cart-count-badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: var(--header-accent-color);
+    color: white;
+    font-size: 10px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+  }
+
+  /* Mobile Responsive */
+  .mobile-menu-trigger {
+    display: none;
+    cursor: pointer;
+    font-size: 22px;
+    color: #fff;
+  }
+
+  @media (max-width: 991px) {
+    .header-top-bar { display: none; }
+    .header-nav { display: none; }
+    .search-pill-wrapper { display: none; }
+    .mobile-menu-trigger { display: block; }
+    .header-main-bar { padding: 12px 0; }
+  }
+{% endstyle %}
+
+<div class="boldstuff-header" id="section-{{ section.id }}">
+  <!-- Announcement Bar -->
+  {% if section.blocks.size > 0 %}
+    <div class="header-announcement-bar">
+      <div class="container">
+        {% for block in section.blocks %}
+          {% if block.type == 'announcement' %}
+            <div class="announcement-item" {{ block.shopify_attributes }}>
+              {% if block.settings.icon != blank %}
+                <img
+                  src="{{ block.settings.icon | image_url: width: 40 }}"
+                  alt=""
+                  class="announcement-icon"
+                  loading="lazy"
+                  width="20"
+                  height="20"
+                >
+              {% endif %}
+              <span>{{ block.settings.text }}</span>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if section.settings.show_top_bar %}
+    <div class="header-top-bar">
+      <div class="container">
+        <a href="{{ routes.search_url }}" class="top-bar-item"> <i class="fa fa-envelope"></i> Search </a>
+        <a href="{{ routes.account_url }}" class="top-bar-item"> <i class="fa fa-user"></i> Account </a>
+        <a href="{{ routes.cart_url }}" class="top-bar-item"> <i class="fa fa-shopping-cart"></i> Cart </a>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="header-main-bar">
+    <div class="container">
+      <!-- Left side: Mobile Toggle & Logo -->
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <div class="mobile-menu-trigger hidden-lg-up">
+          <i class="fa fa-bars"></i>
+        </div>
+        <div class="header-logo">
+          <a href="{{ routes.root_url }}" class="logo-text">
+            {% if section.settings.logo != blank %}
+              <img
+                src="{{ section.settings.logo | image_url: width: 300 }}"
+                alt="{{ shop.name }}"
+                width="{{ section.settings.logo.width }}"
+                height="{{ section.settings.logo.height }}"
+                loading="lazy"
+              >
+            {% else %}
+              BOLD<span>STUFF</span>
+            {% endif %}
+          </a>
+        </div>
+      </div>
+
+      <!-- Center side: Navigation -->
+      <nav class="header-nav hidden-md-down">
+        <ul class="header-nav-list">
+          <span class="nav-separator">|</span>
+          {% for link in section.settings.menu.links %}
+            <li class="header-nav-item">
+              <a href="{{ link.url }}" class="header-nav-link {% if link.active %}active{% endif %}">
+                {{ link.title | upcase }}
+              </a>
+              <span class="nav-separator">|</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+
+      <!-- Right side: Actions -->
+      <div class="header-actions">
+        <div class="search-pill-wrapper hidden-sm-down">
+          <i class="fa fa-search"></i>
+          <input type="text" placeholder="Search">
+        </div>
+
+        <a href="{{ routes.search_url }}" class="action-icon hidden-lg-up">
+          <i class="fa fa-search"></i>
+        </a>
+
+        <a href="{{ routes.cart_url }}" class="action-icon">
+          <i class="fa fa-shopping-cart"></i>
+          <span class="cart-count-badge">{{ cart.item_count }}</span>
+        </a>
+
+        {% if section.settings.button_text != blank %}
+          <a href="{{ section.settings.button_link }}" class="header-cta-button hidden-md-down">
+            {{ section.settings.button_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="boldstuff-section-divider"></div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Boldstuff Header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_top_bar",
+      "label": "Show Top Bar",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Header Background Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title (Optional)",
+      "default": "Boldstuff Header"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Navigation Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color (Logo & Underline)",
+      "default": "#ff5722"
+    },
+    {
+      "type": "header",
+      "content": "CTA Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "CTA Button Text",
+      "info": "Optional button in header"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "CTA Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon (Image/SVG)"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Announcement text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Boldstuff Header",
+      "settings": {
+        "show_top_bar": true
+      }
+    }
+  ]
+}
+{% endschema %}

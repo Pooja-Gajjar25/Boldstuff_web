@@ -1,0 +1,448 @@
+{% comment %}
+  Boldstuff Sidebar Filter Snippet
+  Replicates the custom UI design but uses real Shopify filters.
+  Accepts: block (The block object containing settings)
+{% endcomment %}
+
+<div class="bs-filter-section" id="bs-filter-{{ block.id }}" style="margin-bottom: 30px;">
+  <div class="bs-filter-container">
+    <div class="bs-filter-header">
+      <h3 class="bs-filter-heading">{{ block.settings.title | default: 'Filters' }}</h3>
+    </div>
+
+    <!-- Ensure we are filtering the current collection -->
+    <form class="bs-filter-form" id="BoldStuffFiltersForm">
+      {%- if collection.current_vendor or collection.current_type -%}
+        <input type="hidden" name="q" value="{{ collection.current_vendor }}{{ collection.current_type }}">
+      {%- endif -%}
+
+      {%- comment -%} Loop through Shopify filters available for this collection {%- endcomment -%}
+      {%- for filter in collection.filters -%}
+        {%- assign label_lowercase = filter.label | downcase -%}
+
+        {%- case filter.type -%}
+          {%- when 'list' -%}
+            {%- comment -%} Color Filter {%- endcomment -%}
+            {%- if label_lowercase contains 'color' or label_lowercase contains 'colour' -%}
+              <div class="bs-filter-group">
+                <h4 class="bs-filter-group-title">{{ filter.label }}</h4>
+                <div class="bs-filter-swatches">
+                  {%- for value in filter.values -%}
+                    <label class="bs-swatch-container">
+                      <input
+                        type="checkbox"
+                        name="{{ value.param_name }}"
+                        value="{{ value.value }}"
+                        {% if value.active %}
+                          checked
+                        {% endif %}
+                      >
+                      <!-- Use value.label for class or background color logic -->
+                      <span
+                        class="bs-swatch bs-swatch--{{ value.label | handle }}"
+                        title="{{ value.label }}"
+                        style="background-color: {{ value.label | downcase }};"
+                      >
+                      </span>
+                    </label>
+                  {%- endfor -%}
+                </div>
+              </div>
+
+            {%- else -%}
+              {%- comment -%} Other List Filters (Capacity, Use Case, etc.) {%- endcomment -%}
+              <div class="bs-filter-group {% if forloop.last %}no-border{% endif %}">
+                <h4 class="bs-filter-group-title">{{ filter.label }}</h4>
+                <div class="bs-filter-options-list">
+                  {%- for value in filter.values -%}
+                    <label class="bs-checkbox-container">
+                      <input
+                        type="checkbox"
+                        name="{{ value.param_name }}"
+                        value="{{ value.value }}"
+                        {% if value.active %}
+                          checked
+                        {% endif %}
+                      >
+                      <span class="bs-checkbox-box">
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="3"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      </span>
+                      <span class="bs-checkbox-label">
+                        {{- value.label }}
+                        <span style="font-size: 0.8em; opacity: 0.6;">({{ value.count }})</span></span
+                      >
+                    </label>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
+
+          {%- when 'price_range' -%}
+            {%- comment -%} Price Filter {%- endcomment -%}
+            <div class="bs-filter-group">
+              <h4 class="bs-filter-group-title">{{ filter.label }}</h4>
+              <div class="bs-price-range">
+                <div class="bs-price-field">
+                  <span class="bs-currency-symbol">{{ cart.currency.symbol }}</span>
+                  <input
+                    name="{{ filter.min_value.param_name }}"
+                    id="Filter-{{ filter.label | escape }}-GTE"
+                    type="number"
+                    placeholder="0"
+                    min="0"
+                    max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                    {% if filter.min_value.value %}
+                      value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                    {% endif %}
+                  >
+                </div>
+                <span class="bs-price-separator"></span>
+                <div class="bs-price-field">
+                  <span class="bs-currency-symbol">{{ cart.currency.symbol }}</span>
+                  <input
+                    name="{{ filter.max_value.param_name }}"
+                    id="Filter-{{ filter.label | escape }}-LTE"
+                    type="number"
+                    min="0"
+                    max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                    placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                    {% if filter.max_value.value %}
+                      value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                    {% endif %}
+                  >
+                </div>
+              </div>
+
+              <!-- Clear Filters Button -->
+              <a
+                href="{{ collection.url }}?sort_by={{ collection.sort_by }}"
+                class="bs-clear-btn"
+                style="text-align: center; display: block; text-decoration: none;"
+              >
+                {{ block.settings.button_label | default: 'Clear Filters' }}
+              </a>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+
+      {% comment %} Hidden inputs to preserve sort status {% endcomment %}
+      <input type="hidden" name="sort_by" value="{{ collection.sort_by | default: collection.default_sort_by }}">
+    </form>
+  </div>
+</div>
+
+<style>
+  /* Scoped styles for the filter section */
+  #bs-filter-{{ block.id }} {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    {% if block.settings.bg_image %}
+    background-image: url('{{ block.settings.bg_image | image_url: width: 800 }}');
+    background-size: cover;
+    background-position: center;
+    {% endif %}
+  }
+
+  /* Container matching the card look */
+  .bs-filter-container {
+    background-color: #1F2027; /* Dark background from screenshot */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .bs-filter-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    background: transparent;
+  }
+
+  .bs-filter-heading {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    color: #fff;
+    letter-spacing: 0.5px;
+    text-transform: none;
+    border: none;
+    padding: 0;
+  }
+
+  .bs-filter-group {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+  }
+
+  .bs-filter-group.no-border {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .bs-filter-group-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: #fff;
+    text-transform: none;
+    border: none;
+  }
+
+  /* Checkbox Styling */
+  .bs-filter-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bs-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    margin: 0; /* Reset */
+  }
+
+  .bs-checkbox-container input {
+    display: none;
+  }
+
+  .bs-checkbox-box {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    background: transparent;
+    flex-shrink: 0;
+  }
+
+  .bs-checkbox-box svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: #1A1A23;
+  }
+
+  .bs-checkbox-container input:checked + .bs-checkbox-box svg {
+    opacity: 1;
+    transform: scale(1);
+    color: #2A9D8F; /* Teal tick */
+  }
+
+  .bs-checkbox-container input:checked + .bs-checkbox-box {
+    border-color: #2A9D8F;
+  }
+
+  .bs-checkbox-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  /* Color Swatches */
+  .bs-filter-swatches {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .bs-swatch-container {
+    cursor: pointer;
+    position: relative;
+    margin: 0;
+  }
+
+  .bs-swatch-container input {
+    display: none;
+  }
+
+  .bs-swatch {
+    display: block;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+
+  .bs-swatch::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      transition: border-color 0.2s;
+  }
+
+  .bs-swatch-container input:checked + .bs-swatch::after {
+    border-color: #ffffff; /* White border for selection on dark bg */
+  }
+
+  /* Map hardcoded colors if needed, but dynamic style usually handles regular colors */
+  .bs-swatch--black { background-color: #000000; border: 1px solid #333; }
+  .bs-swatch--darkgrey { background-color: #333333; }
+  .bs-swatch--silver { background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 100%); }
+  .bs-swatch--teal { background-color: #2A9D8F; }
+  .bs-swatch--orange { background-color: #E76F51; }
+
+  /* Price Range */
+  .bs-price-range {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .bs-price-field {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 8px 10px;
+    flex: 1;
+    height: auto;
+  }
+
+  .bs-currency-symbol {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-right: 4px;
+  }
+
+  .bs-price-field input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    font-weight: 500;
+    padding: 0;
+    height: auto;
+  }
+
+  .bs-price-separator {
+    width: 10px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+  }
+
+  .bs-clear-btn {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: #ffffff;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-transform: none;
+  }
+
+  .bs-clear-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Debounce function
+    function debounce(func, wait) {
+      let timeout;
+      return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+    }
+
+    class BoldStuffFilters extends HTMLElement {
+      constructor() {
+        super();
+        this.form = this.querySelector('form');
+        this.inputs = this.form.querySelectorAll('input:not([type="hidden"])');
+
+        this.inputs.forEach((input) => {
+          if (input.type === 'checkbox') {
+            input.addEventListener('change', this.onFilterChange.bind(this));
+          } else {
+            input.addEventListener('input', debounce(this.onFilterChange.bind(this), 500));
+          }
+        });
+      }
+
+      onFilterChange() {
+        const formData = new FormData(this.form);
+        const searchParams = new URLSearchParams(formData).toString();
+        const url = `${window.location.pathname}?${searchParams}`;
+
+        // Reload page with new filters
+        // In a full implementation, you would use AJAX to fetch the new grid and update the DOM
+        // For now, full page reload is safest and easiest implementation
+        window.location.href = url;
+      }
+    }
+
+    // Register web component logic (simple version)
+    // Or just init the logic directly
+    const filterSection = document.getElementById('bs-filter-{{ block.id }}');
+    if (filterSection) {
+      const form = filterSection.querySelector('form');
+      const inputs = form.querySelectorAll('input');
+
+      function submitFilters() {
+        const formData = new FormData(form);
+        const searchParams = new URLSearchParams();
+
+        for (const pair of formData.entries()) {
+          if (pair[1]) {
+            searchParams.append(pair[0], pair[1]);
+          }
+        }
+
+        window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+      }
+
+      const debouncedSubmit = debounce(submitFilters, 800);
+
+      inputs.forEach((input) => {
+        input.addEventListener('change', submitFilters);
+        if (input.type === 'number') {
+          // Remove change listener for numbers to avoid double triggers, and add input debounced
+          input.removeEventListener('change', submitFilters);
+          input.addEventListener('input', debouncedSubmit);
+        }
+      });
+    }
+  });
+</script>

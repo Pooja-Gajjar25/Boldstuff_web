@@ -1,0 +1,482 @@
+<div class="boldstuff-collection-banner" id="boldstuff-collection-banner-{{ section.id }}">
+  <div class="full-width-container">
+    <div class="collection-banner__content-wrapper page-width">
+      <div class="collection-banner__main-content">
+        {%- if section.settings.show_breadcrumbs -%}
+          <nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
+            <a href="{{ routes.root_url }}" title="Home">
+              <i class="fa fa-home"></i>
+              <span>Home</span>
+            </a>
+            <span aria-hidden="true" class="breadcrumb__separator">
+              <i class="fa fa-angle-right"></i>
+            </span>
+            <a href="{{ routes.collections_url }}" title="Shop">Shop</a>
+
+            {%- if collection.handle -%}
+              <span aria-hidden="true" class="breadcrumb__separator">
+                <i class="fa fa-angle-right"></i>
+              </span>
+              <span>{{ collection.title }}</span>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+
+        <h1 class="collection-banner__title">
+          {%- if section.settings.title != blank -%}
+            {{ section.settings.title }}
+          {%- else -%}
+            {{ collection.title }}
+          {%- endif -%}
+        </h1>
+
+        {%- if section.settings.description != blank or collection.description != blank -%}
+          <div class="collection-banner__description">
+            {%- if section.settings.description != blank -%}
+              {{ section.settings.description }}
+            {%- else -%}
+              {{ collection.description }}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Feature Bar -->
+  <div class="collection-banner__bottom-bar">
+    <div class="page-width">
+      <div class="bottom-bar__inner">
+        <div class="bottom-bar__features-wrapper">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'feature' -%}
+              <div class="bottom-bar__item feature-item" {{ block.shopify_attributes }}>
+                <div class="feature-item__icon">
+                  {%- if block.settings.icon_svg != blank -%}
+                    {{ block.settings.icon_svg }}
+                  {%- else -%}
+                    {%- case block.settings.icon_name -%}
+                      {%- when 'truck' -%}
+                        {% render 'icons' with 'shipping' %}
+                      {%- when 'shield-check' -%}
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2L4 5V11C4 16.19 7.41 20.94 12 22C16.59 20.94 20 16.19 20 11V5L12 2ZM10 15.5L6.5 12L7.91 10.59L10 12.67L16.09 6.58L17.5 8L10 15.5Z" fill="currentColor"/>
+                        </svg>
+                      {%- when 'drop' -%}
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 21.5C15.59 21.5 18.5 18.59 18.5 15C18.5 10.5 12 3 12 3C12 3 5.5 10.5 5.5 15C5.5 18.59 8.41 21.5 12 21.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      {%- when 'shield' -%}
+                        {% render 'icons' with 'shield' %}
+                      {%- else -%}
+                        {% render 'icons' with block.settings.icon_name -%}
+                    {%- endcase -%}
+                  {%- endif -%}
+                </div>
+                <span class="item__text">{{ block.settings.text }}</span>
+              </div>
+              <div class="bottom-bar__separator"></div>
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if section.settings.show_rating -%}
+            <div class="bottom-bar__item rating-item">
+              <i class="fa fa-star rating-star-large"></i>
+              <span class="rating-value">{{ section.settings.rating_value }}</span>
+              <i class="fa fa-star rating-star-small"></i>
+              <div class="rating-info">
+                <span class="rating-label">Rated</span>
+                <span class="rating-count">by {{ section.settings.rating_count }}+</span>
+              </div>
+            </div>
+            <div class="bottom-bar__separator hide-mobile"></div>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.show_sort -%}
+          <div class="bottom-bar__sort">
+            <span class="sort-label">Sort by</span>
+            <div class="sort-dropdown-wrapper">
+              <select name="sort_by" class="sort-select" id="SortBy-Banner">
+                {%- for option in collection.sort_options -%}
+                  <option
+                    value="{{ option.value }}"
+                    {%- if option.value == collection.sort_by -%}
+                      selected="selected"
+                    {%- endif -%}
+                  >
+                    {{ option.name }}
+                  </option>
+                {%- endfor -%}
+              </select>
+              <i class="fa fa-chevron-down"></i>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #boldstuff-collection-banner-{{ section.id }} {
+    position: relative;
+    background-color: #111;
+    {% if section.settings.bg_image != blank %}
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ section.settings.bg_image | image_url: width: 2000 }}');
+    {% else %}
+       background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+    {% endif %}
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    overflow: hidden;
+  }
+
+  .full-width-container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .collection-banner__content-wrapper {
+    padding: 80px 0 120px;
+  }
+
+  .collection-banner__main-content {
+    max-width: 900px;
+  }
+
+  .breadcrumb {
+    margin-bottom: 25px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0.8;
+  }
+
+  .breadcrumb a, .breadcrumb span {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 400;
+  }
+
+  .collection-banner__title {
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    letter-spacing: -1px;
+    color: #ffffff;
+  }
+
+  .collection-banner__description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 750px;
+  }
+
+  /* Bottom Feature Bar Styling */
+  .collection-banner__bottom-bar {
+    background: rgba(18, 18, 20, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 20px 0;
+    backdrop-filter: blur(10px);
+  }
+
+  .bottom-bar__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .bottom-bar__features-wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  .bottom-bar__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0;
+  }
+
+  .feature-item__icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+  }
+
+  .feature-item__icon svg {
+    max-width: 100%;
+    max-height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  .feature-item__icon svg[fill="currentColor"] {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  .item__text {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0.9;
+  }
+
+  .bottom-bar__separator {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 0 20px;
+  }
+
+  /* Rating styling to match UI */
+  .rating-item {
+    gap: 8px;
+  }
+
+  .rating-star-large {
+    color: #ffb800;
+    font-size: 22px;
+  }
+
+  .rating-star-small {
+    color: #ffb800;
+    font-size: 12px;
+    margin-top: -2px;
+  }
+
+  .rating-value {
+    font-weight: 700;
+    font-size: 18px;
+    color: #ffffff;
+  }
+
+  .rating-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .rating-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  .rating-count {
+    font-size: 10px;
+    opacity: 0.6;
+    white-space: nowrap;
+  }
+
+  /* Sort styling to match UI */
+  .bottom-bar__sort {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+  }
+
+  .sort-label {
+    font-size: 14px;
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+
+  .sort-dropdown-wrapper {
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 8px 35px 8px 15px;
+    background: rgba(255, 255, 255, 0.03);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .sort-dropdown-wrapper:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .sort-select {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .sort-dropdown-wrapper i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 1024px) {
+    .bottom-bar__inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .bottom-bar__sort {
+        width: 100%;
+        justify-content: flex-end;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .collection-banner__title {
+      font-size: 36px;
+    }
+
+    .bottom-bar__features-wrapper {
+        gap: 15px;
+    }
+
+    .bottom-bar__separator {
+        margin: 0 10px;
+    }
+
+    .hide-mobile {
+        display: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const sortSelect = document.getElementById('SortBy-Banner');
+    if (sortSelect) {
+      sortSelect.addEventListener('change', function (e) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('sort_by', e.target.value);
+        window.location.href = url.href;
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Premium Collection Banner",
+  "tag": "section",
+  "class": "collection-banner-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Custom Title"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Custom Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show Breadcrumbs",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Rating Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_value",
+      "label": "Rating Value",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "rating_count",
+      "label": "Rating Count Text",
+      "default": "10,000"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort",
+      "label": "Show Sort Dropdown",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_name",
+          "label": "Icon",
+          "options": [
+            { "value": "truck", "label": "Truck (Leakproof)" },
+            { "value": "shield-check", "label": "Shield with Check (Insulated)" },
+            { "value": "drop", "label": "Drop (Water)" },
+            { "value": "shield", "label": "Shield (Durable)" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Custom Icon SVG (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Feature Text",
+          "default": "Feature Label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Collection Banner",
+      "blocks": [
+        { "type": "feature", "settings": { "text": "Leakproof", "icon_name": "truck" } },
+        { "type": "feature", "settings": { "text": "24hr Insulated", "icon_name": "shield-check" } },
+        { "type": "feature", "settings": { "text": "24hr Insulated", "icon_name": "drop" } },
+        { "type": "feature", "settings": { "text": "Durable steel", "icon_name": "shield" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

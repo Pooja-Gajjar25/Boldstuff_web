@@ -1,0 +1,635 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "header-layout": "header_layout2",
+    "subtitlefont": "sub_title_style2",
+    "font_size": 16,
+    "sub-title-color": "#9cb067",
+    "password_bgimage": "shopify://shop_images/password.png",
+    "password_bgcolor": "#f8f8f8",
+    "password_textcolor": "#232323",
+    "favicon": "shopify://shop_images/favicon.png",
+    "quick_search_1": "Fragrances",
+    "quick_search_2": "Special Glow",
+    "quick_search_3": "",
+    "quick_search_4": "",
+    "quick_search_5": "",
+    "show_product": true,
+    "show_collection": true,
+    "show_blog": true,
+    "show_search": true,
+    "brand-secondary": "#9cb067",
+    "navbar_background_color": "#232323",
+    "navbar-text-color": "#ffffff",
+    "header-icon-color": "#232323",
+    "header-icon-hover-color": "#9cb067",
+    "menu-bg-color": "#ffffff",
+    "menu-text-color": "#232323",
+    "menu-text-hover-color": "#9cb067",
+    "button-bg-color": "#9cb067",
+    "border-color": "#9cb067",
+    "product-description-bg-color": "#f8f8f8",
+    "footer-bg-color": "#151515",
+    "footer-heading-color": "#ffffff",
+    "footer-text-color": "#999999",
+    "footer-text-hover-color": "#9cb067",
+    "footer-bottom-bg-color": "#9cb067",
+    "type_body_font": "poppins_n4",
+    "type_title_font": "playfair_display_n4",
+    "image_ratio": "square",
+    "show_secondary_image": true,
+    "show_vendor": false,
+    "show_description": "200",
+    "picker_type": "button",
+    "show_quickview": true,
+    "show_wishlist": true,
+    "show_cart": true,
+    "show_sale": true,
+    "sale_bg_color": "#7fbc1e",
+    "sale_text_color": "#ffffff",
+    "show_soldout": true,
+    "soldout_bg_color": "#c92c2c",
+    "soldout_text_color": "#ffffff",
+    "someone_purchase_products": [
+      "leighton-remover",
+      "liquid-lipstick",
+      "modern-eye-brush",
+      "impulse-duffle",
+      "gentle-face-wash",
+      "facial-cleanser",
+      "dior-lip-glow",
+      "cologne-spray",
+      "base-foundation",
+      "anti-aging-cream"
+    ],
+    "dumyname": "Sarah Johnson purchased,\nDavid Thompson purchased,\nEmily Rodriguez purchased,\nAlex Carter purchased,\nRachel Patel purchased,\nJason Williams purchased,\nOlivia Chang purchased,\nDaniel purchased,\nSophia Nguyen purchased,\nLiam Parker purchased",
+    "dumytime": "20 min ago, 40 min ago, 1 hour ago,  2 hour ago , 3 hour ago ,\n4 hour ago , 6 hour ago, 8 hour ago , 9 hour ago ,10 hour ago",
+    "notific_pop": "2",
+    "social_twitter_link": "/",
+    "social_facebook_link": "/",
+    "social_pinterest_link": "/",
+    "social_instagram_link": "/",
+    "social_tumblr_link": "/",
+    "social_snapchat_link": "",
+    "social_tiktok_link": "",
+    "social_vimeo_link": "",
+    "enable_cartdrawer": true,
+    "shipping_amount": 80,
+    "bg_free_shipping_indicator_eligible": "#9cb067",
+    "color_free_shipping_indicator_eligible": "#9cb067",
+    "progress_truck_bg": "#9cb067",
+    "toggleButton": "show-horizontal",
+    "populr_colletion": "make-up",
+    "product": "shipping-protection",
+    "reassurance-image1": "shopify://shop_images/4_6fe3ea3a-7be0-40ee-bdf5-d5128f34907d.png",
+    "reassurance-title1": "Free Delivery",
+    "reassurance-image2": "shopify://shop_images/3_95d970ce-07ce-4b34-8d31-6ddf1a74b1c6.png",
+    "reassurance-title2": "Way To Buy",
+    "reassurance-image3": "shopify://shop_images/2_694355bb-c0d4-4aa3-b74c-cd79f89777f9.png",
+    "reassurance-title3": "Personal Session",
+    "reassurance-image4": "shopify://shop_images/1_73282fed-1cc1-4855-a622-837439305eff.png",
+    "reassurance-title4": "Gift Voucher",
+    "product-btn-bg-hover-color": "#d6ac95",
+    "type_header_font": "poppins_n4",
+    "colors_solid_button_labels": "#9D572C",
+    "colors_accent_1": "#00fff3",
+    "colors_accent_2": "#08ff00",
+    "colors_text": "#001bff",
+    "colors_outline_button_labels": "#ff0072",
+    "colors_background_1": "#08ff00",
+    "sections": {
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "shop": {
+            "type": "link_list",
+            "settings": {
+              "heading": "Shop",
+              "menu": "shop"
+            }
+          },
+          "support": {
+            "type": "link_list",
+            "settings": {
+              "heading": "Support",
+              "menu": "footer-menu-2"
+            }
+          },
+          "legal": {
+            "type": "link_list",
+            "settings": {
+              "heading": "Legal",
+              "menu": "footer"
+            }
+          }
+        },
+        "block_order": [
+          "shop",
+          "support",
+          "legal"
+        ],
+        "settings": {
+          "description_heading": "Built for Everyday Headlife",
+          "description_text": "From the hustle to calls ti everything wired, sweet freestyle comfort for those who hustle.",
+          "copyright_text": "©[year] boldstuff. All rights reserved.",
+          "bg_image": "shopify://shop_images/28e3f34c973afc33a0db85f0ce6e9dd3dcf007b2.png",
+          "bg_color": "#111111",
+          "padding_top": 80,
+          "padding_bottom": 40,
+          "padding_top_mobile": 60,
+          "padding_bottom_mobile": 40
+        }
+      },
+      "Ishi_sidebar": {
+        "type": "Ishi_sidebar",
+        "blocks": {
+          "f1f79e2e-44a9-46ae-aa48-9cd2ae8f8fa9": {
+            "type": "sidebar_link",
+            "settings": {
+              "sidebar_link": "glow"
+            }
+          },
+          "ebfd34be-992a-4614-a61a-9ce47b0ac0b4": {
+            "type": "filter",
+            "settings": {}
+          },
+          "15927723-f6d4-49f5-b623-e142a7e2af9d": {
+            "type": "collection",
+            "settings": {
+              "product_title": "Featured Collection",
+              "collection": "glow",
+              "grid": 3,
+              "show_view_all": true
+            }
+          },
+          "6c804a6d-8229-4da5-b120-18ea15e191fe": {
+            "type": "banner",
+            "settings": {
+              "image": "shopify://shop_images/Left_Banner.png",
+              "hover1": "fadeinflip",
+              "scale_enable1": true,
+              "banner_link": "shopify://collections/glow"
+            }
+          },
+          "51cfae51-26eb-4e3f-9fd0-7ffaef6c522b": {
+            "type": "collection",
+            "settings": {
+              "product_title": "Special Collection",
+              "collection": "make-up",
+              "grid": 3,
+              "show_view_all": true
+            }
+          }
+        },
+        "block_order": [
+          "f1f79e2e-44a9-46ae-aa48-9cd2ae8f8fa9",
+          "ebfd34be-992a-4614-a61a-9ce47b0ac0b4",
+          "15927723-f6d4-49f5-b623-e142a7e2af9d",
+          "6c804a6d-8229-4da5-b120-18ea15e191fe",
+          "51cfae51-26eb-4e3f-9fd0-7ffaef6c522b"
+        ],
+        "settings": {}
+      },
+      "Ishi_megamenu": {
+        "type": "Ishi_megamenu",
+        "blocks": {
+          "0bcbe753-ae3f-4b1d-9943-94d0b5cd1491": {
+            "type": "text_block",
+            "settings": {
+              "title": "Glow",
+              "button_link": "shopify://collections/fragrances",
+              "blog_show_new": true,
+              "blog_show_sale": false,
+              "blog_show_hot": false,
+              "navbar": "fragrances",
+              "button_link1": "shopify://products/anti-aging-cream",
+              "navbar1": "make-up",
+              "button_link2": "shopify://products/base-foundation",
+              "navbar2": "skin-care",
+              "button_link3": "shopify://products/anti-aging-cream",
+              "navbar3": "",
+              "button_link4": "",
+              "navbar4": "",
+              "button_link5": "shopify://products/cologne-spray",
+              "navbar5": "",
+              "button_link6": "",
+              "blog_show_collection": false,
+              "collection-title": "",
+              "collection-titlelink": "",
+              "product": "",
+              "image1": "shopify://shop_images/glow_1.jpg",
+              "bannerlink1": "shopify://products/anti-aging-cream",
+              "image2": "shopify://shop_images/glow_2_3eb7c2d3-a203-4ec7-816e-366b48750a4a.jpg",
+              "bannerlink2": "shopify://products/anti-aging-cream"
+            }
+          },
+          "3d915dee-3a1d-43e8-ab04-1586dd5e5493": {
+            "type": "text_block",
+            "settings": {
+              "title": "Accessories",
+              "button_link": "shopify://collections/fragrances",
+              "blog_show_new": false,
+              "blog_show_sale": false,
+              "blog_show_hot": false,
+              "navbar": "fragrances",
+              "button_link1": "shopify://collections/fragrances",
+              "navbar1": "",
+              "button_link2": "",
+              "navbar2": "",
+              "button_link3": "",
+              "navbar3": "",
+              "button_link4": "",
+              "navbar4": "",
+              "button_link5": "shopify://products/cologne-spray",
+              "navbar5": "",
+              "button_link6": "",
+              "blog_show_collection": true,
+              "collection-title": "New Product",
+              "collection-titlelink": "",
+              "product": "cologne-spray",
+              "bannerlink1": "",
+              "bannerlink2": ""
+            }
+          },
+          "a381cc5a-e85f-4727-9bde-cd106cc85cef": {
+            "type": "text_block",
+            "settings": {
+              "title": "Category",
+              "button_link": "shopify://collections/glow",
+              "blog_show_new": false,
+              "blog_show_sale": true,
+              "blog_show_hot": false,
+              "navbar": "make-up",
+              "button_link1": "shopify://collections/make-up",
+              "navbar1": "skin-care",
+              "button_link2": "shopify://collections/skin-care",
+              "navbar2": "",
+              "button_link3": "",
+              "navbar3": "",
+              "button_link4": "",
+              "navbar4": "",
+              "button_link5": "",
+              "navbar5": "",
+              "button_link6": "",
+              "blog_show_collection": false,
+              "collection-title": "",
+              "collection-titlelink": "",
+              "product": "",
+              "bannerlink1": "",
+              "bannerlink2": "/"
+            }
+          },
+          "967c5f6e-a9a4-4fef-af5b-6720f1fe8551": {
+            "type": "text_block",
+            "settings": {
+              "title": "Include Page",
+              "button_link": "shopify://pages/faqs",
+              "blog_show_new": false,
+              "blog_show_sale": false,
+              "blog_show_hot": false,
+              "navbar": "pages",
+              "button_link1": "shopify://collections/glow",
+              "navbar1": "",
+              "button_link2": "",
+              "navbar2": "",
+              "button_link3": "",
+              "navbar3": "",
+              "button_link4": "",
+              "navbar4": "",
+              "button_link5": "",
+              "navbar5": "",
+              "button_link6": "",
+              "blog_show_collection": false,
+              "collection-title": "",
+              "collection-titlelink": "",
+              "product": "",
+              "bannerlink1": "",
+              "bannerlink2": ""
+            }
+          },
+          "9fcd5441-6d0c-4822-af29-708489d82385": {
+            "type": "text_block",
+            "settings": {
+              "title": "About Us",
+              "button_link": "shopify://pages/about-us",
+              "blog_show_new": true,
+              "blog_show_sale": false,
+              "blog_show_hot": false,
+              "navbar": "",
+              "button_link1": "",
+              "navbar1": "",
+              "button_link2": "",
+              "navbar2": "",
+              "button_link3": "",
+              "navbar3": "",
+              "button_link4": "",
+              "navbar4": "",
+              "button_link5": "",
+              "navbar5": "",
+              "button_link6": "",
+              "blog_show_collection": false,
+              "collection-title": "",
+              "collection-titlelink": "",
+              "product": "",
+              "bannerlink1": "",
+              "bannerlink2": ""
+            }
+          },
+          "7d91ff2d-7b3c-4d66-a371-fc4c5e88136c": {
+            "type": "text_block",
+            "settings": {
+              "title": "Blog",
+              "button_link": "shopify://blogs/glow",
+              "blog_show_new": false,
+              "blog_show_sale": false,
+              "blog_show_hot": true,
+              "navbar": "",
+              "button_link1": "",
+              "navbar1": "",
+              "button_link2": "",
+              "navbar2": "",
+              "button_link3": "",
+              "navbar3": "",
+              "button_link4": "",
+              "navbar4": "",
+              "button_link5": "",
+              "navbar5": "",
+              "button_link6": "",
+              "blog_show_collection": false,
+              "collection-title": "",
+              "collection-titlelink": "",
+              "product": "",
+              "bannerlink1": "",
+              "bannerlink2": ""
+            }
+          }
+        },
+        "block_order": [
+          "0bcbe753-ae3f-4b1d-9943-94d0b5cd1491",
+          "3d915dee-3a1d-43e8-ab04-1586dd5e5493",
+          "a381cc5a-e85f-4727-9bde-cd106cc85cef",
+          "967c5f6e-a9a4-4fef-af5b-6720f1fe8551",
+          "9fcd5441-6d0c-4822-af29-708489d82385",
+          "7d91ff2d-7b3c-4d66-a371-fc4c5e88136c"
+        ],
+        "settings": {}
+      },
+      "copyright_payment": {
+        "type": "copyright_payment",
+        "blocks": {
+          "dcd2ebaf-d7bc-4816-a918-218891a83298": {
+            "type": "logo_image",
+            "settings": {}
+          }
+        },
+        "block_order": [
+          "dcd2ebaf-d7bc-4816-a918-218891a83298"
+        ],
+        "settings": {
+          "copyright": "© 2024, Glow Sectioned Shopify Theme Powered by Shopify",
+          "payment_enable": true,
+          "fakepayment_enable": true
+        }
+      },
+      "main-password-header": {
+        "type": "main-password-header",
+        "settings": {
+          "logo_max_width": "195",
+          "header": "Coming Soon",
+          "startdate": "2021-12-22"
+        }
+      },
+      "main-password-footer": {
+        "type": "main-password-footer",
+        "settings": {
+          "show_share_buttons": true,
+          "social_message": "Spread The Word"
+        }
+      },
+      "newsletterpopup": {
+        "type": "newsletterpopup",
+        "settings": {
+          "enable": true,
+          "show_onall_page": false,
+          "newsletter_time": 4,
+          "bgcolor": "#f9fdef",
+          "textcolor": "#232323",
+          "image_position": "left",
+          "maintitle": "Join Our Newsletter And Get Discount",
+          "subtitle": "Subscribe to the newsletter to receive updates about new products.",
+          "show_social": true
+        }
+      },
+      "cookieconsent": {
+        "type": "cookieconsent",
+        "settings": {
+          "enable": true,
+          "cookieconsent_position": "right",
+          "cookieconsent_description": "<p>This is a cookie consent dialog which comes free of cost with the theme! You can use it if you want or disable it.</p>",
+          "cookieconsent_btntext": "Got it!",
+          "cookieconsent_bgcolor": "#232323",
+          "cookieconsent_bgcoloropacity": 0.9
+        }
+      },
+      "header_layout2": {
+        "type": "header_layout2",
+        "blocks": {
+          "5f4db00e-3428-4fc9-a39b-38e106c4ed88": {
+            "type": "nav_header",
+            "settings": {
+              "category-title": "UP TO 50% OFF THE COSMETIC GLOW STORE!"
+            }
+          },
+          "0e883c7f-5e7f-4379-930a-1fe36080623c": {
+            "type": "nav_header",
+            "settings": {
+              "category-title": "UP TO 50% OFF THE COSMETIC GLOW STORE!"
+            }
+          },
+          "30545a22-6d6c-489d-94bc-bdf7e2f20d51": {
+            "type": "nav_header",
+            "settings": {
+              "category-title": "UP TO 50% OFF THE COSMETIC GLOW STORE!"
+            }
+          }
+        },
+        "block_order": [
+          "5f4db00e-3428-4fc9-a39b-38e106c4ed88",
+          "0e883c7f-5e7f-4379-930a-1fe36080623c",
+          "30545a22-6d6c-489d-94bc-bdf7e2f20d51"
+        ],
+        "settings": {
+          "bg_image": "shopify://shop_images/28e3f34c973afc33a0db85f0ce6e9dd3dcf007b2.png",
+          "menu": "main-menu",
+          "accent_color": "#ff5722"
+        }
+      },
+      "header_layout1": {
+        "type": "header_layout1",
+        "blocks": {
+          "8ed6bb31-360b-44a3-8f17-8c1f37b3583c": {
+            "type": "text_block",
+            "settings": {
+              "title": "Glow",
+              "button_link": "shopify://collections/glow",
+              "blog_show_new": true,
+              "blog_show_sale": false,
+              "blog_show_hot": false,
+              "navbar": "skin-care",
+              "button_link1": "shopify://collections/skin-care",
+              "navbar1": "fragrances",
+              "button_link2": "shopify://collections/fragrances",
+              "navbar2": "make-up",
+              "button_link3": "shopify://collections/make-up",
+              "button_link5": "shopify://products/anti-aging-cream",
+              "blog_show_collection": true,
+              "collection-title": "Special Product",
+              "product": "anti-aging-cream",
+              "image1": "shopify://shop_images/Menu_Banner-1.png",
+              "bannerlink1": "shopify://collections/glow",
+              "image2": "shopify://shop_images/Menu_Banner-2.png",
+              "bannerlink2": "shopify://collections/fragrances"
+            }
+          },
+          "a3c41693-354b-4c0c-ab12-e437268f44a1": {
+            "type": "text_block",
+            "settings": {
+              "title": "Accessories",
+              "button_link": "shopify://collections/fragrances",
+              "blog_show_new": false,
+              "blog_show_sale": false,
+              "blog_show_hot": false,
+              "navbar": "fragrances",
+              "button_link1": "",
+              "navbar1": "",
+              "button_link2": "",
+              "navbar2": "",
+              "button_link3": "",
+              "button_link5": "shopify://products/cologne-spray",
+              "blog_show_collection": true,
+              "collection-title": "New Arrivals",
+              "product": "cologne-spray",
+              "bannerlink1": "",
+              "bannerlink2": ""
+            }
+          },
+          "c39309ea-4a8b-45d9-b954-1b9a42a9c7ab": {
+            "type": "text_block",
+            "settings": {
+              "title": "About Us",
+              "button_link": "shopify://pages/about-us",
+              "blog_show_new": true,
+              "blog_show_sale": false,
+              "blog_show_hot": false,
+              "navbar": "",
+              "button_link1": "",
+              "navbar1": "",
+              "button_link2": "",
+              "navbar2": "",
+              "button_link3": "",
+              "button_link5": "",
+              "blog_show_collection": false,
+              "collection-title": "",
+              "product": "",
+              "bannerlink1": "",
+              "bannerlink2": ""
+            }
+          },
+          "45304bbe-7598-4881-b537-026b66ae9cee": {
+            "type": "text_block",
+            "settings": {
+              "title": "Category",
+              "button_link": "shopify://collections/make-up",
+              "blog_show_new": false,
+              "blog_show_sale": true,
+              "blog_show_hot": false,
+              "navbar": "",
+              "button_link1": "shopify://collections/make-up",
+              "navbar1": "skin-care",
+              "button_link2": "shopify://collections/skin-care",
+              "navbar2": "",
+              "button_link3": "",
+              "button_link5": "",
+              "blog_show_collection": false,
+              "collection-title": "",
+              "product": "",
+              "image1": "shopify://shop_images/Menu_Banner-3.png",
+              "bannerlink1": "shopify://collections/fragrances",
+              "bannerlink2": ""
+            }
+          },
+          "2951f3c4-d79a-46a6-a384-44ef9182cde5": {
+            "type": "text_block",
+            "settings": {
+              "title": "Include Pages",
+              "button_link": "shopify://pages/contact",
+              "blog_show_new": false,
+              "blog_show_sale": false,
+              "blog_show_hot": false,
+              "navbar": "pages",
+              "button_link1": "shopify://pages/contact",
+              "navbar1": "",
+              "button_link2": "",
+              "navbar2": "",
+              "button_link3": "",
+              "button_link5": "",
+              "blog_show_collection": false,
+              "collection-title": "",
+              "product": "",
+              "bannerlink1": "",
+              "bannerlink2": ""
+            }
+          },
+          "f646cfb0-4bfc-4517-8fa9-ae3d780255a1": {
+            "type": "text_block",
+            "settings": {
+              "title": "FAQs",
+              "button_link": "shopify://pages/faqs",
+              "blog_show_new": false,
+              "blog_show_sale": false,
+              "blog_show_hot": true,
+              "navbar": "",
+              "button_link1": "",
+              "navbar1": "",
+              "button_link2": "",
+              "navbar2": "",
+              "button_link3": "",
+              "button_link5": "",
+              "blog_show_collection": false,
+              "collection-title": "",
+              "product": "",
+              "bannerlink1": "",
+              "bannerlink2": ""
+            }
+          }
+        },
+        "block_order": [
+          "8ed6bb31-360b-44a3-8f17-8c1f37b3583c",
+          "a3c41693-354b-4c0c-ab12-e437268f44a1",
+          "c39309ea-4a8b-45d9-b954-1b9a42a9c7ab",
+          "45304bbe-7598-4881-b537-026b66ae9cee",
+          "2951f3c4-d79a-46a6-a384-44ef9182cde5",
+          "f646cfb0-4bfc-4517-8fa9-ae3d780255a1"
+        ],
+        "settings": {
+          "logo": "shopify://shop_images/2_cc7bec77-af35-44da-ae35-0168624568df.png",
+          "logo_max_width": "113"
+        }
+      }
+    },
+    "content_for_index": []
+  },
+  "platform_customizations": {
+    "custom_css": [
+      ".ishi-faq-section .faq-bg-img .text {position: absolute; font-size: 16px; line-height: 21px; bottom: 15px; left: 15px; color: #232323; font-family: var(--font-title-family); text-transform: uppercase; text-decoration: underline;}"
+    ]
+  }
+}

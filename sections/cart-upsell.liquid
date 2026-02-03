@@ -1,0 +1,60 @@
+{% assign relatedTag = false %}
+{% assign latest_item = cart.items.first %}
+{% if latest_item %}
+  {% if latest_item.product.tags.size > 0 %}
+    {% for tag in latest_item.product.tags %}
+      {% if tag contains 'related_' %}
+        {% assign relatedTag = true %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endif %}
+
+{%- if cart != empty -%}
+  <div id="cart-upsell-slider" class="shopify-section {% if settings.toggleButton == 'show-vertical' %} vertical-slider-upsell{% else %} horizontol-slider-upsell{% endif %}">
+    <h2 class="cart-collection-slider-title">{{ 'general.cart.cart_slide_title' | t }}</h2>
+    <div class="cart-notification-slider owl-carousel owl-theme owl-loaded owl-drag" id="{% if settings.toggleButton == 'show-vertical' %}cart-notification-slider{% endif %}">
+   {% if relatedTag == true %}
+      {% if latest_item %}
+        {% for tag in latest_item.product.tags %}
+          {% if tag contains 'related_' %}
+            {% assign recommendedProduct = tag | split: 'related_' %}
+            {% assign producthandel = recommendedProduct | last %}
+            {% assign relatedProduct = all_products[producthandel] %}
+            <div class="products">
+                <li class="grid__item ">
+                  {%
+                    render 'cartpopup-grid',
+                    product_card_product: relatedProduct,
+                    media_size: settings.image_ratio,
+                    product_count: {{counter}},
+                    show_vendor: settings.show_vendor
+                  %}
+                  {% assign counter = counter | plus: 1 %}
+                </li>
+              </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% else %}
+      {% assign collection = collections[settings.populr_colletion] %}
+      {% if collection %}
+          {% for product in collection.products limit: settings.products_to_show %}
+            <div class="products">
+              <li class="grid__item ">
+                {%
+                  render 'cartpopup-grid',
+                  product_card_product: product,
+                  media_size: settings.image_ratio,
+                  product_count: {{counter}},
+                  show_vendor: settings.show_vendor
+                %}
+                {% assign counter = counter | plus: 1 %}
+              </li>
+            </div>
+          {% endfor %}
+      {% endif %}
+    {% endif %}
+  </div>
+  </div>
+{%- endif -%}

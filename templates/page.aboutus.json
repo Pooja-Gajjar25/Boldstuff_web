@@ -1,0 +1,93 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "about-banner": {
+      "type": "about-banner",
+      "settings": {
+        "image": "shopify://shop_images/about_us-1.png",
+        "image_position": "left",
+        "bannerhover": "fadeinoutbordercorner",
+        "bannerimage_link": "shopify://collections/fragrances",
+        "heading": "We Have Everything You Need ?",
+        "info": "<p>Faded short sleeves t-shirt with high neckline. Soft and stretchy material for a comfortable fit. Accessorize with a straw hat and you're ready for summer!</p>\n<h4>Sample Unordered List</h4>\n<ul>\n<li>Lorem ipsum, or lipsum as it is sometimes known</li>\n<li>Dummy text used in laying out print, graphic or web designs</li>\n<li>The passage is attributed to.</li>\n<li>Proin molestie egestas orci ac suscipit risus posuere loremou.</li>\n<li>Dummy text used in laying out print, graphic or web designs</li>\n</ul>",
+        "about_btn": "Contact Us",
+        "btn_link": "shopify://pages/contact",
+        "section_bottom_spacing_desktop": 70,
+        "section_bottom_spacing_mobile": 30
+      }
+    },
+    "Ishi_serviceblock": {
+      "type": "Ishi_serviceblock",
+      "blocks": {
+        "c1133d8d-11ea-4de0-b773-d6bf5a2674d6": {
+          "type": "image",
+          "settings": {
+            "service-image": "shopify://shop_images/icon-1_small_0752e822-c765-43e9-a839-faef4903df01.png",
+            "service-title": "FREE RESOURCES",
+            "service-desc": "Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward",
+            "link": "/"
+          }
+        },
+        "db0bd470-0de7-4d3a-8387-cccdb0352865": {
+          "type": "image",
+          "settings": {
+            "service-image": "shopify://shop_images/icon-2_small_d876f31d-2354-4e57-8f7e-ddee58eeec20.png",
+            "service-title": "MULTI PURPOSE",
+            "service-desc": "Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward",
+            "link": "/"
+          }
+        },
+        "8df044fd-c9f4-4772-bcdf-2663e55b00a0": {
+          "type": "image",
+          "settings": {
+            "service-image": "shopify://shop_images/icon-3_small_30969d44-fe0e-4210-ba1b-97db50eb5cf8.png",
+            "service-title": "FULLY RESPONSIVE",
+            "service-desc": "Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward",
+            "link": "/"
+          }
+        }
+      },
+      "block_order": [
+        "c1133d8d-11ea-4de0-b773-d6bf5a2674d6",
+        "db0bd470-0de7-4d3a-8387-cccdb0352865",
+        "8df044fd-c9f4-4772-bcdf-2663e55b00a0"
+      ],
+      "settings": {
+        "subtitle": "The Products",
+        "hometitle": "Our Services",
+        "service_width": "3",
+        "icon_position": "center",
+        "section_bottom_spacing_desktop": 70,
+        "section_bottom_spacing_mobile": 30
+      }
+    },
+    "1627293184077d33fa": {
+      "type": "about-banner",
+      "settings": {
+        "image": "shopify://shop_images/about_us-2.png",
+        "image_position": "right",
+        "bannerhover": "fadeinoutbordercorner",
+        "bannerimage_link": "shopify://collections/glow",
+        "heading": "We Have Everything You Need ?",
+        "info": "<p>Faded short sleeves t-shirt with high neckline. Soft and stretchy material for a comfortable fit. Accessorize with a straw hat and you're ready for summer!</p>\n<h4>Sample Ordered List</h4>\n<ol>\n<li>Comodous in tempor ullamcorper miaculis</li>\n<li>Pellentesque vitae neque mollis urna mattis laoreet.</li>\n<li>Divamus sit amet purus justo.</li>\n<li>Comodous in tempor ullamcorper miaculis</li>\n<li>Proin molestie egestas orci ac suscipit risus posuere loremous</li>\n</ol>",
+        "about_btn": "Contact Us",
+        "btn_link": "shopify://pages/contact",
+        "section_bottom_spacing_desktop": 70,
+        "section_bottom_spacing_mobile": 30
+      }
+    }
+  },
+  "order": [
+    "about-banner",
+    "Ishi_serviceblock",
+    "1627293184077d33fa"
+  ]
+}

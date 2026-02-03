@@ -1,0 +1,374 @@
+
+{% assign imgRatio = "" %}
+<div class="ishislider">
+  <div class="slideshow-block">
+    {% if section.blocks.size > 0 %}
+      <div class="ishislideshow-carousel ishislideshow-carousel-{{ section.id }} {% if section.blocks.size > 1 %}owl-carousel slider-with-options owl-theme{% endif %} logo-bar"
+           {% if section.blocks.size > 1 %}
+           data-small="1" 
+           data-mobile="1" 
+           data-tablet="1" 
+           data-laptop="1"  
+           data-desktop="1"
+           data-autoplaytimeout="5000"
+           data-autoplay="true"
+           data-nav="true"
+           data-dots="true"
+           data-loop="true"
+           {% endif %}>
+        {% for block in section.blocks %}
+           <div class="desktop-slider">
+         <div class="slideshow__item" {{ block.shopify_attributes }}>
+              <a href="{{ block.settings.link }}" class="media-block-{{ forloop.index }}">
+                  <div class="slideshow__link">
+                 <div class="hidden-xs-down" style="width:100%;">
+                    {% if block.settings.image  %}            
+                      <img 
+                            src=" {{ block.settings.image | img_url: 'master' }}"
+                            alt="Desktop Slider Image">
+                    {% else %}
+                      {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                      {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% endif %}
+                  </div>
+                  <div class="hidden-xs-up" style="width:100%;">
+                     {% if block.settings.image1 %}
+                        <img 
+                            src=" {{ block.settings.image1 | img_url: 'master' }}"
+                            alt="Mobile Slider Image">
+                    {% elsif block.settings.image %}
+                        <img 
+                            src=" {{ block.settings.image | img_url: 'master' }}"
+                            alt="Desktop Slider Image">
+                     {% else %}
+                        {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% endif %}
+                  </div>
+                   {% if block.settings.subtitle != blank or block.settings.maintitle != blank or block.settings.desc != blank or block.settings.button_label != blank %}
+                  <div class="page-width page-width-{{block.settings.text_position}} {% if block.settings.image1 %}mobile-page-width-{{block.settings.text_position1}}{% endif %}">
+                  <div class="slider-content  col-xl-5 col-lg-6 col-md-6 col-sm-6 col-xs-6  slider-content-{{block.settings.text_position}} {% if block.settings.image1 %}mobile-slider-content-{{block.settings.text_position1}}{% endif %}
+                             text-align-{{ block.settings.textalignment }} {% if block.settings.image1 %}mobile-text-align-{{ block.settings.textalignment1 }}{% endif %}">
+                     {% if block.settings.subtitle != blank %}
+                        <div class="sub-title" style="color:{{ block.settings.subtitlecolor }}"> {{ block.settings.subtitle }}</div>
+                      {% endif %}
+                     {% if block.settings.maintitle != blank %}
+                       <div class="main-title" style="color:{{ block.settings.maintitlecolor }}">{{ block.settings.maintitle }}</div>
+                      {% endif %} 
+                      {% if block.settings.desc != blank %}
+                       <div class="desc" style="color:{{ block.settings.desccolor }}">{{ block.settings.desc }}</div>
+                      {% endif %}
+                      {% if block.settings.button_label != blank %}
+                        <div class="slider-btn btn">{{ block.settings.button_label | escape }}</div>
+                     {% endif %}
+                  </div> 
+                  </div>
+                   {% endif %}
+                  </div>
+                </a>
+          </div>
+           </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+      {% if section.blocks.size > 1 %}
+       <div class="ishislideshow-space">
+        <div class="slideshow__item" style="padding-bottom:15%;padding-top: 15%;">
+       <img src="{{ 'loader.svg' | asset_url }}" />
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<style type="text/css">
+  #shopify-section-{{ section.id }} {
+    margin-bottom: {{ section.settings.section_bottom_spacing_desktop }}px;
+  }
+ #shopify-section-{{ section.id }} .text-align-center{
+    text-align:center;
+  }  
+  #shopify-section-{{ section.id }} .text-align-left{
+    text-align:left;
+  }  
+  #shopify-section-{{ section.id }} .text-align-right{
+    text-align:right;
+  }  
+  
+  #shopify-section-{{ section.id }} .slider-content-right,
+  #shopify-section-{{ section.id }} .slider-content-topright,
+  #shopify-section-{{ section.id }} .slider-content-bottomright{
+    float: right;
+  }
+  #shopify-section-{{ section.id }} .slider-content-left,
+  #shopify-section-{{ section.id }} .slider-content-topleft,
+  #shopify-section-{{ section.id }} .slider-content-bottomleft{
+    float: left;
+  }
+  #shopify-section-{{ section.id }} .slider-content-center,
+  #shopify-section-{{ section.id }} .slider-content-topcenter,
+  #shopify-section-{{ section.id }} .slider-content-bottomcenter{
+    margin: 0 auto;
+    float:unset;
+  }
+  
+   #shopify-section-{{ section.id }} .page-width-topleft,
+  #shopify-section-{{ section.id }} .page-width-topcenter,
+  #shopify-section-{{ section.id }} .page-width-topright{
+    top:30px;
+  }
+  #shopify-section-{{ section.id }} .page-width-bottomleft,
+  #shopify-section-{{ section.id }} .page-width-bottomcenter,
+  #shopify-section-{{ section.id }} .page-width-bottomright{
+    bottom:30px;
+  }
+
+  @media(max-width:543px){
+    #shopify-section-{{ section.id }} .mobile-slider-content-right,
+    #shopify-section-{{ section.id }} .mobile-slider-content-topright,
+    #shopify-section-{{ section.id }} .mobile-slider-content-bottomright{
+      float: right !important;
+    }
+    #shopify-section-{{ section.id }} .mobile-slider-content-left,
+    #shopify-section-{{ section.id }} .mobile-slider-content-topleft,
+    #shopify-section-{{ section.id }} .mobile-slider-content-bottomleft{
+      float: left !important;
+    }
+    #shopify-section-{{ section.id }} .mobile-slider-content-center,
+    #shopify-section-{{ section.id }} .mobile-slider-content-topcenter,
+    #shopify-section-{{ section.id }} .mobile-slider-content-bottomcenter{
+      margin: 0 auto;
+      float:unset !important;
+    }
+  
+      
+    #shopify-section-{{ section.id }} .mobile-page-width-topleft,
+    #shopify-section-{{ section.id }} .mobile-page-width-topcenter,
+    #shopify-section-{{ section.id }} .mobile-page-width-topright{
+      top:30px !important;
+      bottom:auto !important;
+    }
+    
+    #shopify-section-{{ section.id }} .mobile-page-width-bottomleft,
+    #shopify-section-{{ section.id }} .mobile-page-width-bottomcenter,
+    #shopify-section-{{ section.id }} .mobile-page-width-bottomright{
+      bottom:30px !important;
+      top:auto !important;
+    }
+
+    #shopify-section-{{ section.id }} .mobile-page-width-left,
+    #shopify-section-{{ section.id }} .mobile-page-width-right,
+    #shopify-section-{{ section.id }} .mobile-page-width-center{
+      top:auto !important;
+      bottom:auto !important;
+    }
+
+    #shopify-section-{{ section.id }} .mobile-text-align-center{
+      text-align:center !important;
+    } 
+    
+    #shopify-section-{{ section.id }} .mobile-text-align-left{
+      text-align:left !important;
+    }  
+    #shopify-section-{{ section.id }} .mobile-text-align-right{
+      text-align:right !important;
+    }
+  }
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} {
+      margin-bottom: {{ section.settings.section_bottom_spacing_mobile }}px;
+    }
+  }
+
+    {%- for block in section.blocks -%}
+    {% assign imgRatioDesktop = 1 | divided_by: block.settings.image.aspect_ratio | times: 100 | divided_by: 2 %}
+    {% assign imgRatioMobile = 1 | divided_by: block.settings.image1.aspect_ratio | times: 100 | divided_by: 2 %}
+    #shopify-section-{{ section.id }} .ishislider .ishislideshow-carousel .media-block-{{ forloop.index }} {
+      padding-bottom: {{ imgRatioDesktop }}%;
+      padding-top: {{ imgRatioDesktop }}%;
+    }
+    @media (max-width: 543px) {
+      #shopify-section-{{ section.id }} .ishislider .ishislideshow-carousel .media-block-{{ forloop.index }} {
+        padding-bottom: {{ imgRatioMobile }}%;
+        padding-top: {{ imgRatioMobile }}%;
+      }
+    }
+  {%- endfor-%}
+</style>
+
+{% schema %}
+  {
+    "name": "Ishi Slideshow",
+    "tag": "section",
+    "class": "ishi-slider-section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section Bottom Spacing"
+      },
+      {
+        "type": "range",
+        "id": "section_bottom_spacing_desktop",
+        "label": "Desktop",
+        "min": 0,
+        "max": 70,
+        "step": 10,
+        "default": 70
+      },
+      {
+        "type": "range",
+        "id": "section_bottom_spacing_mobile",
+        "label": "Mobile",
+        "min": 0,
+        "max": 50,
+        "step": 10,
+        "default": 30
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slide_image",
+        "name": "Slide",
+        "settings": [
+           {
+            "type": "header",
+            "content": "Desktop Settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "Size: 1930px X 830px"
+          },
+          {
+            "type": "select",
+            "id": "text_position",
+            "label": "Text Position",
+            "default": "left",
+            "options": [
+              { "value": "left", "label": "Middle-Left"},
+              { "value": "center", "label": "Middle-Center"},
+              { "value": "right", "label": "Middle-Right"},
+              { "value": "topleft", "label": "Top-Left"},
+              { "value": "topcenter", "label": "Top-Center"},
+              { "value": "topright", "label": "Top-Right"},
+              { "value": "bottomleft", "label": "Bottom-Left"},
+              { "value": "bottomcenter", "label": "Bottom-Center"},
+              { "value": "bottomright", "label": "Bottom-Right"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "textalignment",
+            "label": "Text Alignment",
+            "default": "left",
+            "options": [
+              { "value": "left", "label": "Left"},
+              { "value": "center", "label": "Center"},
+              { "value": "right", "label": "Right"}
+            ]
+          },
+          {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subtitle",
+            "default": " Natural"
+          },
+          {
+            "type": "color",
+            "id": "subtitlecolor",
+            "label": "Subtitle Color",
+            "default": "#d6ac95"
+          },
+          {
+            "type": "text",
+            "id": "maintitle",
+            "label": "Title",
+            "default": "Skin Care"
+          },
+          {
+            "type": "color",
+            "id": "maintitlecolor",
+            "label": "Title Color",
+            "default": "#232323"
+          },
+          {
+            "type": "html",
+            "id": "desc",
+            "label": "Description",
+			"default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do loren sit amet.tempor Lorem ipsum dolor sit amet."
+          },
+          {
+            "type": "color",
+            "id": "desccolor",
+            "label": "Description Color",
+            "default": "#666666"
+          },
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button Label",
+            "default": "SHOP NOW"
+          },
+		  {
+            "type": "url",
+            "id": "link",
+            "label": "Link",
+            "info": "Optional"
+          },
+           {
+            "type": "header",
+            "content": "Mobile Settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image1",
+            "label": "Image",
+            "info": "Size: 543px X 550px. If none is set, desktop image will be cropped."
+          },
+          {
+            "type": "select",
+            "id": "text_position1",
+            "label": "Text Position",
+            "default": "left",
+            "options": [
+              { "value": "left", "label": "Middle-Left"},
+              { "value": "center", "label": "Middle-Center"},
+              { "value": "right", "label": "Middle-Right"},
+              { "value": "topleft", "label": "Top-Left"},
+              { "value": "topcenter", "label": "Top-Center"},
+              { "value": "topright", "label": "Top-Right"},
+              { "value": "bottomleft", "label": "Bottom-Left"},
+              { "value": "bottomcenter", "label": "Bottom-Center"},
+              { "value": "bottomright", "label": "Bottom-Right"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "textalignment1",
+            "label": "Text Alignment",
+            "default": "left",
+            "options": [
+              { "value": "left", "label": "Left"},
+              { "value": "center", "label": "Center"},
+              { "value": "right", "label": "Right"}
+            ]
+          } 
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Ishi Slideshow",
+        "blocks": [
+          {
+            "type": "slide_image"
+          },
+          {
+            "type": "slide_image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+

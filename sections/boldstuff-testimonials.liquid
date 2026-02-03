@@ -1,0 +1,546 @@
+<div class="boldstuff-testimonials section-{{ section.id }}-padding" id="boldstuff-testimonials-{{ section.id }}">
+  <div class="boldstuff-section-divider"></div>
+  {% if section.settings.bg_image != blank %}
+    <div
+      class="boldstuff-testimonials__bg-overlay"
+      style="background-color: {{ section.settings.overlay_color }}; opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
+    ></div>
+  {% endif %}
+
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <div class="boldstuff-testimonials__header">
+        <h2 class="boldstuff-testimonials__title">{{ section.settings.title }}</h2>
+      </div>
+    {% endif %}
+
+    <div class="boldstuff-testimonials__container">
+      <div class="boldstuff-testimonials__slider-wrapper">
+        <div class="boldstuff-testimonials__slider" id="TestimonialSlider-{{ section.id }}">
+          {% for block in section.blocks %}
+            {% if block.type == 'testimonial' %}
+              <div class="boldstuff-testimonials__slide" {{ block.shopify_attributes }}>
+                <div class="boldstuff-testimonials__card">
+                  <div class="boldstuff-testimonials__stars">
+                    {% if section.settings.stars_image != blank %}
+                      <img
+                        src="{{ section.settings.stars_image | image_url: width: 200 }}"
+                        alt="5 Stars"
+                        width="100"
+                        height="28"
+                        loading="lazy"
+                      >
+                    {% else %}
+                      {% for i in (1..5) %}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          class="star-icon"
+                        >
+                          <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                        </svg>
+                      {% endfor %}
+                    {% endif %}
+                  </div>
+
+                  {% if block.settings.title != blank %}
+                    <h3 class="boldstuff-testimonials__card-title">“{{ block.settings.title }}”</h3>
+                  {% endif %}
+
+                  {% if block.settings.text != blank %}
+                    <div class="boldstuff-testimonials__card-text">
+                      {{ block.settings.text }}
+                    </div>
+                  {% endif %}
+
+                  {% if block.settings.author != blank %}
+                    <p class="boldstuff-testimonials__card-author">{{ block.settings.author }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <button class="boldstuff-testimonials__nav boldstuff-testimonials__nav--prev" aria-label="Previous">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button class="boldstuff-testimonials__nav boldstuff-testimonials__nav--next" aria-label="Next">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      {% if section.settings.button_label != blank %}
+        <div class="boldstuff-testimonials__button-wrapper">
+          <a href="{{ section.settings.button_link }}" class="boldstuff-testimonials__button">
+            {{ section.settings.button_label }}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .boldstuff-section-divider {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+
+  .boldstuff-section-divider::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .boldstuff-testimonials-wrapper {
+    margin-bottom: 0 !important;
+    border: none !important;
+  }
+
+  #boldstuff-testimonials-{{ section.id }} {
+    margin-bottom: 0;
+    border-bottom: none;
+    background-color: {{ section.settings.bg_color }};
+    {% if section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% endif %}
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .boldstuff-testimonials__bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  @media (max-width: 767px) {
+    #boldstuff-testimonials-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+
+  .boldstuff-testimonials__header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .boldstuff-testimonials__title {
+    font-family: var(--font-title-family);
+    font-size: 38px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .boldstuff-testimonials__container {
+    position: relative;
+    padding-bottom: 20px;
+  }
+
+  .boldstuff-testimonials__slider-wrapper {
+    overflow: visible;
+  }
+
+  .boldstuff-testimonials__slider {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 10px 0;
+  }
+
+  .boldstuff-testimonials__slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .boldstuff-testimonials__slide {
+    flex: 0 0 calc(33.333% - 20px);
+    scroll-snap-align: start;
+    height: auto;
+  }
+
+  @media (max-width: 991px) {
+    .boldstuff-testimonials__slide {
+      flex: 0 0 calc(50% - 15px);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .boldstuff-testimonials__slide {
+      flex: 0 0 100%;
+    }
+  }
+
+  .boldstuff-testimonials__card {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 18px 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 140px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  .boldstuff-testimonials__stars {
+    display: flex;
+    gap: 4px;
+    color: #ff6b35;
+    margin-bottom: 6px;
+  }
+
+  .boldstuff-testimonials__stars img {
+    height: 20px;
+    width: auto;
+  }
+
+  .star-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .boldstuff-testimonials__card-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0 0 4px 0;
+    color: #000000;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-family: var(--font-title-family);
+  }
+
+  .boldstuff-testimonials__card-text {
+    font-size: 14px;
+    line-height: 1.3;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+    flex-grow: 1;
+    font-weight: 400;
+  }
+
+  .boldstuff-testimonials__card-author {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0;
+    color: #000000;
+    letter-spacing: -0.01em;
+  }
+
+  .boldstuff-testimonials__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: opacity 0.2s ease;
+  }
+
+  .boldstuff-testimonials__nav svg {
+    width: 42px;
+    height: 42px;
+    opacity: 0.9;
+  }
+
+  .boldstuff-testimonials__nav:hover {
+    opacity: 1;
+  }
+
+  .boldstuff-testimonials__nav--prev {
+    left: -60px;
+  }
+
+  .boldstuff-testimonials__nav--next {
+    right: -60px;
+  }
+
+  @media (max-width: 1240px) {
+    .boldstuff-testimonials__nav--prev {
+      left: 10px;
+    }
+    .boldstuff-testimonials__nav--next {
+      right: 10px;
+    }
+    .boldstuff-testimonials__container {
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+  }
+
+  .boldstuff-testimonials__button-wrapper {
+    position: absolute;
+    bottom: 5px;
+    right: -15px;
+    z-index: 5;
+  }
+
+  .boldstuff-testimonials__button {
+    display: inline-block;
+    background-color: #d15d31;
+    color: #ffffff;
+    padding: 12px 35px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .boldstuff-testimonials__button:hover {
+    background-color: #c04e28;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 767px) {
+    .boldstuff-testimonials__button-wrapper {
+      position: static;
+      text-align: center;
+      margin-top: 30px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const slider = document.getElementById('TestimonialSlider-{{ section.id }}');
+    const container = slider.closest('.boldstuff-testimonials__container');
+    const prevBtn = container.querySelector('.boldstuff-testimonials__nav--prev');
+    const nextBtn = container.querySelector('.boldstuff-testimonials__nav--next');
+
+    if (slider && prevBtn && nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        const slideWidth = slider.querySelector('.boldstuff-testimonials__slide').offsetWidth + 30;
+        slider.scrollBy({ left: slideWidth, behavior: 'smooth' });
+      });
+
+      prevBtn.addEventListener('click', () => {
+        const slideWidth = slider.querySelector('.boldstuff-testimonials__slide').offsetWidth + 30;
+        slider.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Customer Testimonials",
+  "tag": "section",
+  "class": "boldstuff-testimonials-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "What our Customers say"
+    },
+    {
+      "type": "image_picker",
+      "id": "stars_image",
+      "label": "Stars Image (Optional)",
+      "info": "Upload the 5-star PNG image"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Section Styling"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fallback Background Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Background Overlay Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Background Overlay Opacity",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Headline",
+          "default": "Great Quality!"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Testimonial Text",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Customer Name",
+          "default": "Customer Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customer Testimonials Slider",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "title": "Longer Hour time",
+            "text": "Aut moa spere inpotables.",
+            "author": "Amit S."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "title": "Go Longer Without refills",
+            "text": "Orguzral prinds and seslators.",
+            "author": "Phys R."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "title": "Ultimate Hydration on the go",
+            "text": "Helps prevent dehydration during travel.",
+            "author": "Rahul M."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
