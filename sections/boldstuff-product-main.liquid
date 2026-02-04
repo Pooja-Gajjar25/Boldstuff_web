@@ -13,7 +13,13 @@
       <div class="gallery-thumbnails">
         {%- for image in product.images limit: 4 -%}
           <div class="thumbnail {% if forloop.first %}active{% endif %}" data-image-index="{{ forloop.index0 }}">
-            <img src="{{ image | image_url: width: 120 }}" alt="{{ product.title }}" loading="lazy">
+            <img
+              src="{{ image | image_url: width: 120 }}"
+              alt="{{ product.title }}"
+              loading="lazy"
+              width="120"
+              height="{{ 120 | divided_by: image.aspect_ratio | ceil }}"
+            >
           </div>
         {%- endfor -%}
       </div>
@@ -191,10 +197,32 @@
 <style>
   .boldstuff-product-main {
     background: #0a0a0a;
+    {% if section.settings.background_image != blank %}
+      background-image: url('{{ section.settings.background_image | image_url: width: 2000 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% endif %}
     color: #fff;
     padding: 40px 20px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    position: relative;
+    z-index: 0;
   }
+
+  {% if section.settings.overlay_opacity > 0 %}
+  .boldstuff-product-main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    z-index: -1;
+  }
+  {% endif %}
 
   .product-container {
     max-width: 1200px;
@@ -598,6 +626,21 @@
       "id": "show_description",
       "label": "Show Description",
       "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Background Overlay Opacity",
+      "default": 0
     },
     {
       "type": "text",
