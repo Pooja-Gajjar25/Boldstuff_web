@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "boldstuff_product_main": {
@@ -100,6 +109,11 @@
       ],
       "settings": {
         "show_description": true,
+        "background_image": "shopify://shop_images/833b68a8a56e8d43e55ec7c3d4c5700bf7c61805.png",
+        "overlay_opacity": 0,
+        "hide_product_title": true,
+        "rating_stars_image": "",
+        "rating_platform_image": "",
         "description": "Keep drinks hot & cold for hours. Built for everyday hydration.",
         "show_amazon_badge": true
       }

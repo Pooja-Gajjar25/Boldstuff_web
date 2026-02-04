@@ -131,7 +131,11 @@
             }
           }
         },
-        "block_order": ["shop", "support", "legal"],
+        "block_order": [
+          "shop",
+          "support",
+          "legal"
+        ],
         "settings": {
           "description_heading": "Built for Everyday Headlife",
           "description_text": "From the hustle to calls ti everything wired, sweet freestyle comfort for those who hustle.",
@@ -386,7 +390,9 @@
             "settings": {}
           }
         },
-        "block_order": ["dcd2ebaf-d7bc-4816-a918-218891a83298"],
+        "block_order": [
+          "dcd2ebaf-d7bc-4816-a918-218891a83298"
+        ],
         "settings": {
           "copyright": "© 2024, Glow Sectioned Shopify Theme Powered by Shopify",
           "payment_enable": true,

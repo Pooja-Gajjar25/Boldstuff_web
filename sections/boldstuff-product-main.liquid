@@ -37,12 +37,55 @@
 
     <!-- Right: Product Info -->
     <div class="product-info">
-      <h1 class="product-title"><span class="brand">BOLDSTUFF</span> {{ product.title | remove: 'BOLDSTUFF' }}</h1>
+      <h1 class="product-title">
+        {%- if section.settings.brand_text != blank -%}
+          <span class="brand">{{ section.settings.brand_text }}</span>
+        {%- endif -%}
+
+        <span id="dynamic-capacity-title" style="margin: 0 4px;">
+          {{- product.selected_or_first_available_variant.option1 -}}
+        </span>
+
+        {%- unless section.settings.hide_product_title -%}
+          {{ product.title | remove: section.settings.brand_text | strip }}
+        {%- endunless -%}
+
+        {%- if section.settings.title_suffix != blank -%}
+          {{ section.settings.title_suffix }}
+        {%- endif -%}
+      </h1>
 
       <!-- Amazon Rating -->
       <div class="product-rating">
-        <div class="stars">★★★★★</div>
-        <span class="rating-text">Rated on <strong>amazon</strong></span>
+        {%- if section.settings.rating_stars_image != blank -%}
+          <div class="stars-img">
+            <img
+              src="{{ section.settings.rating_stars_image | image_url: height: 20 }}"
+              alt="5 Stars"
+              loading="lazy"
+              height="20"
+              width="{{ 20 | times: section.settings.rating_stars_image.aspect_ratio | ceil }}"
+            >
+          </div>
+        {%- else -%}
+          <div class="stars">★★★★★</div>
+        {%- endif -%}
+
+        <span class="rating-text"
+          >Rated on
+          {%- if section.settings.rating_platform_image != blank -%}
+            <img
+              src="{{ section.settings.rating_platform_image | image_url: height: 20 }}"
+              alt="Platform"
+              loading="lazy"
+              height="20"
+              width="{{ 20 | times: section.settings.rating_platform_image.aspect_ratio | ceil }}"
+              style="vertical-align: middle; margin-left: 5px;"
+            >
+          {%- else -%}
+            <strong>amazon</strong>
+          {%- endif -%}
+        </span>
       </div>
 
       <!-- Price -->
@@ -293,10 +336,11 @@
     font-weight: 700;
     line-height: 1.2;
     margin: 0;
+    color: {{ section.settings.title_color }};
   }
 
   .product-title .brand {
-    color: #ff6b35;
+    color: {{ section.settings.brand_color }};
   }
 
   .product-rating {
@@ -609,10 +653,20 @@
 
     // Variant selector
     const variantButtons = document.querySelectorAll('.variant-button');
+    const dynamicCapacityTitle = document.getElementById('dynamic-capacity-title');
+
     variantButtons.forEach((button) => {
       button.addEventListener('click', function () {
         const radio = this.previousElementSibling;
         radio.checked = true;
+
+        // Update Title Capacity Text if it's the first option (Capacity)
+        const optionName = radio.name;
+        if (optionName.includes('Option1') || optionName.includes('option-Capacity') || dynamicCapacityTitle) {
+          if (dynamicCapacityTitle) {
+            dynamicCapacityTitle.textContent = this.textContent.trim();
+          }
+        }
       });
     });
   });
@@ -641,6 +695,50 @@
       "unit": "%",
       "label": "Background Overlay Opacity",
       "default": 0
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Product Title Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_product_title",
+      "label": "Hide Product Title (Show only Brand + Suffix)",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "brand_text",
+      "label": "Brand Name Prefix",
+      "default": "BOLDSTUFF"
+    },
+    {
+      "type": "color",
+      "id": "brand_color",
+      "label": "Brand Name Color",
+      "default": "#ff6b35"
+    },
+    {
+      "type": "text",
+      "id": "title_suffix",
+      "label": "Title Suffix Text",
+      "default": "Insulated Stainless Steel Water Bottle"
+    },
+    {
+      "type": "header",
+      "content": "Rating & Platform"
+    },
+    {
+      "type": "image_picker",
+      "id": "rating_stars_image",
+      "label": "Rating Stars Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "rating_platform_image",
+      "label": "Platform Logo Image (e.g. Amazon)"
     },
     {
       "type": "text",
