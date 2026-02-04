@@ -103,17 +103,7 @@
         "description": "Keep drinks hot & cold for hours. Built for everyday hydration.",
         "show_amazon_badge": true
       }
-    },
-    "product-recommendations": {
-      "type": "product-recommendations",
-      "settings": {
-        "hometitle": "New Season",
-        "subtitle": "Related Products",
-        "products_to_show": 3,
-        "grid": "3",
-        "swipe_on_mobile": true
-      }
     }
   },
-  "order": ["boldstuff_product_main", "product-recommendations"]
+  "order": ["boldstuff_product_main"]
 }

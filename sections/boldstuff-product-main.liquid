@@ -1,0 +1,758 @@
+{% comment %}
+  BOLDSTUFF Product Main Section
+  Modern product detail page with image gallery, variant selector, and trust badges
+{% endcomment %}
+
+<div class="boldstuff-product-main">
+  <div class="product-container">
+    {%- assign current_variant = product.selected_or_first_available_variant -%}
+    {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+
+    <!-- Left: Image Gallery -->
+    <div class="product-gallery">
+      <div class="gallery-thumbnails">
+        {%- for image in product.images limit: 4 -%}
+          <div class="thumbnail {% if forloop.first %}active{% endif %}" data-image-index="{{ forloop.index0 }}">
+            <img src="{{ image | image_url: width: 120 }}" alt="{{ product.title }}" loading="lazy">
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="gallery-main">
+        <img
+          id="main-product-image"
+          src="{{ featured_image | image_url: width: 800 }}"
+          alt="{{ product.title }}"
+          width="800"
+          height="800"
+        >
+      </div>
+    </div>
+
+    <!-- Right: Product Info -->
+    <div class="product-info">
+      <h1 class="product-title"><span class="brand">BOLDSTUFF</span> {{ product.title | remove: 'BOLDSTUFF' }}</h1>
+
+      <!-- Amazon Rating -->
+      <div class="product-rating">
+        <div class="stars">★★★★★</div>
+        <span class="rating-text">Rated on <strong>amazon</strong></span>
+      </div>
+
+      <!-- Price -->
+      <div class="product-price">
+        <span class="currency">₹</span>{{ current_variant.price | money_without_currency | remove: '.00' }}
+      </div>
+
+      <!-- Description -->
+      {%- if section.settings.show_description and product.description != blank -%}
+        <p class="product-description">
+          {{ section.settings.description | default: product.description | truncate: 100 }}
+        </p>
+      {%- endif -%}
+
+      <!-- Variant Selector (Capacity/Size) -->
+      {%- unless product.has_only_default_variant -%}
+        <div class="variant-selector">
+          {%- for option in product.options_with_values -%}
+            <div class="variant-group">
+              {%- for value in option.values -%}
+                <input
+                  type="radio"
+                  id="option-{{ option.name }}-{{ value | handle }}"
+                  name="option-{{ option.name }}"
+                  value="{{ value }}"
+                  {% if option.selected_value == value %}
+                    checked
+                  {% endif %}
+                >
+                <label
+                  for="option-{{ option.name }}-{{ value | handle }}"
+                  class="variant-button"
+                >
+                  {{ value }}
+                </label>
+              {%- endfor -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endunless -%}
+
+      <!-- Add to Cart & Buy Now -->
+      <div class="product-actions">
+        {%- form 'product', product, id: 'product-form', class: 'product-form' -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+          <button
+            type="submit"
+            name="add"
+            class="btn btn-add-to-cart"
+            {% unless current_variant.available %}
+              disabled
+            {% endunless %}
+          >
+            Add to Cart
+          </button>
+
+          <button type="button" class="btn btn-buy-now">Buy Now</button>
+        {%- endform -%}
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="trust-badges">
+        <div class="badge-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>Free Shipping</span>
+        </div>
+        <div class="badge-separator">|</div>
+        <div class="badge-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 11 12 14 22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+          <span>Easy Returns</span>
+        </div>
+        <div class="badge-separator">|</div>
+        <div class="badge-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <span>Secure Checkout</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="product-features">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'feature' -%}
+        <div class="feature-item">
+          <div class="feature-icon">
+            {%- if block.settings.icon == 'fire' -%}
+              🔥
+            {%- elsif block.settings.icon == 'shield' -%}
+              🛡️
+            {%- elsif block.settings.icon == 'check' -%}
+              ✓
+            {%- endif -%}
+          </div>
+          <span>{{ block.settings.text }}</span>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <!-- Product Details & Specifications -->
+  <div class="product-tabs">
+    <div class="tabs-container">
+      <div class="tab-content">
+        <div class="details-section">
+          <h2>Product Details</h2>
+          <ul class="details-list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'detail' -%}
+                <li>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6b35" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  {{ block.settings.text }}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+
+          {%- if section.settings.show_amazon_badge -%}
+            <div class="amazon-badge">Trusted by thousands writ, reating ⭐⭐⭐⭐⭐ on Amazon</div>
+          {%- endif -%}
+        </div>
+
+        <div class="specs-section">
+          <h2>Technical Specifications</h2>
+          <table class="specs-table">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'specification' -%}
+                <tr>
+                  <td class="spec-label">{{ block.settings.label }}</td>
+                  <td class="spec-value">{{ block.settings.value }}</td>
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .boldstuff-product-main {
+    background: #0a0a0a;
+    color: #fff;
+    padding: 40px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .product-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+
+  /* Image Gallery */
+  .product-gallery {
+    display: flex;
+    gap: 20px;
+  }
+
+  .gallery-thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .thumbnail {
+    width: 100px;
+    height: 100px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    background: #1a1a1a;
+  }
+
+  .thumbnail.active,
+  .thumbnail:hover {
+    border-color: #ff6b35;
+  }
+
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gallery-main {
+    flex: 1;
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 1;
+  }
+
+  .gallery-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Product Info */
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .product-title {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .product-title .brand {
+    color: #ff6b35;
+  }
+
+  .product-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .stars {
+    color: #ff6b35;
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+
+  .rating-text {
+    color: #999;
+    font-size: 14px;
+  }
+
+  .rating-text strong {
+    color: #fff;
+  }
+
+  .product-price {
+    font-size: 48px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .currency {
+    font-size: 32px;
+  }
+
+  .product-description {
+    color: #ccc;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Variant Selector */
+  .variant-selector {
+    margin: 10px 0;
+  }
+
+  .variant-group {
+    display: flex;
+    gap: 10px;
+  }
+
+  .variant-group input[type='radio'] {
+    display: none;
+  }
+
+  .variant-button {
+    padding: 12px 30px;
+    background: #2a2a2a;
+    border: 2px solid #3a3a3a;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    min-width: 100px;
+  }
+
+  .variant-group input[type='radio']:checked + .variant-button {
+    background: #ff6b35;
+    border-color: #ff6b35;
+    color: #fff;
+  }
+
+  .variant-button:hover {
+    border-color: #ff6b35;
+  }
+
+  /* Product Actions */
+  .product-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-add-to-cart {
+    background: #ff6b35;
+    color: #fff;
+  }
+
+  .btn-add-to-cart:hover {
+    background: #ff5722;
+    transform: translateY(-2px);
+  }
+
+  .btn-add-to-cart:disabled {
+    background: #555;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-buy-now {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+
+  .btn-buy-now:hover {
+    background: #fff;
+    color: #0a0a0a;
+  }
+
+  /* Trust Badges */
+  .trust-badges {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 0;
+    border-top: 1px solid #2a2a2a;
+    margin-top: 10px;
+  }
+
+  .badge-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ccc;
+    font-size: 14px;
+  }
+
+  .badge-item svg {
+    color: #ff6b35;
+  }
+
+  .badge-separator {
+    color: #555;
+  }
+
+  /* Features Section */
+  .product-features {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 30px;
+    background: #1a1a1a;
+    border-radius: 12px;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    font-size: 15px;
+  }
+
+  .feature-icon {
+    font-size: 24px;
+  }
+
+  /* Product Tabs */
+  .product-tabs {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .tab-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .details-section h2,
+  .specs-section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    color: #fff;
+  }
+
+  .details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+  }
+
+  .details-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    color: #ccc;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .details-list li svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .amazon-badge {
+    background: #3a3a3a;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: #ccc;
+    font-size: 14px;
+    display: inline-block;
+  }
+
+  .specs-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .specs-table tr {
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .specs-table td {
+    padding: 15px 20px;
+    font-size: 15px;
+  }
+
+  .spec-label {
+    color: #999;
+    font-weight: 600;
+    width: 40%;
+  }
+
+  .spec-value {
+    color: #fff;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 968px) {
+    .product-container {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .product-gallery {
+      flex-direction: column-reverse;
+    }
+
+    .gallery-thumbnails {
+      flex-direction: row;
+      overflow-x: auto;
+    }
+
+    .thumbnail {
+      min-width: 80px;
+      height: 80px;
+    }
+
+    .product-title {
+      font-size: 24px;
+    }
+
+    .product-price {
+      font-size: 36px;
+    }
+
+    .product-actions {
+      flex-direction: column;
+    }
+
+    .product-features {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .tab-content {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+</style>
+
+<script>
+  // Image gallery switcher
+  document.addEventListener('DOMContentLoaded', function () {
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const mainImage = document.getElementById('main-product-image');
+
+    thumbnails.forEach((thumb, index) => {
+      thumb.addEventListener('click', function () {
+        thumbnails.forEach((t) => t.classList.remove('active'));
+        this.classList.add('active');
+
+        const img = this.querySelector('img');
+        mainImage.src = img.src.replace('width=120', 'width=800');
+      });
+    });
+
+    // Variant selector
+    const variantButtons = document.querySelectorAll('.variant-button');
+    variantButtons.forEach((button) => {
+      button.addEventListener('click', function () {
+        const radio = this.previousElementSibling;
+        radio.checked = true;
+      });
+    });
+  });
+</script>
+{% schema %}
+{
+  "name": "Product Main",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show Description",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Custom Description",
+      "default": "Keep drinks hot & cold for hours. Built for everyday hydration."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_amazon_badge",
+      "label": "Show Amazon Badge",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "fire", "label": "Fire" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "check", "label": "Check" }
+          ],
+          "default": "fire"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Feature Text",
+          "default": "6+ Hours Hot & Cold Retention"
+        }
+      ]
+    },
+    {
+      "type": "detail",
+      "name": "Product Detail",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Detail Text",
+          "default": "Built for Indian climate – Hot summers & cold mornings"
+        }
+      ]
+    },
+    {
+      "type": "specification",
+      "name": "Specification",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Capacity"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "1.5L / 2L / 3L"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BOLDSTUFF Product Main",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "fire",
+            "text": "6+ Hours Hot & Cold Retention"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "text": "Premium Insulated Stainless Steel"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "check",
+            "text": "Leakproof & Travel-Ready"
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "text": "Built for Indian climate – Hot summers & cold mornings"
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "text": "Ideal for gym, office, travel & outdoor use"
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "text": "Food-greade stainless steel"
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "text": "Easy to clean & long-lasting."
+          }
+        },
+        {
+          "type": "specification",
+          "settings": {
+            "label": "Capacity",
+            "value": "1.5L / 2L / 3L"
+          }
+        },
+        {
+          "type": "specification",
+          "settings": {
+            "label": "Material",
+            "value": "Insulated Stainless Steel"
+          }
+        },
+        {
+          "type": "specification",
+          "settings": {
+            "label": "Insulation Type",
+            "value": "Double-wall vacuum"
+          }
+        },
+        {
+          "type": "specification",
+          "settings": {
+            "label": "Leakproof",
+            "value": "Yes"
+          }
+        },
+        {
+          "type": "specification",
+          "settings": {
+            "label": "Ideal For",
+            "value": "Gym, Travel, Office, Outdoor"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
