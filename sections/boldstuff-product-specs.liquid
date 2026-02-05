@@ -1,0 +1,409 @@
+{% schema %}
+{
+  "name": "Product Specs & Details",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#0a0a0a"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color (Icons/Highlight)",
+      "default": "#ff6b35"
+    },
+    {
+      "type": "header",
+      "content": "Left Column (Details)"
+    },
+    {
+      "type": "text",
+      "id": "title_left",
+      "label": "Left Column Title",
+      "default": "Product Details"
+    },
+    {
+      "type": "header",
+      "content": "Amazon Badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_amazon_badge",
+      "label": "Show Amazon Trust Badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "amazon_text_prefix",
+      "label": "Badge Text Prefix",
+      "default": "Trusted by thousands writ, reating"
+    },
+    {
+      "type": "text",
+      "id": "amazon_text_suffix",
+      "label": "Badge Text Suffix",
+      "default": "on Amazon"
+    },
+    {
+      "type": "header",
+      "content": "Right Column (Specs)"
+    },
+    {
+      "type": "text",
+      "id": "title_right",
+      "label": "Right Column Title",
+      "default": "Technical Specifications"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "detail_point",
+      "name": "Detail Point",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Detail Text",
+          "default": "Built for Indian climate – Hot summers & cold mornings"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "check", "label": "Checkmark" },
+            { "value": "check_circle", "label": "Check Circle" },
+            { "value": "star", "label": "Star" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "fire", "label": "Fire" }
+          ],
+          "default": "check"
+        }
+      ]
+    },
+    {
+      "type": "spec_row",
+      "name": "Specification",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Capacity"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "1.5L / 2L / 3L"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Specs & Details",
+      "blocks": [
+        { "type": "detail_point", "settings": { "text": "Built for Indian climate – Hot summers & cold mornings" } },
+        { "type": "detail_point", "settings": { "text": "Ideal for gym, office, travel & outdoor use" } },
+        { "type": "detail_point", "settings": { "text": "Food-grade stainless steel" } },
+        { "type": "detail_point", "settings": { "text": "Easy to clean & long-lasting." } },
+        { "type": "spec_row", "settings": { "label": "Capacity", "value": "1.5L / 2L / 3L" } },
+        { "type": "spec_row", "settings": { "label": "Material", "value": "Insulated Stainless Steel" } },
+        { "type": "spec_row", "settings": { "label": "Insulation Type", "value": "Double-wall vacuum" } },
+        { "type": "spec_row", "settings": { "label": "Leakproof", "value": "Yes" } },
+        { "type": "spec_row", "settings": { "label": "Ideal For", "value": "Gym, Travel, Office, Outdoor" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div
+  class="boldstuff-specs-wrapper"
+  style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};"
+>
+  <div class="specs-container">
+    <div class="specs-grid-layout">
+      <!-- Left Column: Product Details -->
+      <div class="specs-column details-column">
+        <h2 class="column-title">{{ section.settings.title_left }}</h2>
+
+        <ul class="details-list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'detail_point' -%}
+              <li class="detail-item">
+                <span class="icon-wrapper" style="color: {{ section.settings.accent_color }};">
+                  {%- case block.settings.icon -%}
+                    {%- when 'check' -%}
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    {%- when 'check_circle' -%}
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                      </svg>
+                    {%- when 'star' -%}
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                      </svg>
+                    {%- when 'shield' -%}
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                      </svg>
+                    {%- when 'fire' -%}
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M8.56 2.9A7 7 0 0 1 19 9c0 4.48-3.32 9.67-7 12.38-3.68-2.71-7-7.9-7-12.38A7 7 0 0 1 8.56 2.9z"/>
+                      </svg>
+                  {%- endcase -%}
+                </span>
+                <span class="detail-text">{{ block.settings.text }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- if section.settings.show_amazon_badge -%}
+          <div class="amazon-badge-box">
+            <span class="badge-text">{{ section.settings.amazon_text_prefix }}</span>
+            <div class="badge-stars" style="color: {{ section.settings.accent_color }};">
+              {%- for i in (1..5) -%}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              {%- endfor -%}
+            </div>
+            <span class="badge-suffix">{{ section.settings.amazon_text_suffix }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Right Column: Technical Specifications -->
+      <div class="specs-column specs-right-column">
+        <h2 class="column-title">{{ section.settings.title_right }}</h2>
+        <div class="specs-table-container">
+          <table class="specs-table">
+            <tbody>
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'spec_row' -%}
+                  <tr class="spec-row">
+                    <td class="spec-label">{{ block.settings.label }}</td>
+                    <td class="spec-value">{{ block.settings.value }}</td>
+                  </tr>
+                {%- endif -%}
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .boldstuff-specs-wrapper {
+    padding: 60px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .boldstuff-specs-wrapper .specs-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .boldstuff-specs-wrapper .specs-grid-layout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  /* Columns */
+  .boldstuff-specs-wrapper .specs-column {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .boldstuff-specs-wrapper .details-column {
+    padding-right: 50px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .boldstuff-specs-wrapper .specs-right-column {
+    padding-left: 50px;
+  }
+
+  /* Typography */
+  .boldstuff-specs-wrapper .column-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    margin-top: 0;
+    color: inherit;
+  }
+
+  /* Details List */
+  .boldstuff-specs-wrapper .details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+  }
+
+  .boldstuff-specs-wrapper .detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 2px; /* reduced from 8px */
+    font-size: 15px;
+    line-height: 1.5;
+    opacity: 0.9;
+  }
+
+  .boldstuff-specs-wrapper .icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Amazon Badge */
+  .boldstuff-specs-wrapper .amazon-badge-box {
+    background: rgba(255, 255, 255, 0.08);
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .boldstuff-specs-wrapper .badge-stars {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+  }
+
+  .boldstuff-specs-wrapper .badge-suffix {
+    opacity: 0.7;
+  }
+
+  /* Specs Table */
+  .boldstuff-specs-wrapper .specs-table-container {
+    width: 100%;
+  }
+
+  .boldstuff-specs-wrapper .specs-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .boldstuff-specs-wrapper .spec-row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .boldstuff-specs-wrapper .spec-row:last-child {
+    border-bottom: none;
+  }
+
+  .boldstuff-specs-wrapper .specs-table td {
+    padding: 5px 0; /* reduced from 8px */
+    font-size: 15px;
+    vertical-align: top;
+  }
+
+  .boldstuff-specs-wrapper .spec-label {
+    width: 40%;
+    opacity: 0.6;
+    font-weight: 500;
+  }
+
+  .boldstuff-specs-wrapper .spec-value {
+    width: 60%;
+    font-weight: 400;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .boldstuff-specs-wrapper {
+      padding: 40px 15px;
+    }
+
+    .boldstuff-specs-wrapper .specs-grid-layout {
+      flex-direction: column;
+    }
+
+    .boldstuff-specs-wrapper .details-column {
+      padding-right: 0;
+      border-right: none;
+      padding-bottom: 40px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      width: 100%;
+    }
+
+    .boldstuff-specs-wrapper .specs-right-column {
+      padding-left: 0;
+      width: 100%;
+    }
+
+    .boldstuff-specs-wrapper .column-title {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .boldstuff-specs-wrapper .amazon-badge-box {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

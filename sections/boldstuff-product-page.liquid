@@ -1,0 +1,1005 @@
+{% schema %}
+{
+  "name": "Product Page Complete",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product Section"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "header",
+      "content": "Why Choose Section"
+    },
+    {
+      "type": "text",
+      "id": "why_choose_title",
+      "label": "Why Choose Title",
+      "default": "Why Choose [BOLDSTUFF] Bottles?"
+    },
+    {
+      "type": "image_picker",
+      "id": "why_choose_bg",
+      "label": "Why Choose Background Image"
+    },
+    {
+      "type": "header",
+      "content": "Adventure Carousel"
+    },
+    {
+      "type": "text",
+      "id": "carousel_title",
+      "label": "Carousel Title",
+      "default": "Built for Every Adventure"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_detail",
+      "name": "Product Detail",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Detail Text"
+        }
+      ]
+    },
+    {
+      "type": "specification",
+      "name": "Specification",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value"
+        }
+      ]
+    },
+    {
+      "type": "feature_badge",
+      "name": "Feature Badge",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "why_feature",
+      "name": "Why Choose Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Feature Text"
+        }
+      ]
+    },
+    {
+      "type": "adventure_slide",
+      "name": "Adventure Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Page Complete",
+      "blocks": [
+        {
+          "type": "product_detail",
+          "settings": {
+            "text": "Built for Indian climate – Hot summers & cold mornings"
+          }
+        },
+        {
+          "type": "product_detail",
+          "settings": {
+            "text": "Ideal for gym, office, travel & outdoor use"
+          }
+        },
+        {
+          "type": "product_detail",
+          "settings": {
+            "text": "Food-grade stainless steel"
+          }
+        },
+        {
+          "type": "product_detail",
+          "settings": {
+            "text": "Easy to clean & long-lasting"
+          }
+        },
+        {
+          "type": "specification",
+          "settings": {
+            "label": "Capacity",
+            "value": "1.5L / 2L / 3L"
+          }
+        },
+        {
+          "type": "specification",
+          "settings": {
+            "label": "Material",
+            "value": "Insulated Stainless Steel"
+          }
+        },
+        {
+          "type": "specification",
+          "settings": {
+            "label": "Insulation Type",
+            "value": "Double-wall vacuum"
+          }
+        },
+        {
+          "type": "specification",
+          "settings": {
+            "label": "Leakproof",
+            "value": "Yes"
+          }
+        },
+        {
+          "type": "specification",
+          "settings": {
+            "label": "Ideal For",
+            "value": "Gym, Travel, Office, Outdoor"
+          }
+        },
+        {
+          "type": "feature_badge",
+          "settings": {
+            "text": "6+ Hours Hot & Cold Retention"
+          }
+        },
+        {
+          "type": "feature_badge",
+          "settings": {
+            "text": "Premium Insulated Stainless Steel"
+          }
+        },
+        {
+          "type": "feature_badge",
+          "settings": {
+            "text": "Leakproof & Travel-Ready"
+          }
+        },
+        {
+          "type": "why_feature",
+          "settings": {
+            "text": "Built for performance"
+          }
+        },
+        {
+          "type": "why_feature",
+          "settings": {
+            "text": "Thermosteel insulation"
+          }
+        },
+        {
+          "type": "why_feature",
+          "settings": {
+            "text": "Durable everyday design"
+          }
+        },
+        {
+          "type": "why_feature",
+          "settings": {
+            "text": "Trusted by thousands of users"
+          }
+        },
+        {
+          "type": "adventure_slide",
+          "settings": {
+            "title": "Gym & Fitness"
+          }
+        },
+        {
+          "type": "adventure_slide",
+          "settings": {
+            "title": "Office Commute"
+          }
+        },
+        {
+          "type": "adventure_slide",
+          "settings": {
+            "title": "Travel & Adventure"
+          }
+        },
+        {
+          "type": "adventure_slide",
+          "settings": {
+            "title": "Family Outdoor & picnic"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{%- assign product = all_products[section.settings.product] -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<div class="boldstuff-product-page" style="background-color: {{ section.settings.bg_color }};">
+  <!-- Main Product Section -->
+  <div class="product-main-section">
+    <div class="page-width">
+      <div class="product-grid">
+        <!-- Left: Image Gallery -->
+        <div class="product-gallery-wrapper">
+          <div class="thumbnail-column">
+            {%- for image in product.images limit: 4 -%}
+              <div class="thumbnail-item {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
+                <img
+                  src="{{ image | image_url: width: 100 }}"
+                  alt="{{ product.title }}"
+                  loading="lazy"
+                  width="100"
+                  height="100"
+                >
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <div class="main-image-wrapper">
+            <img
+              id="mainProductImage"
+              src="{{ product.featured_image | image_url: width: 600 }}"
+              alt="{{ product.title }}"
+              width="600"
+              height="600"
+            >
+          </div>
+        </div>
+
+        <!-- Right: Product Info -->
+        <div class="product-info-wrapper">
+          <h1 class="product-title">{{ product.title }}</h1>
+
+          <div class="product-rating">
+            <div class="stars">★★★★★</div>
+            <span class="rating-text">Rated on <strong>Amazon</strong></span>
+          </div>
+
+          <div class="product-price">
+            <span class="currency">₹</span>{{ current_variant.price | money_without_currency | remove: '.00' }}
+          </div>
+
+          <p class="product-description">{{ product.description | truncate: 80 }}</p>
+
+          <!-- Variant Selector -->
+          {%- unless product.has_only_default_variant -%}
+            <div class="variant-selector">
+              {%- for option in product.options_with_values -%}
+                <div class="variant-options">
+                  {%- for value in option.values -%}
+                    <button
+                      class="variant-btn {% if option.selected_value == value %}active{% endif %}"
+                      data-value="{{ value }}"
+                    >
+                      {{ value }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endunless -%}
+
+          <!-- Add to Cart -->
+          <div class="product-actions">
+            <button class="btn btn-add-cart">Add to Cart</button>
+            <button class="btn btn-buy-now">Buy Now</button>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="trust-badges">
+            <span class="badge-item">🚚 Free Shipping</span>
+            <span class="badge-separator">|</span>
+            <span class="badge-item">↩️ Easy Returns</span>
+            <span class="badge-separator">|</span>
+            <span class="badge-item">🔒 Secure Checkout</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Badges Row -->
+      <div class="feature-badges-row">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'feature_badge' -%}
+            <div class="feature-badge-item">
+              {%- if block.settings.icon != blank -%}
+                <img src="{{ block.settings.icon | image_url: width: 40 }}" alt="" width="24" height="24">
+              {%- else -%}
+                <span class="badge-icon">🔥</span>
+              {%- endif -%}
+              <span class="badge-text">{{ block.settings.text }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Details & Specs Section -->
+  <div class="details-specs-section">
+    <div class="page-width">
+      <div class="details-specs-grid">
+        <!-- Left: Product Details -->
+        <div class="details-column">
+          <h2 class="section-heading">Product Details</h2>
+          <ul class="details-list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'product_detail' -%}
+                <li class="detail-item">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6b35" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  <span>{{ block.settings.text }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+
+          <div class="amazon-trust-badge">Trusted by thousands writ, reating ⭐⭐⭐⭐⭐ on Amazon</div>
+        </div>
+
+        <!-- Right: Technical Specifications -->
+        <div class="specs-column">
+          <h2 class="section-heading">Technical Specifications</h2>
+          <table class="specs-table">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'specification' -%}
+                <tr>
+                  <td class="spec-label">{{ block.settings.label }}</td>
+                  <td class="spec-value">{{ block.settings.value }}</td>
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why Choose Section -->
+  <div
+    class="why-choose-section"
+    {% if section.settings.why_choose_bg != blank %}
+      style="background-image: url('{{ section.settings.why_choose_bg | image_url: width: 2000 }}');"
+    {% endif %}
+  >
+    <div class="why-choose-overlay"></div>
+    <div class="page-width">
+      <div class="why-choose-content">
+        <h2 class="why-choose-title">
+          {{ section.settings.why_choose_title | replace: '[', '<span class="highlight">' | replace: ']', '</span>' }}
+        </h2>
+
+        <ul class="why-choose-list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'why_feature' -%}
+              <li class="why-feature-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff6b35" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9 12l2 2 4-4"/>
+                </svg>
+                <span>{{ block.settings.text }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adventure Carousel Section -->
+  <div class="adventure-carousel-section">
+    <div class="page-width">
+      <h2 class="carousel-heading">{{ section.settings.carousel_title }}</h2>
+
+      <div class="carousel-wrapper">
+        <button class="carousel-nav prev" aria-label="Previous">‹</button>
+
+        <div class="carousel-track">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'adventure_slide' -%}
+              <div class="carousel-slide">
+                <div class="slide-image">
+                  {%- if block.settings.image != blank -%}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 400 }}"
+                      alt="{{ block.settings.title }}"
+                      loading="lazy"
+                      width="400"
+                      height="300"
+                    >
+                  {%- else -%}
+                    <div class="placeholder-image">{{ 'image' | placeholder_svg_tag }}</div>
+                  {%- endif -%}
+                </div>
+                <div class="slide-content">
+                  <h3 class="slide-title">{{ block.settings.title }}</h3>
+                  <a href="{{ block.settings.link }}" class="slide-cta">Add to Cart</a>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <button class="carousel-nav next" aria-label="Next">›</button>
+      </div>
+
+      <div class="carousel-dots">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'adventure_slide' -%}
+            <span class="dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}"></span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .boldstuff-product-page {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #fff;
+  }
+
+  .page-width {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Product Main Section */
+  .product-main-section {
+    padding: 40px 0;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 40px;
+  }
+
+  .product-gallery-wrapper {
+    display: flex;
+    gap: 15px;
+  }
+
+  .thumbnail-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .thumbnail-item {
+    width: 80px;
+    height: 80px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+
+  .thumbnail-item.active,
+  .thumbnail-item:hover {
+    border-color: #ff6b35;
+  }
+
+  .thumbnail-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .main-image-wrapper {
+    flex: 1;
+    background: #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .main-image-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Product Info */
+  .product-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .product-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .product-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .stars {
+    color: #ff6b35;
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+
+  .rating-text {
+    color: #999;
+    font-size: 14px;
+  }
+
+  .product-price {
+    font-size: 42px;
+    font-weight: 700;
+  }
+
+  .currency {
+    font-size: 28px;
+  }
+
+  .product-description {
+    color: #ccc;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .variant-selector {
+    display: flex;
+    gap: 10px;
+  }
+
+  .variant-btn {
+    padding: 12px 24px;
+    background: #2a2a2a;
+    border: 2px solid #3a3a3a;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .variant-btn.active,
+  .variant-btn:hover {
+    background: #ff6b35;
+    border-color: #ff6b35;
+  }
+
+  .product-actions {
+    display: flex;
+    gap: 15px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-add-cart {
+    background: #ff6b35;
+    color: #fff;
+  }
+
+  .btn-add-cart:hover {
+    background: #ff5722;
+  }
+
+  .btn-buy-now {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+
+  .btn-buy-now:hover {
+    background: #fff;
+    color: #1a1a1a;
+  }
+
+  .trust-badges {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ccc;
+    font-size: 14px;
+  }
+
+  .badge-separator {
+    color: #555;
+  }
+
+  /* Feature Badges Row */
+  .feature-badges-row {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 30px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .feature-badge-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+  }
+
+  .badge-icon {
+    font-size: 24px;
+  }
+
+  /* Details & Specs Section */
+  .details-specs-section {
+    padding: 60px 0;
+  }
+
+  .details-specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+
+  .section-heading {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 25px 0;
+  }
+
+  .details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+  }
+
+  .detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 15px;
+    color: #ccc;
+  }
+
+  .detail-item svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .amazon-trust-badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    display: inline-block;
+  }
+
+  .specs-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .specs-table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .specs-table td {
+    padding: 15px 0;
+    font-size: 15px;
+  }
+
+  .spec-label {
+    color: #999;
+    width: 40%;
+  }
+
+  .spec-value {
+    color: #fff;
+  }
+
+  /* Why Choose Section */
+  .why-choose-section {
+    position: relative;
+    padding: 80px 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .why-choose-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+  }
+
+  .why-choose-content {
+    position: relative;
+    z-index: 1;
+    max-width: 50%;
+  }
+
+  .why-choose-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 30px 0;
+  }
+
+  .why-choose-title .highlight {
+    color: #ff6b35;
+  }
+
+  .why-choose-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .why-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    font-size: 18px;
+  }
+
+  /* Adventure Carousel */
+  .adventure-carousel-section {
+    padding: 60px 0;
+  }
+
+  .carousel-heading {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 40px 0;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.5s ease;
+  }
+
+  .carousel-slide {
+    min-width: calc(25% - 15px);
+    background: #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .slide-image {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+  }
+
+  .slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .slide-content {
+    padding: 20px;
+  }
+
+  .slide-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+  }
+
+  .slide-cta {
+    display: inline-block;
+    padding: 10px 24px;
+    background: #ff6b35;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.3s;
+  }
+
+  .slide-cta:hover {
+    background: #ff5722;
+  }
+
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+    font-size: 32px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+    z-index: 2;
+  }
+
+  .carousel-nav:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .carousel-nav.prev {
+    left: -25px;
+  }
+
+  .carousel-nav.next {
+    right: -25px;
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .dot.active,
+  .dot:hover {
+    background: #ff6b35;
+  }
+
+  /* Responsive */
+  @media (max-width: 968px) {
+    .product-grid,
+    .details-specs-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .product-gallery-wrapper {
+      flex-direction: column-reverse;
+    }
+
+    .thumbnail-column {
+      flex-direction: row;
+      overflow-x: auto;
+    }
+
+    .why-choose-content {
+      max-width: 100%;
+    }
+
+    .carousel-slide {
+      min-width: calc(50% - 10px);
+    }
+
+    .feature-badges-row {
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .carousel-slide {
+      min-width: 100%;
+    }
+
+    .product-actions {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<script>
+  // Thumbnail switcher
+  document.querySelectorAll('.thumbnail-item').forEach((thumb) => {
+    thumb.addEventListener('click', function () {
+      document.querySelectorAll('.thumbnail-item').forEach((t) => t.classList.remove('active'));
+      this.classList.add('active');
+
+      const img = this.querySelector('img');
+      const mainImg = document.getElementById('mainProductImage');
+      mainImg.src = img.src.replace('width=100', 'width=600');
+    });
+  });
+
+  // Carousel functionality
+  let currentSlide = 0;
+  const track = document.querySelector('.carousel-track');
+  const slides = document.querySelectorAll('.carousel-slide');
+  const dots = document.querySelectorAll('.dot');
+
+  function updateCarousel() {
+    const slideWidth = slides[0].offsetWidth + 20;
+    track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentSlide);
+    });
+  }
+
+  document.querySelector('.carousel-nav.prev').addEventListener('click', () => {
+    currentSlide = Math.max(0, currentSlide - 1);
+    updateCarousel();
+  });
+
+  document.querySelector('.carousel-nav.next').addEventListener('click', () => {
+    currentSlide = Math.min(slides.length - 1, currentSlide + 1);
+    updateCarousel();
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      currentSlide = index;
+      updateCarousel();
+    });
+  });
+</script>
