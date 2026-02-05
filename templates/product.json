@@ -178,29 +178,41 @@
         "adventure_card_1": {
           "type": "adventure_card",
           "settings": {
+            "image": "shopify://shop_images/12046cd8fce53f4750b1ff16e36e36ceccc3592a.png",
             "title": "Gym & Fitness",
-            "button_text": "Add to Cart"
+            "button_text": "Add to Cart",
+            "button_link": "",
+            "product": ""
           }
         },
         "adventure_card_2": {
           "type": "adventure_card",
           "settings": {
+            "image": "shopify://shop_images/f773157a24da08c957e16437e25126289bee3029.png",
             "title": "Office Commute",
-            "button_text": "Add to Cart"
+            "button_text": "Add to Cart",
+            "button_link": "",
+            "product": ""
           }
         },
         "adventure_card_3": {
           "type": "adventure_card",
           "settings": {
+            "image": "shopify://shop_images/a535fe401706a630a7edfbe0020944519c9d26b4.png",
             "title": "Travel & Adventure",
-            "button_text": "Add to Cart"
+            "button_text": "Add to Cart",
+            "button_link": "",
+            "product": ""
           }
         },
         "adventure_card_4": {
           "type": "adventure_card",
           "settings": {
+            "image": "shopify://shop_images/6f9b0a13e03d31bdf54d8221f8173edd5c484a36.png",
             "title": "Family Outdoor & picnic",
-            "button_text": "Add to Cart"
+            "button_text": "Add to Cart",
+            "button_link": "",
+            "product": ""
           }
         }
       },
