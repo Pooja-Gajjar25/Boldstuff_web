@@ -150,19 +150,30 @@
       <!-- Trust Badges -->
       <div class="trust-badges">
         <div class="badge-icon">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="#3a3a3a" stroke="#555"></path>
-            <path d="M9 12l2 2 4-4" stroke="#999"></path>
-          </svg>
+          {%- if section.settings.trust_badge_icon != blank -%}
+            <img
+              src="{{ section.settings.trust_badge_icon | image_url: width: 40 }}"
+              alt="Trust Badge"
+              loading="lazy"
+              width="20"
+              height="20"
+              style="object-fit: contain;"
+            >
+          {%- else -%}
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="#3a3a3a" stroke="#555"></path>
+              <path d="M9 12l2 2 4-4" stroke="#999"></path>
+            </svg>
+          {%- endif -%}
         </div>
         <span class="badge-text">Free Shipping</span>
         <span class="badge-separator">|</span>
@@ -174,23 +185,38 @@
   </div>
 
   <!-- Features Section -->
-  <div class="product-features">
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'feature' -%}
-        <div class="feature-item">
-          <div class="feature-icon">
-            {%- if block.settings.icon == 'fire' -%}
-              🔥
-            {%- elsif block.settings.icon == 'shield' -%}
-              🛡️
-            {%- elsif block.settings.icon == 'check' -%}
-              ✓
-            {%- endif -%}
+  <div class="product-features-container">
+    <div class="glass-line-top"></div>
+    <div class="product-features">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'feature' -%}
+          <div class="feature-item">
+            <div class="feature-icon">
+              {%- if block.settings.custom_icon != blank -%}
+                <img
+                  src="{{ block.settings.custom_icon | image_url: width: 40 }}"
+                  alt="{{ block.settings.text }}"
+                  loading="lazy"
+                  width="24"
+                  height="24"
+                  style="object-fit: contain;"
+                >
+              {%- else -%}
+                {%- if block.settings.icon == 'fire' -%}
+                  🔥
+                {%- elsif block.settings.icon == 'shield' -%}
+                  🛡️
+                {%- elsif block.settings.icon == 'check' -%}
+                  ✓
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+            <span>{{ block.settings.text }}</span>
           </div>
-          <span>{{ block.settings.text }}</span>
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="glass-line-bottom"></div>
   </div>
 
   <!-- Product Details & Specifications -->
@@ -497,15 +523,36 @@
   }
 
   /* Features Section */
-  .product-features {
+  .product-features-container {
     max-width: 1200px;
     margin: 0 auto 60px;
+    position: relative;
+    padding: 0 20px;
+  }
+
+  .product-features {
     display: flex;
     justify-content: center;
     gap: 40px;
-    padding: 30px;
-    background: #1a1a1a;
-    border-radius: 12px;
+    padding: 25px 0;
+    /* Removed background and border-radius to match screenshot's transparent look */
+    background: transparent;
+  }
+
+  .glass-line-top,
+  .glass-line-bottom {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 20%,
+      rgba(255, 255, 255, 0.6) 50%,
+      rgba(255, 255, 255, 0.3) 80%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    opacity: 0.8;
   }
 
   .feature-item {
@@ -514,9 +561,12 @@
     gap: 12px;
     color: #fff;
     font-size: 15px;
+    font-weight: 400;
   }
 
   .feature-icon {
+    display: flex; /* alignment for img */
+    align-items: center;
     font-size: 24px;
   }
 
@@ -529,7 +579,16 @@
   .tab-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    /* Removed gap to allow border spacing */
+  }
+
+  .details-section {
+    padding-right: 40px;
+    border-right: 1px solid #333;
+  }
+
+  .specs-section {
+    padding-left: 40px;
   }
 
   .details-section h2,
@@ -567,6 +626,7 @@
     border-radius: 8px;
     color: #ccc;
     font-size: 14px;
+    font-weight: 700;
     display: inline-block;
   }
 
@@ -635,6 +695,18 @@
     .tab-content {
       grid-template-columns: 1fr;
       gap: 30px;
+    }
+
+    .details-section {
+      padding-right: 0;
+      border-right: none;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #333;
+    }
+
+    .specs-section {
+      padding-left: 0;
+      padding-top: 0;
     }
   }
 </style>
@@ -755,6 +827,15 @@
       "id": "show_amazon_badge",
       "label": "Show Amazon Badge",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Trust Badges"
+    },
+    {
+      "type": "image_picker",
+      "id": "trust_badge_icon",
+      "label": "Trust Badge Icon"
     }
   ],
   "blocks": [
@@ -763,9 +844,14 @@
       "name": "Feature",
       "settings": [
         {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon (Upload Image)"
+        },
+        {
           "type": "select",
           "id": "icon",
-          "label": "Icon",
+          "label": "Default Icon (Fallback)",
           "options": [
             { "value": "fire", "label": "Fire" },
             { "value": "shield", "label": "Shield" },
