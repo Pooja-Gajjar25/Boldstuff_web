@@ -225,6 +225,7 @@
       "settings": {
         "section_title": "Built for Every Adventure",
         "background_color": "#0a0a0a",
+        "background_image": "shopify://shop_images/d7d33d81522b88b68ca498b3166e8b342dc779c2.png",
         "section_padding_desktop": 60,
         "section_padding_mobile": 40
       }

@@ -229,9 +229,20 @@
             {%- for block in section.blocks -%}
               {%- if block.type == 'detail' -%}
                 <li>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6b35" stroke-width="2">
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
+                  {%- if block.settings.icon != blank -%}
+                    <img
+                      src="{{ block.settings.icon | image_url: width: 40 }}"
+                      alt="check"
+                      loading="lazy"
+                      width="20"
+                      height="20"
+                      style="object-fit: contain; margin-top: 2px;"
+                    >
+                  {%- else -%}
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6b35" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  {%- endif -%}
                   {{ block.settings.text }}
                 </li>
               {%- endif -%}
@@ -239,7 +250,22 @@
           </ul>
 
           {%- if section.settings.show_amazon_badge -%}
-            <div class="amazon-badge">Trusted by thousands writ, reating ⭐⭐⭐⭐⭐ on Amazon</div>
+            <div class="amazon-badge">
+              Trusted by thousands writ, reating
+              {%- if section.settings.amazon_stars_icon != blank -%}
+                <img
+                  src="{{ section.settings.amazon_stars_icon | image_url: height: 20 }}"
+                  alt="5 Stars"
+                  loading="lazy"
+                  height="16"
+                  width="80"
+                  style="vertical-align: middle; margin: 0 5px;"
+                >
+              {%- else -%}
+                ⭐⭐⭐⭐⭐
+              {%- endif -%}
+              on Amazon
+            </div>
           {%- endif -%}
         </div>
 
@@ -525,7 +551,7 @@
   /* Features Section */
   .product-features-container {
     max-width: 1200px;
-    margin: 0 auto 60px;
+    margin: 0 auto 30px;
     position: relative;
     padding: 0 20px;
   }
@@ -595,21 +621,21 @@
   .specs-section h2 {
     font-size: 24px;
     font-weight: 700;
-    margin: 0 0 20px 0;
+    margin: 0 0 10px 0;
     color: #fff;
   }
 
   .details-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 20px 0;
+    margin: 0 0 15px 0;
   }
 
   .details-list li {
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    padding: 12px 0;
+    padding: 6px 0;
     color: #ccc;
     font-size: 15px;
     line-height: 1.6;
@@ -640,7 +666,7 @@
   }
 
   .specs-table td {
-    padding: 15px 20px;
+    padding: 8px 20px;
     font-size: 15px;
   }
 
@@ -829,6 +855,11 @@
       "default": true
     },
     {
+      "type": "image_picker",
+      "id": "amazon_stars_icon",
+      "label": "Amazon Stars Icon"
+    },
+    {
       "type": "header",
       "content": "Trust Badges"
     },
@@ -876,6 +907,11 @@
           "id": "text",
           "label": "Detail Text",
           "default": "Built for Indian climate – Hot summers & cold mornings"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Custom Bullet Icon (Image)"
         }
       ]
     },
