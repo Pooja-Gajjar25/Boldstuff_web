@@ -238,22 +238,11 @@
         "section_padding_desktop": 60,
         "section_padding_mobile": 40
       }
-    },
-    "product-recommendations": {
-      "type": "product-recommendations",
-      "settings": {
-        "hometitle": "New Season",
-        "subtitle": "Related Products",
-        "products_to_show": 3,
-        "grid": "3",
-        "swipe_on_mobile": true
-      }
     }
   },
   "order": [
     "boldstuff_product_main",
     "why_choose_section",
-    "adventure_carousel_section",
-    "product-recommendations"
+    "adventure_carousel_section"
   ]
 }
