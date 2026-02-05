@@ -74,24 +74,26 @@
         {% endif %}
       </div>
 
-      <div class="boldstuff-why-choose__image-column">
-        {% if section.settings.image != blank %}
-          <div class="boldstuff-why-choose__image-wrapper">
-            <img
-              src="{{ section.settings.image | image_url: width: 1000 }}"
-              alt="{{ section.settings.image.alt | escape }}"
-              loading="lazy"
-              width="{{ section.settings.image.width }}"
-              height="{{ section.settings.image.height }}"
-              class="boldstuff-why-choose__image"
-            >
-          </div>
-        {% else %}
-          <div class="boldstuff-why-choose__image-wrapper placeholder">
-            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-          </div>
-        {% endif %}
-      </div>
+      {% comment %}
+        <div class="boldstuff-why-choose__image-column">
+          {% if section.settings.image != blank %}
+            <div class="boldstuff-why-choose__image-wrapper">
+              <img
+                src="{{ section.settings.image | image_url: width: 1000 }}"
+                alt="{{ section.settings.image.alt | escape }}"
+                loading="lazy"
+                width="{{ section.settings.image.width }}"
+                height="{{ section.settings.image.height }}"
+                class="boldstuff-why-choose__image"
+              >
+            </div>
+          {% else %}
+            <div class="boldstuff-why-choose__image-wrapper placeholder">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {% endif %}
+        </div>
+      {% endcomment %}
     </div>
   </div>
 </div>
@@ -153,6 +155,7 @@
   .boldstuff-why-choose__grid {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 60px;
     position: relative;
     z-index: 2;
@@ -166,7 +169,9 @@
   }
 
   .boldstuff-why-choose__content {
-    flex: 1.2;
+    flex: 1;
+    max-width: 100%;
+    text-align: left;
   }
 
   .boldstuff-why-choose__title {
@@ -197,6 +202,7 @@
     margin: 0 0 40px 0;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 15px;
   }
 

@@ -158,11 +158,18 @@
       ],
       "settings": {
         "title": "Why Choose [BOLDSTUFF] Bottles?",
+        "trust_label": "",
+        "trust_platform": "",
+        "trust_info": "",
+        "image": "",
+        "bg_image": "shopify://shop_images/7d5b23365bfd98cbede57eb10f1189e9541d2162.png",
         "bg_color": "#111111",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 50,
-        "padding_bottom_mobile": 50
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "padding_top": 85,
+        "padding_bottom": 85,
+        "padding_top_mobile": 65,
+        "padding_bottom_mobile": 65
       }
     },
     "featured_bottles_section": {
@@ -171,45 +178,53 @@
         "product_card_1": {
           "type": "product_card",
           "settings": {
+            "product": "",
             "product_name": "Gym & Fitness",
             "product_size": "Water Bottle",
             "product_price": "999",
             "feature_1": "Keeps Hot & Cold 6+Hours",
             "feature_2": "Leakproof & Durable",
-            "button_text": "Add to Cart"
+            "button_text": "Add to Cart",
+            "product_url": ""
           }
         },
         "product_card_2": {
           "type": "product_card",
           "settings": {
+            "product": "",
             "product_name": "Office Commute",
             "product_size": "Water Bottle",
             "product_price": "999",
             "feature_1": "Keeps Hot & Cold 6+Hours",
             "feature_2": "Leakproof & Durable",
-            "button_text": "Add to Cart"
+            "button_text": "Add to Cart",
+            "product_url": ""
           }
         },
         "product_card_3": {
           "type": "product_card",
           "settings": {
+            "product": "",
             "product_name": "Travel & Adventure",
             "product_size": "Water Bottle",
             "product_price": "999",
             "feature_1": "Keeps Hot & Cold 6+Hours",
             "feature_2": "Leakproof & Durable",
-            "button_text": "Add to Cart"
+            "button_text": "Add to Cart",
+            "product_url": ""
           }
         },
         "product_card_4": {
           "type": "product_card",
           "settings": {
+            "product": "",
             "product_name": "Family Outdoor & picnic",
             "product_size": "Water Bottle",
             "product_price": "999",
             "feature_1": "Keeps Hot & Cold 6+Hours",
             "feature_2": "Leakproof & Durable",
-            "button_text": "Add to Cart"
+            "button_text": "Add to Cart",
+            "product_url": ""
           }
         }
       },
@@ -220,7 +235,10 @@
         "product_card_4"
       ],
       "settings": {
-        "section_title": "Built for Every Adventure"
+        "section_title": "Built for Every Adventure",
+        "background_color": "#1a1a1a",
+        "section_padding_desktop": 60,
+        "section_padding_mobile": 40
       }
     },
     "product-recommendations": {
