@@ -190,7 +190,7 @@
     <div class="product-features">
       {%- for block in section.blocks -%}
         {%- if block.type == 'feature' -%}
-          <div class="feature-item">
+          <div class="feature-item" {{ block.shopify_attributes }}>
             <div class="feature-icon">
               {%- if block.settings.custom_icon != blank -%}
                 <img
@@ -228,7 +228,7 @@
           <ul class="details-list">
             {%- for block in section.blocks -%}
               {%- if block.type == 'detail' -%}
-                <li>
+                <li {{ block.shopify_attributes }}>
                   {%- if block.settings.icon != blank -%}
                     <img
                       src="{{ block.settings.icon | image_url: width: 40 }}"
@@ -274,7 +274,7 @@
           <table class="specs-table">
             {%- for block in section.blocks -%}
               {%- if block.type == 'specification' -%}
-                <tr>
+                <tr {{ block.shopify_attributes }}>
                   <td class="spec-label">{{ block.settings.label }}</td>
                   <td class="spec-value">{{ block.settings.value }}</td>
                 </tr>

@@ -15,6 +15,7 @@
         "feature_1": {
           "type": "feature",
           "settings": {
+            "custom_icon": "shopify://shop_images/c33cf1cb894cf4cc6a0768ce9ab80e6bbd0cef6b.png",
             "icon": "fire",
             "text": "6+ Hours Hot & Cold Retention"
           }
@@ -22,6 +23,7 @@
         "feature_2": {
           "type": "feature",
           "settings": {
+            "custom_icon": "shopify://shop_images/fc8d4cfea5a9705425723797032e1393b4208fe8.png",
             "icon": "shield",
             "text": "Premium Insulated Stainless Steel"
           }
@@ -29,6 +31,7 @@
         "feature_3": {
           "type": "feature",
           "settings": {
+            "custom_icon": "shopify://shop_images/4185be303bea26bf183f7e10b9e627efdcd21dd5.png",
             "icon": "check",
             "text": "Leakproof & Travel-Ready"
           }
@@ -36,25 +39,29 @@
         "detail_1": {
           "type": "detail",
           "settings": {
-            "text": "Built for Indian climate – Hot summers & cold mornings"
+            "text": "Built for Indian climate – Hot summers & cold mornings",
+            "icon": "shopify://shop_images/images_1.png"
           }
         },
         "detail_2": {
           "type": "detail",
           "settings": {
-            "text": "Ideal for gym, office, travel & outdoor use"
+            "text": "Ideal for gym, office, travel & outdoor use",
+            "icon": "shopify://shop_images/images_1.png"
           }
         },
         "detail_3": {
           "type": "detail",
           "settings": {
-            "text": "Food-greade stainless steel"
+            "text": "Food-greade stainless steel",
+            "icon": "shopify://shop_images/images_1.png"
           }
         },
         "detail_4": {
           "type": "detail",
           "settings": {
-            "text": "Easy to clean & long-lasting."
+            "text": "Easy to clean & long-lasting.",
+            "icon": "shopify://shop_images/images_1.png"
           }
         },
         "spec_1": {
@@ -119,7 +126,9 @@
         "rating_stars_image": "shopify://shop_images/1df1532763ba0cbb0bdfc39ac7c35ce15ca9fcf2_18aa9d91-476f-441d-9146-a9354dc0ac71.png",
         "rating_platform_image": "shopify://shop_images/download_10.png",
         "description": "Keep drinks hot & cold for hours. Built for everyday hydration.",
-        "show_amazon_badge": true
+        "show_amazon_badge": true,
+        "amazon_stars_icon": "shopify://shop_images/1df1532763ba0cbb0bdfc39ac7c35ce15ca9fcf2_18aa9d91-476f-441d-9146-a9354dc0ac71.png",
+        "trust_badge_icon": "shopify://shop_images/dropped-image_1.png"
       }
     },
     "why_choose_section": {
