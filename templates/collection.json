@@ -15,6 +15,7 @@
         "leakproof": {
           "type": "feature",
           "settings": {
+            "custom_icon_image": "shopify://shop_images/truck.png",
             "icon_name": "truck",
             "icon_svg": "",
             "text": "Leakproof"
@@ -23,6 +24,7 @@
         "insulated_1": {
           "type": "feature",
           "settings": {
+            "custom_icon_image": "shopify://shop_images/shield-check.png",
             "icon_name": "shield-check",
             "icon_svg": "",
             "text": "24hr Insulated"
@@ -31,6 +33,7 @@
         "insulated_2": {
           "type": "feature",
           "settings": {
+            "custom_icon_image": "shopify://shop_images/droplets.png",
             "icon_name": "drop",
             "icon_svg": "",
             "text": "24hr Insulated"
@@ -39,6 +42,7 @@
         "durable": {
           "type": "feature",
           "settings": {
+            "custom_icon_image": "shopify://shop_images/shield-half.png",
             "icon_name": "shield",
             "icon_svg": "",
             "text": "Durable steel"
