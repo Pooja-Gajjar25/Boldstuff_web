@@ -45,7 +45,11 @@
         {%- endif -%}
       </a>
 
-      {%- if product_card_product.tags contains 'Best Seller' or product_card_product.tags contains 'BEST SELLER' -%}
+      {%- if product_card_product.tags contains 'Bestseller'
+        or product_card_product.tags contains 'bestseller'
+        or product_card_product.tags contains 'Best Seller'
+        or product_card_product.tags contains 'BEST SELLER'
+      -%}
         <div class="card-badge">BEST SELLER</div>
       {%- endif -%}
     </div>
@@ -156,15 +160,27 @@
   }
   .card-badge {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    background: #d48c44;
+    top: 15px;
+    left: 0;
+    background: #c69c6d;
     color: #fff;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 2px;
+    padding: 4px 12px;
+    text-transform: uppercase;
     letter-spacing: 0.5px;
+    z-index: 2;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  .card-badge::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 5px solid #8e6b42;
+    border-left: 5px solid transparent;
   }
   .card-divider {
     height: 1px;

@@ -2,6 +2,9 @@
   <div class="row">
     {%- if settings.show_collection -%}
       <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 normal-sidebar sidebar_content">
+        <div class="collection-top-bar mb-3">
+          <span style="font-weight: 600;">Filters</span>
+        </div>
         {% render 'ishi-sidebar-content' %}
       </div>
     {%- endif -%}
@@ -10,13 +13,31 @@
       <div class="collection-top-bar">
         <div class="breadcrumb-wrapper">
           <nav class="breadcrumb" aria-label="breadcrumbs">
-            <a href="{{ routes.root_url }}">Home</a>
+            <span class="breadcrumb-label">Home</span>
             <span class="divider">/</span>
-            <span>{{ collection.title }}</span>
+            <span class="breadcrumb-current">{{ collection.title }}</span>
           </nav>
         </div>
-      </div>
 
+        <div class="sort-by-wrapper">
+          <label for="SortBy-Grid" class="sort-label">Sort by /</label>
+          <div class="select-wrapper">
+            <select name="sort_by" class="sort-select" id="SortBy-Grid" aria-describedby="a11y-refresh-page-message">
+              {%- for option in collection.sort_options -%}
+                <option
+                  value="{{ option.value }}"
+                  {% if option.value == collection.sort_by %}
+                    selected="selected"
+                  {% endif %}
+                >
+                  {{ option.name }}
+                </option>
+              {%- endfor -%}
+            </select>
+            <i class="fa fa-chevron-down"></i>
+          </div>
+        </div>
+      </div>
       <div id="ProductGridContainer">
         {%- paginate collection.products by section.settings.products_per_page -%}
           {%- if collection.products.size == 0 -%}
@@ -136,12 +157,92 @@
     margin: 0;
   }
 
+  .collection-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1f2027;
+    padding: 0 20px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    height: 50px;
+    margin-bottom: 20px;
+  }
+
   /* Sidebar Styling */
   .sidebar_content {
-    background: #1f2027;
-    padding: 30px 20px !important;
-    border-right: 1px solid #2a2a2c;
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
   }
+
+  /* Hide default filter title since we added a custom header */
+  .facets__heading {
+    display: none !important;
+  }
+
+  .mb-3 {
+    margin-bottom: 20px;
+  }
+
+  .breadcrumb {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    font-size: 14px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .breadcrumb-label {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .breadcrumb-current {
+    color: #888;
+  }
+
+  .sort-by-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sort-label {
+    margin: 0;
+    font-weight: 500;
+    color: #888;
+    font-size: 13px;
+  }
+
+  .select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .sort-select {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    padding-right: 20px;
+    appearance: none;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .select-wrapper i {
+    position: absolute;
+    right: 0;
+    pointer-events: none;
+    font-size: 10px;
+    color: #fff;
+  }
+
   .sidebar-title {
     color: #fff !important;
     font-size: 14px !important;
@@ -154,8 +255,17 @@
   }
 
   /* Facets / Filters */
+  .facets__form {
+    padding: 0 20px;
+  }
+
   .facets__disclosure {
     margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #333;
+  }
+  .facets__disclosure:last-child {
+    border-bottom: none;
   }
   .facets__summary span {
     color: #fff;
@@ -435,3 +545,16 @@
   ]
 }
 {% endschema %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const sortSelect = document.getElementById('SortBy-Grid');
+    if (sortSelect) {
+      sortSelect.addEventListener('change', function (e) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('sort_by', e.target.value);
+        window.location.href = url.href;
+      });
+    }
+  });
+</script>

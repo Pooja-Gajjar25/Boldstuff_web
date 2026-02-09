@@ -30,9 +30,9 @@
                     >
                   {% else %}
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" />
-                      <circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="1.5" />
-                      <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <circle cx="12" cy="12" r="10" stroke="#ff6b35" stroke-width="1" />
+                      <circle cx="12" cy="12" r="7" stroke="#ff6b35" stroke-width="1.5" />
+                      <path d="M9 12L11 14L15 10" stroke="#ff6b35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                   {% endif %}
                 </span>
@@ -41,6 +41,14 @@
             {% endif %}
           {% endfor %}
         </ul>
+
+        {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+          <div class="boldstuff-why-choose__button-wrapper">
+            <a href="{{ section.settings.button_link }}" class="boldstuff-button">
+              {{ section.settings.button_text }}
+            </a>
+          </div>
+        {% endif %}
 
         {% if section.settings.trust_info != blank %}
           <div class="boldstuff-why-choose__trust-bar">
@@ -74,26 +82,20 @@
         {% endif %}
       </div>
 
-      {% comment %}
+      {% if section.settings.image != blank %}
         <div class="boldstuff-why-choose__image-column">
-          {% if section.settings.image != blank %}
-            <div class="boldstuff-why-choose__image-wrapper">
-              <img
-                src="{{ section.settings.image | image_url: width: 1000 }}"
-                alt="{{ section.settings.image.alt | escape }}"
-                loading="lazy"
-                width="{{ section.settings.image.width }}"
-                height="{{ section.settings.image.height }}"
-                class="boldstuff-why-choose__image"
-              >
-            </div>
-          {% else %}
-            <div class="boldstuff-why-choose__image-wrapper placeholder">
-              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-            </div>
-          {% endif %}
+          <div class="boldstuff-why-choose__image-wrapper">
+            <img
+              src="{{ section.settings.image | image_url: width: 1000 }}"
+              alt="{{ section.settings.image.alt | escape }}"
+              loading="lazy"
+              width="{{ section.settings.image.width }}"
+              height="{{ section.settings.image.height }}"
+              class="boldstuff-why-choose__image"
+            >
+          </div>
         </div>
-      {% endcomment %}
+      {% endif %}
     </div>
   </div>
 </div>
@@ -327,6 +329,28 @@
     height: auto;
     display: block;
   }
+
+  .boldstuff-why-choose__button-wrapper {
+    margin-bottom: 30px;
+  }
+
+  .boldstuff-button {
+    display: inline-block;
+    background-color: #ff6b35;
+    color: #ffffff;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+  }
+
+  .boldstuff-button:hover {
+    background-color: #e55a2b;
+    color: #ffffff;
+  }
 </style>
 
 {% schema %}
@@ -345,6 +369,17 @@
       "label": "Heading",
       "default": "Why Choose [BOLDSTUFF] Bottles?",
       "info": "Use [ ] to highlight text in orange"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
     },
     {
       "type": "image_picker",
