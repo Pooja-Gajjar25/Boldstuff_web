@@ -373,7 +373,9 @@
 
         <a href="{{ routes.cart_url }}" class="action-icon">
           <i class="fa fa-shopping-cart"></i>
-          <span class="cart-count-badge">{{ cart.item_count }}</span>
+          {% if cart.item_count > 0 %}
+            <span class="cart-count-badge">{{ cart.item_count }}</span>
+          {% endif %}
         </a>
 
         {% if section.settings.button_text != blank %}
