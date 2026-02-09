@@ -124,7 +124,7 @@
         "brand_color": "#ff6b35",
         "title_suffix": "Insulated Stainless Steel Water Bottle",
         "rating_stars_image": "shopify://shop_images/1df1532763ba0cbb0bdfc39ac7c35ce15ca9fcf2_18aa9d91-476f-441d-9146-a9354dc0ac71.png",
-        "rating_platform_image": "shopify://shop_images/download_10.png",
+        "rating_platform_image": "shopify://shop_images/Screenshot_2026-02-09_at_6.08.27_PM-removebg-preview.png",
         "description": "Keep drinks hot & cold for hours. Built for everyday hydration.",
         "show_amazon_badge": true,
         "amazon_stars_icon": "shopify://shop_images/1df1532763ba0cbb0bdfc39ac7c35ce15ca9fcf2_18aa9d91-476f-441d-9146-a9354dc0ac71.png",
@@ -167,6 +167,8 @@
       ],
       "settings": {
         "title": "Why Choose [BOLDSTUFF] Bottles?",
+        "button_text": "Shop Now",
+        "button_link": "",
         "feature_icon": "shopify://shop_images/images_1.png",
         "trust_label": "",
         "trust_platform": "",
