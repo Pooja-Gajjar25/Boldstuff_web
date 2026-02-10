@@ -49,12 +49,7 @@
           }
         }
       },
-      "block_order": [
-        "leakproof",
-        "insulated_1",
-        "insulated_2",
-        "durable"
-      ],
+      "block_order": ["leakproof", "insulated_1", "insulated_2", "durable"],
       "settings": {
         "bg_image": "shopify://shop_images/d62a455d7271a08a8695b69644a2b25c32e84f4c.png",
         "title": "Insulated water Bottles",
@@ -77,11 +72,9 @@
           }
         }
       },
-      "block_order": [
-        "boldstuff_filters_ui"
-      ],
+      "block_order": ["boldstuff_filters_ui"],
       "settings": {
-        "products_per_page": 12,
+        "products_per_page": 6,
         "enable_sorting": true
       }
     },
