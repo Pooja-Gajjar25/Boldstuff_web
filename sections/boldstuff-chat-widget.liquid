@@ -1,0 +1,417 @@
+{% schema %}
+{
+  "name": "AI Chat Widget",
+  "settings": [
+    {
+      "type": "text",
+      "id": "chat_title",
+      "label": "Chat Title",
+      "default": "Boldstuff Bottle Expert"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar",
+      "label": "Agent Avatar"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Color",
+      "default": "#ff5722"
+    },
+    {
+      "type": "color",
+      "id": "secondary_color",
+      "label": "Secondary Background (Header)",
+      "default": "#000000"
+    },
+    {
+      "type": "textarea",
+      "id": "welcome_message",
+      "label": "Welcome Message",
+      "default": "Hello! 😊 Looking for the best insulated bottle? Let me help you out!"
+    }
+  ],
+  "presets": [
+    {
+      "name": "AI Chat Widget"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="boldstuff-chat-widget">
+  <!-- Launcher Button -->
+  <button id="chat-launcher" class="chat-launcher">
+    {% if section.settings.avatar != blank %}
+      <img src="{{ section.settings.avatar | image_url: width: 60 }}" alt="Chat" width="30" height="30">
+    {% else %}
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="white"/>
+      </svg>
+    {% endif %}
+  </button>
+
+  <!-- Chat Window -->
+  <div id="chat-window" class="chat-window">
+    <!-- Header -->
+    <div class="chat-header" style="background-color: {{ section.settings.secondary_color }};">
+      <div class="header-info">
+        <div class="header-avatar">
+          {% if section.settings.avatar != blank %}
+            <img src="{{ section.settings.avatar | image_url: width: 80 }}" alt="Avatar" width="40" height="40">
+          {% else %}
+            <div class="avatar-placeholder">AI</div>
+          {% endif %}
+        </div>
+        <span class="header-title">{{ section.settings.chat_title }}</span>
+      </div>
+      <button id="chat-close" class="chat-close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Messages Area -->
+    <div class="chat-messages" id="chat-messages">
+      <!-- Welcome Message -->
+      <div class="message message-bot">
+        <div class="message-content">
+          {{ section.settings.welcome_message }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="chat-input-area">
+      <div class="input-wrapper" style="border-color: {{ section.settings.primary_color }};">
+        <input type="text" id="chat-input" placeholder="Ask me anything">
+        <button id="chat-send" style="background-color: {{ section.settings.primary_color }};">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
+        </button>
+      </div>
+      <div class="powered-by">Powered by <span>Verifast</span></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .boldstuff-chat-widget {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  /* Launcher */
+  .chat-launcher {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: {{ section.settings.primary_color }};
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s;
+  }
+
+  .chat-launcher:hover {
+    transform: scale(1.05);
+  }
+
+  .chat-launcher img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Chat Window */
+  .chat-window {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    width: 350px;
+    height: 500px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+
+  .chat-window.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  /* Header */
+  .chat-header {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+  }
+
+  .header-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-avatar {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .header-title {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .chat-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  /* Messages */
+  .chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #fdfdfd;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .message {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .message-bot {
+    align-self: flex-start;
+  }
+
+  .message-user {
+    align-self: flex-end;
+  }
+
+  .message-content {
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .message-bot .message-content {
+    background: #f7f7f7;
+    color: #333;
+    border-top-left-radius: 2px;
+  }
+
+  .message-user .message-content {
+    background: {{ section.settings.primary_color }};
+    color: white;
+    border-top-right-radius: 2px;
+  }
+
+  /* Input Area */
+  .chat-input-area {
+    padding: 15px;
+    background: #fff;
+    border-top: 1px solid #eee;
+  }
+
+  .input-wrapper {
+    display: flex;
+    border: 2px solid;
+    border-radius: 25px;
+    padding: 5px;
+    overflow: hidden;
+  }
+
+  .input-wrapper input {
+    flex: 1;
+    border: none;
+    padding: 8px 15px;
+    outline: none;
+    font-size: 14px;
+  }
+
+  .input-wrapper button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .powered-by {
+    text-align: center;
+    font-size: 10px;
+    color: #999;
+    margin-top: 8px;
+  }
+
+  .powered-by span {
+    color: {{ section.settings.primary_color }};
+    font-weight: 700;
+  }
+</style>
+
+<script>
+  (function () {
+    function initChatWidget() {
+      const launcher = document.getElementById('chat-launcher');
+      const chatWindow = document.getElementById('chat-window'); // Renamed variable
+      const closeBtn = document.getElementById('chat-close');
+      const sendBtn = document.getElementById('chat-send');
+      const input = document.getElementById('chat-input');
+      const messages = document.getElementById('chat-messages');
+
+      if (!launcher || !chatWindow) return;
+
+      // Unbind previous listeners to avoid duplicates if re-initialized
+      const newLauncher = launcher.cloneNode(true);
+      if (launcher.parentNode) launcher.parentNode.replaceChild(newLauncher, launcher);
+
+      const newCloseBtn = closeBtn.cloneNode(true);
+      if (closeBtn.parentNode) closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
+
+      // Re-select element referneces after replacement
+      const currentLauncher = document.getElementById('chat-launcher');
+      const currentCloseBtn = document.getElementById('chat-close');
+
+      // Toggle Chat
+      function toggleChat() {
+        chatWindow.classList.toggle('open');
+      }
+
+      currentLauncher.addEventListener('click', toggleChat);
+      currentCloseBtn.addEventListener('click', toggleChat);
+
+      // Send Message Logic
+      // Remove old listeners from send button and input
+      const newSendBtn = sendBtn.cloneNode(true);
+      if (sendBtn.parentNode) sendBtn.parentNode.replaceChild(newSendBtn, sendBtn);
+      const currentSendBtn = document.getElementById('chat-send');
+
+      const newInput = input.cloneNode(true);
+      if (input.parentNode) input.parentNode.replaceChild(newInput, input);
+      const currentInput = document.getElementById('chat-input');
+
+      function getBotResponse(input) {
+        const lowerInput = input.toLowerCase();
+
+        // Greetings
+        if (['hi', 'hello', 'hey', 'hy', 'hola'].includes(lowerInput)) {
+          return 'Hello! 😊 Welcome to Boldstuff. How can I help you find the perfect hydration companion?';
+        }
+
+        // Product Suggestion / General Bottle Queries
+        if (
+          lowerInput.includes('bottle') ||
+          lowerInput.includes('water') ||
+          lowerInput.includes('flask') ||
+          lowerInput.includes('sipper') ||
+          lowerInput.includes('suggestion') ||
+          lowerInput.includes('recommend') ||
+          lowerInput.includes('buy') ||
+          lowerInput.includes('shop')
+        ) {
+          return 'Our <b>Boldstuff</b> insulated steel bottles are a customer favorite! 🧴<br><br>They keep beverages <b>Hot or Cold for 6+ hours</b>, are 100% leakproof, and built for travel. <br><br>We have sizes from 1.5L to 3L. Would you like to check the <a href="/collections/all" style="color:inherit;text-decoration:underline;font-weight:bold;">pricing</a> or <a href="/collections/all" style="color:inherit;text-decoration:underline;font-weight:bold;">shop now</a>?';
+        }
+
+        // Price Queries
+        if (lowerInput.includes('price') || lowerInput.includes('cost') || lowerInput.includes('how much')) {
+          return 'Our premium bottles start at just <b>₹999</b> (1.5L) and go up to <b>₹1,499</b> (3L). <br><br>All boldstuff bottles come with a <b>1-year warranty</b> for peace of mind! 🛡️';
+        }
+
+        // Default Fallback
+        return "I'm your personal Boldstuff assistant! 🤖<br><br>I can help you with:<br>✨ Product recommendations<br>💰 Pricing & Warranty<br>📦 Shipping queries<br><br>Try asking: <i>'Suggest a bottle'</i> or <i>'What is the price?'</i>";
+      }
+
+      function sendMessage() {
+        const text = currentInput.value.trim();
+        if (!text) return;
+
+        // Add User Message
+        addMessage(text, 'user');
+        currentInput.value = '';
+
+        // Simulate Bot Response
+        setTimeout(() => {
+          const response = getBotResponse(text);
+          addMessage(response, 'bot');
+        }, 1000);
+      }
+
+      function addMessage(text, sender) {
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('message', `message-${sender}`);
+
+        const contentDiv = document.createElement('div');
+        contentDiv.classList.add('message-content');
+        contentDiv.innerHTML = text;
+
+        msgDiv.appendChild(contentDiv);
+        messages.appendChild(msgDiv);
+
+        // Scroll to bottom
+        messages.scrollTop = messages.scrollHeight;
+      }
+
+      currentSendBtn.addEventListener('click', sendMessage);
+      currentInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') sendMessage();
+      });
+    }
+
+    // Initialize on load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initChatWidget);
+    } else {
+      initChatWidget();
+    }
+
+    // Initialize on Shopify Theme Editor events
+    document.addEventListener('shopify:section:load', initChatWidget);
+  })();
+</script>

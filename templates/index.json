@@ -233,6 +233,15 @@
         "padding_top_mobile": 60,
         "padding_bottom_mobile": 40
       }
+    },
+    "chat_widget": {
+      "type": "boldstuff-chat-widget",
+      "settings": {
+        "chat_title": "Boldstuff Bottle Expert",
+        "primary_color": "#ff5722",
+        "secondary_color": "#000000",
+        "welcome_message": "Hello! 😊 Welcome to Boldstuff. Need help finding the perfect water bottle?"
+      }
     }
   },
   "order": [
@@ -240,6 +249,7 @@
     "featured_bottles_section",
     "why_choose_boldstuff",
     "boldstuff_testimonials",
-    "boldstuff_footer"
+    "boldstuff_footer",
+    "chat_widget"
   ]
 }
