@@ -1,0 +1,619 @@
+{% comment %}
+  BOLDSTUFF Premium Cart Footer Section
+  Matches the dark theme aesthetic from home and product pages
+{% endcomment %}
+
+<style>
+  /* Cart Footer Dark Theme Styling */
+  .boldstuff-cart-footer {
+    background: #0a0a0a;
+    padding: 0 0 40px;
+  }
+
+  .boldstuff-cart-footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .cart-footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 450px;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* Reassurance Section */
+  .cart-reassurance-section {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 30px;
+  }
+
+  .cart-reassurance-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #ffffff;
+  }
+
+  .cart-reassurance-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+
+  .cart-reassurance-item {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .cart-reassurance-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 87, 34, 0.1);
+    border-radius: 8px;
+  }
+
+  .cart-reassurance-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  .cart-reassurance-content h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    color: #ffffff;
+  }
+
+  .cart-reassurance-content p {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+  }
+
+  /* Cart Summary */
+  .cart-summary-section {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 30px;
+    position: sticky;
+    top: 20px;
+  }
+
+  .cart-summary-title {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 25px;
+    color: #ffffff;
+  }
+
+  /* Cart Note */
+  .cart-note-wrapper {
+    margin-bottom: 25px;
+  }
+
+  .cart-note-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .cart-note-textarea {
+    width: 100%;
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: #ffffff;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+  }
+
+  .cart-note-textarea:focus {
+    outline: none;
+    border-color: #ff5722;
+  }
+
+  .cart-note-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Subtotal */
+  .cart-subtotal-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid #ff5722;
+    margin-bottom: 20px;
+  }
+
+  .cart-subtotal-label {
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .cart-subtotal-value {
+    font-size: 28px;
+    font-weight: 900;
+    color: #ff5722;
+  }
+
+  .cart-tax-note {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 25px;
+    line-height: 1.6;
+  }
+
+  /* Checkout Button */
+  .cart-checkout-btn {
+    width: 100%;
+    background: #ff5722;
+    color: #ffffff;
+    border: none;
+    padding: 18px 30px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+  }
+
+  .cart-checkout-btn:hover:not(:disabled) {
+    background: #e64a19;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 87, 34, 0.4);
+  }
+
+  .cart-checkout-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .cart-continue-shopping {
+    display: block;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+
+  .cart-continue-shopping:hover {
+    color: #ff5722;
+  }
+
+  /* Discounts */
+  .cart-discounts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+  }
+
+  .cart-discount-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(76, 175, 80, 0.1);
+    border-radius: 6px;
+    color: #4caf50;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .cart-discount-item svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 991px) {
+    .cart-footer-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .cart-summary-section {
+      position: static;
+    }
+
+    .cart-reassurance-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .cart-reassurance-section,
+    .cart-summary-section {
+      padding: 20px;
+    }
+
+    .cart-subtotal-value {
+      font-size: 24px;
+    }
+
+    .cart-checkout-btn {
+      padding: 15px 25px;
+      font-size: 16px;
+    }
+  }
+</style>
+
+<div
+  class="boldstuff-cart-footer{% if cart == empty %} is-empty{% endif %}"
+  id="main-cart-footer"
+  data-id="{{ section.id }}"
+>
+  <div class="boldstuff-cart-footer-container">
+    {% if cart != empty %}
+      <div class="cart-footer-grid">
+        <!-- Reassurance Section -->
+        {% if section.settings.enable_cartpage %}
+          <div class="cart-reassurance-section">
+            <h3 class="cart-reassurance-title">Why Shop With Us</h3>
+            <div class="cart-reassurance-grid">
+              {% if section.settings['reassurance-title1'] != blank %}
+                <div class="cart-reassurance-item">
+                  <div class="cart-reassurance-icon">
+                    {% if section.settings['reassurance-image1'] != blank %}
+                      <img
+                        src="{{ section.settings['reassurance-image1'] | image_url: width: 48 }}"
+                        alt="{{ section.settings['reassurance-title1'] }}"
+                        width="24"
+                        height="24"
+                        loading="lazy"
+                      >
+                    {% else %}
+                      <i class="fa fa-truck" style="color: #ff5722; font-size: 20px;"></i>
+                    {% endif %}
+                  </div>
+                  <div class="cart-reassurance-content">
+                    <h4>{{ section.settings['reassurance-title1'] }}</h4>
+                    <p>{{ section.settings['reassurance-desc1'] }}</p>
+                  </div>
+                </div>
+              {% endif %}
+
+              {% if section.settings['reassurance-title2'] != blank %}
+                <div class="cart-reassurance-item">
+                  <div class="cart-reassurance-icon">
+                    {% if section.settings['reassurance-image2'] != blank %}
+                      <img
+                        src="{{ section.settings['reassurance-image2'] | image_url: width: 48 }}"
+                        alt="{{ section.settings['reassurance-title2'] }}"
+                        width="24"
+                        height="24"
+                        loading="lazy"
+                      >
+                    {% else %}
+                      <i class="fa fa-shield" style="color: #ff5722; font-size: 20px;"></i>
+                    {% endif %}
+                  </div>
+                  <div class="cart-reassurance-content">
+                    <h4>{{ section.settings['reassurance-title2'] }}</h4>
+                    <p>{{ section.settings['reassurance-desc2'] }}</p>
+                  </div>
+                </div>
+              {% endif %}
+
+              {% if section.settings['reassurance-title3'] != blank %}
+                <div class="cart-reassurance-item">
+                  <div class="cart-reassurance-icon">
+                    {% if section.settings['reassurance-image3'] != blank %}
+                      <img
+                        src="{{ section.settings['reassurance-image3'] | image_url: width: 48 }}"
+                        alt="{{ section.settings['reassurance-title3'] }}"
+                        width="24"
+                        height="24"
+                        loading="lazy"
+                      >
+                    {% else %}
+                      <i class="fa fa-gift" style="color: #ff5722; font-size: 20px;"></i>
+                    {% endif %}
+                  </div>
+                  <div class="cart-reassurance-content">
+                    <h4>{{ section.settings['reassurance-title3'] }}</h4>
+                    <p>{{ section.settings['reassurance-desc3'] }}</p>
+                  </div>
+                </div>
+              {% endif %}
+
+              {% if section.settings['reassurance-title4'] != blank %}
+                <div class="cart-reassurance-item">
+                  <div class="cart-reassurance-icon">
+                    {% if section.settings['reassurance-image4'] != blank %}
+                      <img
+                        src="{{ section.settings['reassurance-image4'] | image_url: width: 48 }}"
+                        alt="{{ section.settings['reassurance-title4'] }}"
+                        width="24"
+                        height="24"
+                        loading="lazy"
+                      >
+                    {% else %}
+                      <i class="fa fa-star" style="color: #ff5722; font-size: 20px;"></i>
+                    {% endif %}
+                  </div>
+                  <div class="cart-reassurance-content">
+                    <h4>{{ section.settings['reassurance-title4'] }}</h4>
+                    <p>{{ section.settings['reassurance-desc4'] }}</p>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- Cart Summary -->
+        <div class="cart-summary-section">
+          <h3 class="cart-summary-title">Order Summary</h3>
+
+          {% if section.settings.show_cart_note %}
+            <cart-note class="cart-note-wrapper">
+              <label for="Cart-note" class="cart-note-label">{{ 'sections.cart.note' | t }}</label>
+              <textarea
+                class="cart-note-textarea"
+                name="note"
+                form="cart"
+                id="Cart-note"
+                placeholder="{{ 'sections.cart.note' | t }}"
+              >{{ cart.note }}</textarea>
+            </cart-note>
+          {% endif %}
+
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when '@app' %}
+                {% render block %}
+              {% when 'subtotal' %}
+                <div class="js-contents" {{ block.shopify_attributes }}>
+                  {% if cart.cart_level_discount_applications.size > 0 %}
+                    <ul class="cart-discounts-list" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                      {% for discount in cart.cart_level_discount_applications %}
+                        <li class="cart-discount-item">
+                          <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.5 6.5L4.5 9.5L10.5 2.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                          {{ discount.title }} (-{{ discount.total_allocated_amount | money }})
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+
+                  <div class="cart-subtotal-row">
+                    <span class="cart-subtotal-label">Subtotal</span>
+                    <span class="cart-subtotal-value">{{ cart.total_price | money_with_currency }}</span>
+                  </div>
+
+                  <p class="cart-tax-note">
+                    {% if cart.taxes_included and shop.shipping_policy.body != blank %}
+                      {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                    {% elsif cart.taxes_included %}
+                      {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+                    {% elsif shop.shipping_policy.body != blank %}
+                      {{
+                        'sections.cart.taxes_and_shipping_policy_at_checkout_html'
+                        | t: link: shop.shipping_policy.url
+                      }}
+                    {% else %}
+                      {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
+                    {% endif %}
+                  </p>
+                </div>
+              {% else %}
+                <div class="cart-ctas" {{ block.shopify_attributes }}>
+                  <noscript>
+                    <button type="submit" class="cart-checkout-btn" form="cart">
+                      {{ 'sections.cart.update' | t }}
+                    </button>
+                  </noscript>
+
+                  <button
+                    type="submit"
+                    id="checkout"
+                    class="cart-checkout-btn"
+                    name="checkout"
+                    {% if cart == empty %}
+                      disabled
+                    {% endif %}
+                    form="cart"
+                  >
+                    {{ 'sections.cart.checkout' | t }}
+                  </button>
+
+                  <a href="{{ routes.all_products_collection_url }}" class="cart-continue-shopping">
+                    {{ 'general.continue_shopping' | t }}
+                  </a>
+                </div>
+
+                {% if additional_checkout_buttons %}
+                  <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
+                    {{ content_for_additional_checkout_buttons }}
+                  </div>
+                {% endif %}
+            {% endcase %}
+          {% endfor %}
+
+          <div class="center" id="cart-errors"></div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% javascript %}
+  class CartNote extends HTMLElement {
+    constructor() {
+      super();
+
+      this.addEventListener(
+        'change',
+        debounce((event) => {
+          const body = JSON.stringify({ note: event.target.value });
+          fetch(`${routes.cart_update_url}`, { ...fetchConfig(), ...{ body } });
+        }, 300)
+      );
+    }
+  }
+
+  customElements.define('cart-note', CartNote);
+{% endjavascript %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    function isIE() {
+      const ua = window.navigator.userAgent;
+      const msie = ua.indexOf('MSIE ');
+      const trident = ua.indexOf('Trident/');
+      return msie > 0 || trident > 0;
+    }
+    if (!isIE()) return;
+    const cartSubmitInput = document.createElement('input');
+    cartSubmitInput.setAttribute('name', 'checkout');
+    cartSubmitInput.setAttribute('type', 'hidden');
+    document.querySelector('#cart').appendChild(cartSubmitInput);
+    document.querySelector('#checkout').addEventListener('click', function (event) {
+      document.querySelector('#cart').submit();
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "BOLDSTUFF Cart Footer",
+  "class": "boldstuff-cart-footer-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_cart_note",
+      "default": true,
+      "label": "Show cart note"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_cartpage",
+      "label": "Enable Reassurance Section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Reassurance Item 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "reassurance-image1",
+      "label": "Icon Image"
+    },
+    {
+      "type": "text",
+      "id": "reassurance-title1",
+      "label": "Title",
+      "default": "Free Delivery"
+    },
+    {
+      "type": "textarea",
+      "id": "reassurance-desc1",
+      "label": "Description",
+      "default": "On orders over ₹999"
+    },
+    {
+      "type": "header",
+      "content": "Reassurance Item 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "reassurance-image2",
+      "label": "Icon Image"
+    },
+    {
+      "type": "text",
+      "id": "reassurance-title2",
+      "label": "Title",
+      "default": "Secure Payment"
+    },
+    {
+      "type": "textarea",
+      "id": "reassurance-desc2",
+      "label": "Description",
+      "default": "100% secure transactions"
+    },
+    {
+      "type": "header",
+      "content": "Reassurance Item 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "reassurance-image3",
+      "label": "Icon Image"
+    },
+    {
+      "type": "text",
+      "id": "reassurance-title3",
+      "label": "Title",
+      "default": "Easy Returns"
+    },
+    {
+      "type": "textarea",
+      "id": "reassurance-desc3",
+      "label": "Description",
+      "default": "30-day return policy"
+    },
+    {
+      "type": "header",
+      "content": "Reassurance Item 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "reassurance-image4",
+      "label": "Icon Image"
+    },
+    {
+      "type": "text",
+      "id": "reassurance-title4",
+      "label": "Title",
+      "default": "Premium Quality"
+    },
+    {
+      "type": "textarea",
+      "id": "reassurance-desc4",
+      "label": "Description",
+      "default": "Built to last"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "subtotal",
+      "name": "Subtotal",
+      "limit": 1
+    },
+    {
+      "type": "buttons",
+      "name": "Checkout Buttons",
+      "limit": 1
+    },
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}
