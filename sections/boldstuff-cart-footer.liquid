@@ -6,14 +6,20 @@
 <style>
   /* Cart Footer Dark Theme Styling */
   .boldstuff-cart-footer {
-    background: #0a0a0a;
+    background: #0a0a0a !important;
     padding: 0 0 40px;
+  }
+
+  /* Hide footer completely when cart is empty */
+  .boldstuff-cart-footer.is-empty {
+    display: none;
   }
 
   .boldstuff-cart-footer-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    background: #0a0a0a;
   }
 
   .cart-footer-grid {

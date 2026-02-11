@@ -14,110 +14,116 @@
           {% assign image = block.settings.product_image | default: product_item.featured_image %}
           {% assign title = block.settings.product_name | default: product_item.title %}
 
+          {% if product_item != blank %}
+            {% assign product_url = product_item.url %}
+          {% elsif block.settings.product_url != blank %}
+            {% assign product_url = block.settings.product_url %}
+          {% else %}
+            {% assign product_url = '#' %}
+          {% endif %}
+
           <div class="featured-bottle-card" {{ block.shopify_attributes }}>
-            {% if image != blank %}
-              <div class="featured-bottle-card__image-wrapper">
-                <img
-                  src="{{ image | image_url: width: 400 }}"
-                  alt="{{ title }}"
-                  width="400"
-                  height="400"
-                  class="featured-bottle-card__image"
-                  loading="lazy"
-                >
-              </div>
-            {% endif %}
-
-            <div class="featured-bottle-card__content">
-              {% if title != blank %}
-                <h3 class="featured-bottle-card__name">
-                  {{ title }}
-                  {% if block.settings.product_size != blank %}
-                    <span class="featured-bottle-card__size">{{ block.settings.product_size }}</span>
-                  {% endif %}
-                </h3>
+            <a href="{{ product_url }}" class="featured-bottle-card__link">
+              {% if image != blank %}
+                <div class="featured-bottle-card__image-wrapper">
+                  <img
+                    src="{{ image | image_url: width: 400 }}"
+                    alt="{{ title }}"
+                    width="400"
+                    height="400"
+                    class="featured-bottle-card__image"
+                    loading="lazy"
+                  >
+                </div>
               {% endif %}
 
-              <div class="featured-bottle-card__price">
-                {% if block.settings.product_price != blank %}
-                  ₹{{ block.settings.product_price }}
-                {% elsif product_item != blank %}
-                  {{ product_item.price | money }}
+              <div class="featured-bottle-card__content">
+                {% if title != blank %}
+                  <h3 class="featured-bottle-card__name">
+                    {{ title }}
+                    {% if block.settings.product_size != blank %}
+                      <span class="featured-bottle-card__size">{{ block.settings.product_size }}</span>
+                    {% endif %}
+                  </h3>
                 {% endif %}
-              </div>
 
-              {% if block.settings.feature_1 != blank or block.settings.feature_2 != blank %}
-                <ul class="featured-bottle-card__features">
-                  {% if block.settings.feature_1 != blank %}
-                    <li class="featured-bottle-card__feature">
-                      <span class="featured-bottle-card__check-icon">
-                        {% if block.settings.feature_icon != blank %}
-                          <img
-                            src="{{ block.settings.feature_icon | image_url: width: 40 }}"
-                            alt=""
-                            loading="lazy"
-                            width="16"
-                            height="16"
-                          >
-                        {% else %}
-                          <svg
-                            viewBox="0 0 20 20"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M4 10.5L8 14.5L16 6.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        {% endif %}
-                      </span>
-                      {{ block.settings.feature_1 }}
-                    </li>
+                <div class="featured-bottle-card__price">
+                  {% if block.settings.product_price != blank %}
+                    ₹{{ block.settings.product_price }}
+                  {% elsif product_item != blank %}
+                    {{ product_item.price | money }}
                   {% endif %}
-                  {% if block.settings.feature_2 != blank %}
-                    <li class="featured-bottle-card__feature">
-                      <span class="featured-bottle-card__check-icon">
-                        {% if block.settings.feature_icon != blank %}
-                          <img
-                            src="{{ block.settings.feature_icon | image_url: width: 40 }}"
-                            alt=""
-                            loading="lazy"
-                            width="16"
-                            height="16"
-                          >
-                        {% else %}
-                          <svg
-                            viewBox="0 0 20 20"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M4 10.5L8 14.5L16 6.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        {% endif %}
-                      </span>
-                      {{ block.settings.feature_2 }}
-                    </li>
-                  {% endif %}
-                </ul>
-              {% endif %}
+                </div>
 
-              {% if block.settings.button_text != blank %}
-                {% if product_item != blank and product_item.available %}
-                  <form method="post" action="{{ routes.cart_add_url }}" class="featured-bottle-card__form">
-                    <input type="hidden" name="id" value="{{ product_item.selected_or_first_available_variant.id }}">
-                    <button type="submit" class="featured-bottle-card__button">
+                {% if block.settings.feature_1 != blank or block.settings.feature_2 != blank %}
+                  <ul class="featured-bottle-card__features">
+                    {% if block.settings.feature_1 != blank %}
+                      <li class="featured-bottle-card__feature">
+                        <span class="featured-bottle-card__check-icon">
+                          {% if block.settings.feature_icon != blank %}
+                            <img
+                              src="{{ block.settings.feature_icon | image_url: width: 40 }}"
+                              alt=""
+                              loading="lazy"
+                              width="16"
+                              height="16"
+                            >
+                          {% else %}
+                            <svg
+                              viewBox="0 0 20 20"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M4 10.5L8 14.5L16 6.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          {% endif %}
+                        </span>
+                        {{ block.settings.feature_1 }}
+                      </li>
+                    {% endif %}
+                    {% if block.settings.feature_2 != blank %}
+                      <li class="featured-bottle-card__feature">
+                        <span class="featured-bottle-card__check-icon">
+                          {% if block.settings.feature_icon != blank %}
+                            <img
+                              src="{{ block.settings.feature_icon | image_url: width: 40 }}"
+                              alt=""
+                              loading="lazy"
+                              width="16"
+                              height="16"
+                            >
+                          {% else %}
+                            <svg
+                              viewBox="0 0 20 20"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M4 10.5L8 14.5L16 6.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          {% endif %}
+                        </span>
+                        {{ block.settings.feature_2 }}
+                      </li>
+                    {% endif %}
+                  </ul>
+                {% endif %}
+
+                {% if block.settings.button_text != blank %}
+                  {% if product_item != blank and product_item.available %}
+                    <span
+                      class="featured-bottle-card__button featured-bottle-card__button--add-to-cart"
+                      data-product-id="{{ product_item.selected_or_first_available_variant.id }}"
+                    >
                       {{ block.settings.button_text }}
-                    </button>
-                  </form>
-                {% elsif block.settings.product_url != blank %}
-                  <a href="{{ block.settings.product_url }}" class="featured-bottle-card__button">
-                    {{ block.settings.button_text }}
-                  </a>
-                {% else %}
-                  <button type="button" class="featured-bottle-card__button">
-                    {{ block.settings.button_text }}
-                  </button>
+                    </span>
+                  {% else %}
+                    <span class="featured-bottle-card__button">
+                      {{ block.settings.button_text }}
+                    </span>
+                  {% endif %}
                 {% endif %}
-              {% endif %}
-            </div>
+              </div>
+            </a>
           </div>
         {% endif %}
       {% endfor %}
@@ -226,6 +232,14 @@
   .featured-bottle-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .featured-bottle-card__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    height: 100%;
   }
 
   .featured-bottle-card__image-wrapper {

@@ -4,11 +4,20 @@
 {% endcomment %}
 
 <style>
-  /* Remove default page spacing */
+  /* Force dark background on entire cart page */
+  .template-cart,
+  .template-cart body,
+  .template-cart #MainContent,
   .template-cart .content-for-layout,
-  .template-cart #MainContent {
+  .template-cart main {
+    background: #0a0a0a !important;
     margin: 0 !important;
     padding: 0 !important;
+  }
+
+  /* Remove any white backgrounds from sections */
+  .template-cart .shopify-section {
+    background: transparent !important;
   }
 
   /* Cart Page Dark Theme Styling */
