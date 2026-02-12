@@ -15,6 +15,31 @@
     padding: 0 !important;
   }
 
+  /* Background image support */
+  .boldstuff-cart-wrapper.has-bg-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+  }
+
+  .boldstuff-cart-wrapper.has-bg-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 10, 10, 0.85);
+    z-index: 0;
+  }
+
+  .boldstuff-cart-wrapper.has-bg-image .boldstuff-cart-container {
+    position: relative;
+    z-index: 1;
+  }
+
   /* Remove any white backgrounds from sections */
   .template-cart .shopify-section {
     background: transparent !important;
@@ -334,7 +359,12 @@
   }
 </style>
 
-<div class="boldstuff-cart-wrapper">
+<div
+  class="boldstuff-cart-wrapper{% if section.settings.cart_background_image != blank %} has-bg-image{% endif %}"
+  {% if section.settings.cart_background_image != blank %}
+    style="background-image: url('{{ section.settings.cart_background_image | image_url: width: 2000 }}');"
+  {% endif %}
+>
   <div class="boldstuff-cart-container">
     <cart-items class="{% if cart == empty %}is-empty{% endif %}">
       {% if cart == empty %}
@@ -468,6 +498,14 @@
 {% schema %}
 {
   "name": "BOLDSTUFF Cart Items",
-  "class": "boldstuff-cart-section"
+  "class": "boldstuff-cart-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "cart_background_image",
+      "label": "Cart Background Image",
+      "info": "Upload a background image for the cart page. Leave empty for solid dark background."
+    }
+  ]
 }
 {% endschema %}

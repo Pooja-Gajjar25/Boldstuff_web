@@ -34,12 +34,16 @@
           }
         }
       },
-      "block_order": ["feature_1", "feature_2", "feature_3"],
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ],
       "settings": {
         "hero_image": "shopify://shop_images/black-theme-gym-related-landscape-backgroud-image.png",
         "hero_title": "Hydrate <b>Boldly.</b><br>Anywhere, Every Day.",
         "hero_description": "Premium insulated steel bottles built for hot Indian summers and cold mornings.",
-        "primary_button_label": "Shop All Water Bottles",
+        "primary_button_label": "Shop All Water Bottle",
         "primary_button_link": "shopify://collections/all",
         "secondary_button_label": "View Bestsellers",
         "secondary_button_link": "shopify://collections/all",
@@ -96,7 +100,11 @@
           }
         }
       },
-      "block_order": ["bottle_1", "bottle_2", "bottle_3"],
+      "block_order": [
+        "bottle_1",
+        "bottle_2",
+        "bottle_3"
+      ],
       "settings": {
         "section_title": "Featured Bottles",
         "section_background_image": "shopify://shop_images/c4fdb7fbced4bd0c24bd3d04b1379370870ef6a0.png",
@@ -133,9 +141,16 @@
           }
         }
       },
-      "block_order": ["feature_1", "feature_2", "feature_3", "feature_4"],
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4"
+      ],
       "settings": {
         "title": "Why Choose [BOLDSTUFF] Bottles?",
+        "button_text": "Shop Now",
+        "button_link": "",
         "image": "shopify://shop_images/Untitled_design_2.png",
         "feature_icon": "shopify://shop_images/images_1.png",
         "trust_label": "Rated",
@@ -180,7 +195,11 @@
           }
         }
       },
-      "block_order": ["testimonial_1", "testimonial_2", "testimonial_3"],
+      "block_order": [
+        "testimonial_1",
+        "testimonial_2",
+        "testimonial_3"
+      ],
       "settings": {
         "title": "What our Customers say",
         "stars_image": "shopify://shop_images/1df1532763ba0cbb0bdfc39ac7c35ce15ca9fcf2.png",
@@ -221,7 +240,11 @@
           }
         }
       },
-      "block_order": ["shop", "support", "legal"],
+      "block_order": [
+        "shop",
+        "support",
+        "legal"
+      ],
       "settings": {
         "description_heading": "Built for Everyday Headlife",
         "description_text": "From the hustle to calls ti everything wired, sweet freestyle comfort for those who hustle.",
