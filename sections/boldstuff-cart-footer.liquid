@@ -6,8 +6,14 @@
 <style>
   /* Cart Footer Transparent Styling */
   .boldstuff-cart-footer {
-    background: transparent !important;
-    padding: 0 0 40px;
+    padding: 20px 0 40px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    margin-top: -50px; /* Pull up to cover any gap from previous section */
+    position: relative;
+    z-index: 2; /* Ensure it sits above if needed */
   }
 
   /* Hide footer completely when cart is empty */
@@ -34,13 +40,35 @@
     background: #1a1a1a;
     border-radius: 12px;
     padding: 30px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+
+  .cart-reassurance-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 0;
+  }
+
+  .cart-reassurance-section > * {
+    position: relative;
+    z-index: 1;
   }
 
   .cart-reassurance-title {
     font-size: 20px;
     font-weight: 700;
-    margin-bottom: 25px;
+    margin: 0 0 25px 0;
     color: #ffffff;
+    line-height: 1.2;
   }
 
   .cart-reassurance-grid {
@@ -87,18 +115,42 @@
 
   /* Cart Summary */
   .cart-summary-section {
-    background: #1a1a1a;
+    background-color: #1a1a1a;
     border-radius: 12px;
     padding: 30px;
-    position: sticky;
-    top: 20px;
+    /* Removed sticky to ensure alignment */
+    /* position: sticky; */
+    /* top: 20px; */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    height: fit-content;
+  }
+
+  .cart-summary-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    z-index: 0;
+  }
+
+  .cart-summary-section > * {
+    position: relative;
+    z-index: 1;
   }
 
   .cart-summary-title {
     font-size: 24px;
     font-weight: 900;
-    margin-bottom: 25px;
+    margin: 0 0 25px 0;
     color: #ffffff;
+    line-height: 1.2;
   }
 
   /* Cart Note */
@@ -270,13 +322,21 @@
   class="boldstuff-cart-footer{% if cart == empty %} is-empty{% endif %}"
   id="main-cart-footer"
   data-id="{{ section.id }}"
+  {% if section.settings.section_background_image %}
+    style="background-image: url('{{ section.settings.section_background_image | image_url: width: 1920 }}');"
+  {% endif %}
 >
   <div class="boldstuff-cart-footer-container">
     {% if cart != empty %}
       <div class="cart-footer-grid">
         <!-- Reassurance Section -->
         {% if section.settings.enable_cartpage %}
-          <div class="cart-reassurance-section">
+          <div
+            class="cart-reassurance-section"
+            {% if section.settings.reassurance_background_image %}
+              style="background-image: url('{{ section.settings.reassurance_background_image | image_url: width: 800 }}');"
+            {% endif %}
+          >
             <h3 class="cart-reassurance-title">Why Shop With Us</h3>
             <div class="cart-reassurance-grid">
               {% if section.settings['reassurance-title1'] != blank %}
@@ -371,7 +431,12 @@
         {% endif %}
 
         <!-- Cart Summary -->
-        <div class="cart-summary-section">
+        <div
+          class="cart-summary-section"
+          {% if section.settings.summary_background_image %}
+            style="background-image: url('{{ section.settings.summary_background_image | image_url: width: 800 }}');"
+          {% endif %}
+        >
           <h3 class="cart-summary-title">Order Summary</h3>
 
           {% if section.settings.show_cart_note %}
@@ -510,6 +575,38 @@
   "class": "boldstuff-cart-footer-section",
   "settings": [
     {
+      "type": "image_picker",
+      "id": "section_background_image",
+      "label": "Section Background Image",
+      "info": "Background image for the entire footer section"
+    },
+    {
+      "type": "image_picker",
+      "id": "summary_background_image",
+      "label": "Order Summary Background Image",
+      "info": "Background image for the Order Summary section"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36
+    },
+    {
       "type": "checkbox",
       "id": "show_cart_note",
       "default": true,
@@ -520,6 +617,12 @@
       "id": "enable_cartpage",
       "label": "Enable Reassurance Section",
       "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "reassurance_background_image",
+      "label": "Reassurance Background Image",
+      "info": "Background image for the Why Shop With Us section"
     },
     {
       "type": "header",
