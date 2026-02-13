@@ -4,13 +4,13 @@
 {% endcomment %}
 
 <style>
-  /* Force dark background on entire cart page */
+  /* Force transparent background on entire cart page when image is present */
   .template-cart,
   .template-cart body,
   .template-cart #MainContent,
   .template-cart .content-for-layout,
   .template-cart main {
-    background: #0a0a0a !important;
+    background: transparent !important;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -22,8 +22,10 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     position: relative;
+    min-height: 100vh;
   }
 
+  /* Optional: Add a subtle overlay for better text readability */
   .boldstuff-cart-wrapper.has-bg-image::before {
     content: '';
     position: absolute;
@@ -31,7 +33,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(10, 10, 10, 0.85);
+    background: rgba(0, 0, 0, 0.3); /* Light overlay for readability */
     z-index: 0;
   }
 
@@ -45,13 +47,18 @@
     background: transparent !important;
   }
 
-  /* Cart Page Dark Theme Styling */
+  /* Cart Page Styling - transparent when image present, dark when not */
   .boldstuff-cart-wrapper {
-    background: #0a0a0a;
+    background: transparent;
     min-height: auto;
     padding: 0;
     color: #ffffff;
     margin-top: 0;
+  }
+
+  /* Fallback dark background only when NO image */
+  .boldstuff-cart-wrapper:not(.has-bg-image) {
+    background: #0a0a0a;
   }
 
   .boldstuff-cart-container {

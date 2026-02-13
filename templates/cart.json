@@ -11,7 +11,9 @@
   "sections": {
     "cart-items": {
       "type": "boldstuff-cart-items",
-      "settings": {}
+      "settings": {
+        "cart_background_image": "shopify://shop_images/c4fdb7fbced4bd0c24bd3d04b1379370870ef6a0.png"
+      }
     },
     "cart-footer": {
       "type": "boldstuff-cart-footer",
@@ -25,24 +27,26 @@
           "settings": {}
         }
       },
-      "block_order": ["subtotal", "buttons"],
+      "block_order": [
+        "subtotal",
+        "buttons"
+      ],
       "settings": {
         "show_cart_note": true,
         "enable_cartpage": true,
-        "reassurance-image1": "shopify://shop_images/serviceicon111.png",
         "reassurance-title1": "Free Delivery",
         "reassurance-desc1": "On orders over ₹999",
-        "reassurance-image2": "shopify://shop_images/serviceicon2_7ff46959-38d3-4c45-8a4c-cb33a332d499.png",
         "reassurance-title2": "Secure Payment",
         "reassurance-desc2": "100% secure transactions",
-        "reassurance-image3": "shopify://shop_images/serviceicon3_43931611-a27b-4571-bb97-48753a8ede9b.png",
         "reassurance-title3": "Easy Returns",
         "reassurance-desc3": "30-day return policy",
-        "reassurance-image4": "shopify://shop_images/serviceicon4_7490b3b9-bedb-4642-b2e4-75847081693a.png",
         "reassurance-title4": "Premium Quality",
         "reassurance-desc4": "Built to last"
       }
     }
   },
-  "order": ["cart-items", "cart-footer"]
+  "order": [
+    "cart-items",
+    "cart-footer"
+  ]
 }
