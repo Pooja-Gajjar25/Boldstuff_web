@@ -34,6 +34,8 @@
       "settings": {
         "section_background_image": "shopify://shop_images/833b68a8a56e8d43e55ec7c3d4c5700bf7c61805.png",
         "summary_background_image": "shopify://shop_images/c4fdb7fbced4bd0c24bd3d04b1379370870ef6a0.png",
+        "padding_top": 36,
+        "padding_bottom": 36,
         "show_cart_note": true,
         "enable_cartpage": true,
         "reassurance-title1": "Free Delivery",
