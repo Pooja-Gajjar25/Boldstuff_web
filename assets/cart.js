@@ -13,34 +13,8 @@ class CartRemoveButton extends HTMLElement {
 
 customElements.define("cart-remove-button", CartRemoveButton);
 
-class QuantityInput extends HTMLElement {
-  constructor() {
-    super();
-    this.input = this.querySelector("input");
-    this.changeEvent = new Event("change", { bubbles: true });
-
-    this.querySelectorAll("button").forEach((button) =>
-      button.addEventListener("click", this.onButtonClick.bind(this)),
-    );
-  }
-
-  onButtonClick(event) {
-    event.preventDefault();
-    const previousValue = this.input.value;
-
-    if (event.target.name === "plus") {
-      this.input.stepUp();
-    } else {
-      this.input.stepDown();
-    }
-
-    if (previousValue !== this.input.value) {
-      this.input.dispatchEvent(this.changeEvent);
-    }
-  }
-}
-
-customElements.define("quantity-input", QuantityInput);
+// QuantityInput is defined in global.js and used here
+// Removed duplicate definition to avoid confusion
 
 class CartItems extends HTMLElement {
   constructor() {
@@ -73,33 +47,50 @@ class CartItems extends HTMLElement {
   }
 
   getSectionsToRender() {
-    return [
-      {
+    const sections = [];
+
+    // Main cart items
+    const cartItems = document.getElementById("main-cart-items");
+    if (cartItems && cartItems.dataset.id) {
+      sections.push({
         id: "main-cart-items",
-        section: document.getElementById("main-cart-items").dataset.id,
+        section: cartItems.dataset.id,
         selector: ".js-contents",
-      },
-      {
-        id: "cart-icon-bubble",
-        section: "cart-icon-bubble",
-        selector: ".shopify-section",
-      },
-      {
-        id: "cart-notification",
-        section: "cart-notification-product",
-        selector: ".shopify-section",
-      },
-      {
-        id: "cart-live-region-text",
-        section: "cart-live-region-text",
-        selector: ".shopify-section",
-      },
-      {
+      });
+    }
+
+    // Cart icon bubble
+    sections.push({
+      id: "cart-icon-bubble",
+      section: "cart-icon-bubble",
+      selector: ".shopify-section",
+    });
+
+    // Cart notification
+    sections.push({
+      id: "cart-notification",
+      section: "cart-notification-product",
+      selector: ".shopify-section",
+    });
+
+    // Cart live region
+    sections.push({
+      id: "cart-live-region-text",
+      section: "cart-live-region-text",
+      selector: ".shopify-section",
+    });
+
+    // Main cart footer
+    const cartFooter = document.getElementById("main-cart-footer");
+    if (cartFooter && cartFooter.dataset.id) {
+      sections.push({
         id: "main-cart-footer",
-        section: document.getElementById("main-cart-footer").dataset.id,
+        section: cartFooter.dataset.id,
         selector: ".js-contents",
-      },
-    ];
+      });
+    }
+
+    return sections;
   }
 
   updateQuantity(line, quantity, name) {
@@ -118,6 +109,7 @@ class CartItems extends HTMLElement {
       })
       .then((state) => {
         const parsedState = JSON.parse(state);
+
         this.classList.toggle("is-empty", parsedState.item_count === 0);
         const cartFooter = document.getElementById("main-cart-footer");
 
@@ -125,24 +117,35 @@ class CartItems extends HTMLElement {
           cartFooter.classList.toggle("is-empty", parsedState.item_count === 0);
 
         this.getSectionsToRender().forEach((section) => {
-          const elementToReplace =
-            document
-              .getElementById(section.id)
-              .querySelector(section.selector) ||
-            document.getElementById(section.id);
+          const element = document.getElementById(section.id);
+          if (!element) {
+            return;
+          }
 
-          elementToReplace.innerHTML = this.getSectionInnerHTML(
-            parsedState.sections[section.section],
+          const elementToReplace =
+            element.querySelector(section.selector) || element;
+
+          const sectionHTML = parsedState.sections[section.section];
+          if (!sectionHTML) {
+            return;
+          }
+
+          const newHTML = this.getSectionInnerHTML(
+            sectionHTML,
             section.selector,
           );
+          elementToReplace.innerHTML = newHTML;
         });
 
         this.updateLiveRegions(line, parsedState.item_count);
         const lineItem = document.getElementById(`CartItem-${line}`);
-        if (lineItem) lineItem.querySelector(`[name="${name}"]`).focus();
+        if (lineItem) {
+          const focusElement = lineItem.querySelector(`[name="${name}"]`);
+          if (focusElement) focusElement.focus();
+        }
         this.disableLoading();
       })
-      .catch(() => {
+      .catch((error) => {
         this.querySelectorAll(".loading-overlay").forEach((overlay) =>
           overlay.classList.add("hidden"),
         );
