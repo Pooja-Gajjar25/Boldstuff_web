@@ -57,6 +57,62 @@
     object-fit: contain;
   }
 
+  /* Top Bar */
+  .header-top-bar {
+    background-color: #000;
+    border-bottom: 1px solid #222;
+    padding: 8px 0;
+    font-size: 13px;
+    z-index: 1001;
+    position: relative;
+  }
+
+  .header-top-bar .container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .top-bar-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .top-bar-link {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+  }
+
+  .top-bar-link:hover {
+    color: var(--header-accent-color);
+  }
+
+  .top-bar-link i {
+    font-size: 14px;
+    color: #aaa;
+  }
+
+  .top-bar-link:hover i {
+    color: var(--header-accent-color);
+  }
+
+  .top-bar-divider {
+    color: #333;
+    font-weight: 300;
+  }
+
   /* Main Header */
   .header-main-bar {
     background: rgba(0, 0, 0, 0.8);
@@ -269,6 +325,15 @@
       </div>
     </div>
   {% endif %}
+
+  <!-- Top Header Bar -->
+  <div class="header-top-bar">
+    <div class="container">
+      <div class="top-bar-links">
+        <a href="/pages/about-us" class="top-bar-link"> <i class="fa fa-tint"></i> About Us </a>
+      </div>
+    </div>
+  </div>
 
   <!-- Main Header -->
   <div class="header-main-bar">

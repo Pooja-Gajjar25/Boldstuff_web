@@ -2,9 +2,6 @@
   <div class="row">
     {%- if settings.show_collection -%}
       <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 normal-sidebar sidebar_content">
-        <div class="collection-top-bar mb-3">
-          <span style="font-weight: 600;">Filters</span>
-        </div>
         {% render 'ishi-sidebar-content' %}
       </div>
     {%- endif -%}
@@ -342,6 +339,12 @@
   .normal_main_content {
     background: #1f2027;
     padding: 0 !important;
+  }
+
+  @media (min-width: 992px) {
+    .normal_main_content {
+      padding-left: 40px !important;
+    }
   }
 
   .collection-top-bar {
