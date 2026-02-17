@@ -467,9 +467,8 @@
           "30545a22-6d6c-489d-94bc-bdf7e2f20d51"
         ],
         "settings": {
-          "bg_image": "shopify://shop_images/28e3f34c973afc33a0db85f0ce6e9dd3dcf007b2.png",
           "menu": "main-menu",
-          "accent_color": "#ff5722"
+          "accent_color": "#4697a0"
         }
       },
       "header_layout1": {

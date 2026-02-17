@@ -1,54 +1,53 @@
 {% comment %}
-  Boldstuff Integrated Header (Replacing Header Layout 2)
-  Designed to match BOLDSTUFF brand aesthetics.
+  Boldstuff White Header (Replacing Header Layout 2)
+  Updated to match White Theme screenshot with combined Nav+Search pill.
 {% endcomment %}
 
 {% style %}
   :root {
-    --header-bg-color: #000000;
-    --header-accent-color: {{ section.settings.accent_color | default: '#ff5722' }};
-    --header-text-color: #ffffff;
-    --header-border-color: #333333;
+    --header-bg-color: #ffffff;
+    --header-accent-color: {{ section.settings.accent_color | default: '#4697A0' }};
+    --header-text-color: #000000;
+    --header-border-color: #e5e5e5;
   }
 
   #header-layout2 {
-    background-color: #000 !important;
+    background-color: var(--header-bg-color) !important;
   }
 
   .boldstuff-header {
     width: 100%;
     font-family: 'Inter', sans-serif;
     z-index: 1000;
-    background-color: #000;
-    margin: 0;
-    padding: 0;
+    position: relative;
+    background: var(--header-bg-color);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   }
 
   /* Announcement Bar */
   .header-announcement-bar {
-    background-color: #111;
-    color: #fff;
-    padding: 10px 0;
-    font-size: 13px;
+    background-color: #f8f8f8;
+    color: #111;
+    padding: 8px 0;
+    font-size: 12px;
     font-weight: 500;
+    border-bottom: 1px solid #eee;
   }
 
   .header-announcement-bar .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 40px;
-    max-width: 1200px;
+    gap: 20px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 15px;
-    flex-wrap: wrap;
+    padding: 0 20px;
   }
 
   .announcement-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    white-space: nowrap;
   }
 
   .announcement-icon {
@@ -59,98 +58,62 @@
 
   /* Top Bar */
   .header-top-bar {
-    background-color: #000;
-    border-bottom: 1px solid #222;
-    padding: 8px 0;
-    font-size: 13px;
-    z-index: 1001;
-    position: relative;
+    background-color: #fff;
+    color: #666;
+    padding: 6px 0;
+    font-size: 12px;
+    border-bottom: 1px solid #f0f0f0;
   }
 
   .header-top-bar .container {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 20px;
   }
 
-  .top-bar-links {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .top-bar-link {
-    color: #fff;
+  .top-bar-item {
+    margin-left: 20px;
+    color: #666;
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 500;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: color 0.3s;
+    gap: 6px;
+    transition: color 0.2s;
   }
 
-  .top-bar-link:hover {
+  .top-bar-item:hover {
     color: var(--header-accent-color);
-  }
-
-  .top-bar-link i {
-    font-size: 14px;
-    color: #aaa;
-  }
-
-  .top-bar-link:hover i {
-    color: var(--header-accent-color);
-  }
-
-  .top-bar-divider {
-    color: #333;
-    font-weight: 300;
   }
 
   /* Main Header */
   .header-main-bar {
-    background: rgba(0, 0, 0, 0.8);
-    {% if section.settings.bg_image != blank %}
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    {% endif %}
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    padding: 20px 0;
-    margin: 0;
-    color: var(--header-text-color);
-    position: relative;
-    border: none;
+    padding: 15px 0;
+    background: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
   }
 
   .header-main-bar .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 20px;
   }
 
   /* Logo */
   .header-logo .logo-text {
-    font-size: 28px;
-    font-weight: 900;
+    font-size: 24px;
+    font-weight: 800;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #000;
     text-decoration: none;
-    letter-spacing: 0.5px;
+    letter-spacing: -0.5px;
     display: flex;
     align-items: center;
-    line-height: 1;
   }
 
   .header-logo .logo-text span {
@@ -158,19 +121,23 @@
   }
 
   .header-logo img {
-    max-height: 45px;
-    display: block;
+    height: 35px;
     width: auto;
   }
 
-  /* Navigation */
-  .header-nav {
+  /* Center Pill: Combined Nav + Search */
+  .header-center-pill {
     display: flex;
     align-items: center;
-    margin: 0 30px;
+    background-color: #f3f4f6; /* Light grey pill bg */
+    border-radius: 6px;
+    padding: 4px 6px 4px 15px;
+    flex: 0 1 700px; /* Width constraint */
+    justify-content: space-between;
+    margin: 0 20px;
   }
 
-  .header-nav-list {
+  .header-nav-inline ul {
     display: flex;
     list-style: none;
     margin: 0;
@@ -178,140 +145,131 @@
     align-items: center;
   }
 
-  .header-nav-item {
-    display: flex;
-    align-items: center;
+  .header-nav-link {
+    color: #555;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 10px;
+    position: relative;
+    white-space: nowrap;
+    transition: color 0.2s;
   }
 
-  .header-nav-link {
-    color: var(--header-text-color);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 700;
-    padding: 5px 15px;
-    position: relative;
-    transition: color 0.3s;
-    letter-spacing: 0.5px;
+  .header-nav-link:hover {
+    color: #000;
+  }
+
+  .header-nav-link.active {
+    color: #000;
+    font-weight: 600;
   }
 
   .header-nav-link.active::after {
     content: '';
     position: absolute;
-    bottom: -10px;
-    left: 15px;
-    right: 15px;
-    height: 3px;
+    bottom: 2px;
+    left: 10px;
+    right: 10px;
+    height: 2px;
     background-color: var(--header-accent-color);
   }
 
   .nav-separator {
-    color: #555;
-    font-size: 16px;
-    font-weight: 300;
-    opacity: 0.6;
+    color: #ccc;
+    font-size: 12px;
+    margin: 0 2px;
   }
 
-  /* Actions */
+  /* Embedded Search Input */
+  .header-search-inline {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-left: 15px;
+    min-width: 250px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .header-search-inline form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .header-search-inline input {
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    color: #333;
+    width: 100%;
+    outline: none;
+  }
+
+  .header-search-inline button {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #888;
+    cursor: pointer;
+  }
+
+  /* Right Actions */
   .header-actions {
     display: flex;
     align-items: center;
     gap: 15px;
   }
 
-  .search-pill-wrapper {
-    display: flex;
-    align-items: center;
-    border: 1px solid #444;
-    border-radius: 6px;
-    padding: 6px 12px;
-    background: rgba(255, 255, 255, 0.05);
-    transition: border-color 0.3s;
-  }
-
-  .search-pill-wrapper:focus-within {
-    border-color: var(--header-accent-color);
-  }
-
-  .search-pill-wrapper input {
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 13px;
-    outline: none;
-    width: 140px;
-  }
-
-  .search-pill-wrapper i {
-    font-size: 14px;
-    color: #fff;
-    margin-right: 8px;
-  }
-
   .action-icon {
-    font-size: 20px;
-    color: var(--header-text-color);
+    color: #000;
+    font-size: 18px;
     text-decoration: none;
     position: relative;
-    transition: color 0.3s;
-    display: flex;
-    align-items: center;
-  }
-
-  .action-icon:hover {
-    color: var(--header-accent-color);
   }
 
   .cart-count-badge {
     position: absolute;
-    top: -10px;
-    right: -12px;
-    background-color: var(--header-accent-color);
-    color: white;
-    font-size: 11px;
-    min-width: 20px;
-    height: 20px;
+    top: -5px;
+    right: -8px;
+    background: var(--header-accent-color);
+    color: #fff;
+    font-size: 10px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 900;
-    border: none;
   }
 
-  /* Mobile Responsive */
   .mobile-menu-trigger {
     display: none;
+    font-size: 20px;
+    color: #000;
     cursor: pointer;
-    font-size: 24px;
-    color: #fff;
-  }
-
-  @media (max-width: 1199px) {
-    .header-nav { margin: 0 10px; }
-    .search-pill-wrapper input { width: 100px; }
   }
 
   @media (max-width: 991px) {
-    .header-top-bar { display: none; }
-    .header-nav { display: none; }
-    .search-pill-wrapper { display: none; }
+    .header-center-pill { display: none; } /* Hide complex nav on mobile */
     .mobile-menu-trigger { display: block; }
-    .header-main-bar { padding: 15px 0; }
+    .header-top-bar { display: none; }
   }
 {% endstyle %}
 
 <div class="boldstuff-header" id="section-{{ section.id }}">
-  <!-- Announcement Bar -->
+  <!-- Announcement -->
   {% if section.blocks.size > 0 %}
     <div class="header-announcement-bar">
       <div class="container">
         {% for block in section.blocks %}
           {% if block.type == 'announcement' %}
-            <div class="announcement-item" {{ block.shopify_attributes }}>
+            <div class="announcement-item">
               {% if block.settings.icon != blank %}
                 <img
-                  src="{{ block.settings.icon | image_url: width: 40 }}"
-                  alt=""
+                  src="{{ block.settings.icon | image_url: width: 20 }}"
                   class="announcement-icon"
                   loading="lazy"
                   width="20"
@@ -326,20 +284,21 @@
     </div>
   {% endif %}
 
-  <!-- Top Header Bar -->
-  <div class="header-top-bar">
-    <div class="container">
-      <div class="top-bar-links">
-        <a href="/pages/about-us" class="top-bar-link"> <i class="fa fa-tint"></i> About Us </a>
+  <!-- Top Bar (Optional) -->
+  {% if section.settings.show_top_bar %}
+    <div class="header-top-bar">
+      <div class="container">
+        <a href="{{ routes.account_url }}" class="top-bar-item">Account</a>
+        <a href="{{ routes.cart_url }}" class="top-bar-item">Cart</a>
       </div>
     </div>
-  </div>
+  {% endif %}
 
-  <!-- Main Header -->
+  <!-- Main Bar -->
   <div class="header-main-bar">
     <div class="container">
-      <!-- Left side: Mobile Toggle & Logo -->
-      <div style="display: flex; align-items: center; gap: 20px;">
+      <!-- Left: Mobile Menu & Logo -->
+      <div style="display:flex; align-items:center; gap:15px;">
         <div class="mobile-menu-trigger hidden-lg-up">
           <i class="fa fa-bars"></i>
         </div>
@@ -349,9 +308,9 @@
               <img
                 src="{{ section.settings.logo | image_url: width: 300 }}"
                 alt="{{ shop.name }}"
+                loading="lazy"
                 width="{{ section.settings.logo.width }}"
                 height="{{ section.settings.logo.height }}"
-                loading="lazy"
               >
             {% else %}
               BOLD<span>STUFF</span>
@@ -360,37 +319,47 @@
         </div>
       </div>
 
-      <!-- Center: Navigation -->
-      <nav class="header-nav hidden-md-down">
-        <ul class="header-nav-list">
-          <span class="nav-separator">|</span>
-          {% for link in section.settings.menu.links %}
-            <li class="header-nav-item">
-              <a href="{{ link.url }}" class="header-nav-link {% if link.active %}active{% endif %}">
-                {{ link.title }}
-              </a>
-              <span class="nav-separator">|</span>
-            </li>
-          {% endfor %}
-        </ul>
-      </nav>
+      <!-- Center: Combined Pill -->
+      <div class="header-center-pill hidden-md-down">
+        <nav class="header-nav-inline">
+          <ul>
+            {% for link in section.settings.menu.links %}
+              <li>
+                <a href="{{ link.url }}" class="header-nav-link {% if link.active %}active{% endif %}">
+                  {{ link.title }}
+                </a>
+              </li>
+              {% unless forloop.last %}
+                <li class="nav-separator">|</li>
+              {% endunless %}
+            {% endfor %}
+          </ul>
+        </nav>
+
+        <div class="header-search-inline">
+          <form action="{{ routes.search_url }}" method="get" role="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+            <input type="search" name="q" placeholder="Search" value="{{ search.terms | escape }}">
+            <input type="hidden" name="type" value="product">
+            <input type="hidden" name="options[prefix]" value="last">
+          </form>
+        </div>
+      </div>
 
       <!-- Right: Actions -->
       <div class="header-actions">
-        <!-- Rounded Search Pill -->
-        <div class="search-pill-wrapper hidden-sm-down">
-          <i class="fa fa-search"></i>
-          <input type="text" placeholder="Search" name="q">
-        </div>
-
-        <!-- Search Icon (visible on mobile or small screens) -->
+        <!-- Search icon for mobile -->
         <a href="{{ routes.search_url }}" class="action-icon hidden-lg-up">
           <i class="fa fa-search"></i>
         </a>
 
-        <!-- Cart Icon -->
+        <a href="{{ routes.account_url }}" class="action-icon">
+          <i class="fa fa-user-o"></i>
+          <!-- Outline user icon -->
+        </a>
+
         <a href="{{ routes.cart_url }}" class="action-icon">
-          <i class="fa fa-shopping-cart"></i>
+          <i class="fa fa-shopping-bag"></i>
           {% if cart.item_count > 0 %}
             <span class="cart-count-badge">{{ cart.item_count }}</span>
           {% endif %}
@@ -405,6 +374,12 @@
   "name": "Boldstuff Header",
   "settings": [
     {
+      "type": "checkbox",
+      "id": "show_top_bar",
+      "label": "Show Top Bar",
+      "default": true
+    },
+    {
       "type": "image_picker",
       "id": "logo",
       "label": "Logo Image"
@@ -412,37 +387,28 @@
     {
       "type": "image_picker",
       "id": "bg_image",
-      "label": "Header Background Image"
+      "label": "Header Background Image (Unused in White Theme)"
     },
     {
       "type": "link_list",
       "id": "menu",
-      "label": "Navigation Menu",
+      "label": "Menu",
       "default": "main-menu"
     },
     {
       "type": "color",
       "id": "accent_color",
       "label": "Accent Color",
-      "default": "#ff5722"
+      "default": "#4697A0"
     }
   ],
   "blocks": [
     {
       "type": "announcement",
-      "name": "Announcement Item",
+      "name": "Announcement",
       "settings": [
-        {
-          "type": "image_picker",
-          "id": "icon",
-          "label": "Icon (Image/SVG)"
-        },
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Text",
-          "default": "Announcement text"
-        }
+        { "type": "text", "id": "text", "label": "Text" },
+        { "type": "image_picker", "id": "icon", "label": "Icon" }
       ]
     },
     {
@@ -455,6 +421,11 @@
           "label": "Offer Text"
         }
       ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Boldstuff Header"
     }
   ]
 }

@@ -1,0 +1,362 @@
+{% schema %}
+{
+  "name": "Boldstuff White Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "headline_part1",
+      "label": "Headline Part 1",
+      "default": "Hydrate"
+    },
+    {
+      "type": "text",
+      "id": "headline_part2",
+      "label": "Headline Highlight (Teal)",
+      "default": "Boldly."
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "Subheadline",
+      "default": "Anywhere, Every Day."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Premium insulated bottles built for hot Indian summers and cold mornings."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "btn_primary_text",
+      "label": "Primary Button Text",
+      "default": "Shop All Water Bottles"
+    },
+    {
+      "type": "url",
+      "id": "btn_primary_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "btn_secondary_text",
+      "label": "Secondary Button Text",
+      "default": "View Bestsellers"
+    },
+    {
+      "type": "url",
+      "id": "btn_secondary_link",
+      "label": "Secondary Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Feature Text",
+          "default": "Feature Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Boldstuff White Hero",
+      "blocks": [
+        { "type": "feature", "settings": { "text": "6-Hour Hot & Cold Retention" } },
+        { "type": "feature", "settings": { "text": "Premium Insulated Stainless Steel" } },
+        { "type": "feature", "settings": { "text": "Leakproof & Travel-Ready" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% style %}
+  .bs-white-hero-section {
+    position: relative;
+    background-color: #f7f7f7; /* Light grey background */
+    overflow: hidden;
+    padding-top: 60px;
+    padding-bottom: 0; /* Content goes to bottom */
+  }
+
+  .bs-hero-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 550px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Left Content */
+  .bs-hero-content {
+    flex: 1;
+    max-width: 600px;
+    padding-right: 40px;
+    z-index: 2;
+  }
+
+  .bs-hero-headline {
+    font-family: 'Playfair Display', serif; /* Trying to match the serif look */
+    font-size: 56px;
+    line-height: 1.1;
+    color: #111;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .bs-hero-headline .highlight-teal {
+    color: #4697a0; /* Teal accent */
+  }
+
+  .bs-hero-subheadline {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    line-height: 1.1;
+    color: #111;
+    margin-bottom: 25px;
+    font-weight: 700;
+    display: block;
+  }
+
+  .bs-hero-desc {
+    font-family: 'Inter', sans-serif;
+    color: #555;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 480px;
+  }
+
+  .bs-hero-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .bs-btn {
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .bs-btn-primary {
+    background-color: #4697a0;
+    color: #fff;
+    border: 1px solid #4697a0;
+    box-shadow: 0 4px 6px rgba(70, 151, 160, 0.2);
+  }
+
+  .bs-btn-primary:hover {
+    background-color: #3a828a;
+    border-color: #3a828a;
+  }
+
+  .bs-btn-secondary {
+    background-color: transparent;
+    color: #111;
+    border: 1px solid #ddd;
+    background: #fff;
+  }
+
+  .bs-btn-secondary:hover {
+    border-color: #999;
+    background: #f9f9f9;
+  }
+
+  /* Right Image */
+  .bs-hero-image-col {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    position: relative;
+    height: 100%;
+  }
+
+  .bs-hero-img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: 600px; /* Adjust based on asset */
+    margin-right: -50px; /* Slight overlap or bleed */
+  }
+
+  /* Features Bar */
+  .bs-features-bar {
+    background: #ffffff;
+    border-top: 1px solid #eee;
+    padding: 25px 0;
+    width: 100%;
+  }
+
+  .bs-features-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+    padding: 0 20px;
+  }
+
+  .bs-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #444;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .bs-feature-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 991px) {
+    .bs-hero-container {
+      flex-direction: column;
+      padding-top: 40px;
+      text-align: center;
+      min-height: auto;
+    }
+
+    .bs-hero-content {
+      padding-right: 0;
+      margin-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .bs-hero-headline,
+    .bs-hero-subheadline {
+      font-size: 36px;
+    }
+
+    .bs-hero-image-col {
+      justify-content: center;
+      margin-right: 0;
+    }
+
+    .bs-hero-img {
+      max-height: 400px;
+      margin-right: 0;
+    }
+
+    .bs-features-container {
+      gap: 30px;
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding-bottom: 15px; /* Scrollbar space */
+    }
+
+    .bs-feature-item {
+      white-space: nowrap;
+    }
+  }
+{% endstyle %}
+
+<div class="bs-white-hero-section">
+  <div class="bs-hero-container">
+    <div class="bs-hero-content">
+      <h1 class="bs-hero-headline">
+        {{ section.settings.headline_part1 }}
+        <span class="highlight-teal">{{ section.settings.headline_part2 }}</span>
+      </h1>
+      <div class="bs-hero-subheadline">
+        {{ section.settings.subheadline }}
+      </div>
+      <p class="bs-hero-desc">
+        {{ section.settings.description }}
+      </p>
+
+      <div class="bs-hero-buttons">
+        <a href="{{ section.settings.btn_primary_link | default: '#' }}" class="bs-btn bs-btn-primary">
+          {{ section.settings.btn_primary_text }}
+        </a>
+        <a href="{{ section.settings.btn_secondary_link | default: '#' }}" class="bs-btn bs-btn-secondary">
+          {{ section.settings.btn_secondary_text }}
+        </a>
+      </div>
+    </div>
+
+    <div class="bs-hero-image-col">
+      {% if section.settings.hero_image != blank %}
+        <img
+          src="{{ section.settings.hero_image | image_url: width: 1000 }}"
+          alt="Hero Bottle"
+          class="bs-hero-img"
+          loading="eager"
+          width="1000"
+          height="1000"
+        >
+      {% else %}
+        <!-- Placeholder if no image set, can be removed once user sets image -->
+        {{ 'product-1' | placeholder_svg_tag: 'bs-hero-img' }}
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="bs-features-bar">
+    <div class="bs-features-container">
+      {% for block in section.blocks %}
+        <div class="bs-feature-item">
+          {% if block.settings.icon != blank %}
+            <img
+              src="{{ block.settings.icon | image_url: width: 50 }}"
+              class="bs-feature-icon"
+              loading="lazy"
+              width="50"
+              height="50"
+            >
+          {% else %}
+            <!-- Fallback icons for specific texts based on screenshot logic if needed or just empty -->
+            <i class="fa fa-check-circle" style="color:#666; font-size: 20px;"></i>
+          {% endif %}
+          <span>{{ block.settings.text }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

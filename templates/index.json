@@ -9,42 +9,46 @@
  */
 {
   "sections": {
-    "hero_banner_boldstuff": {
-      "type": "hero-banner",
+    "boldstuff_hero_white": {
+      "type": "boldstuff-hero-white",
       "blocks": {
         "feature_1": {
           "type": "feature",
           "settings": {
-            "feature_icon": "shopify://shop_images/images-removebg-preview_1.png",
-            "feature_text": "6-Hour Hot & Cold Retention"
+            "icon": "shopify://shop_images/images-removebg-preview_1.png",
+            "text": "6-Hour Hot & Cold Retention"
           }
         },
         "feature_2": {
           "type": "feature",
           "settings": {
-            "feature_icon": "shopify://shop_images/download-removebg-preview_1.png",
-            "feature_text": "Premium Insulated Stainless Steel"
+            "icon": "shopify://shop_images/download-removebg-preview_1.png",
+            "text": "Premium Insulated Stainless Steel"
           }
         },
         "feature_3": {
           "type": "feature",
           "settings": {
-            "feature_icon": "shopify://shop_images/1c8e3f434d080f1d9d55002657c7e1cf7c6536ce.png",
-            "feature_text": "Leakproof & Travel-Ready"
+            "icon": "shopify://shop_images/1c8e3f434d080f1d9d55002657c7e1cf7c6536ce.png",
+            "text": "Leakproof & Travel-Ready"
           }
         }
       },
-      "block_order": ["feature_1", "feature_2", "feature_3"],
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ],
       "settings": {
-        "hero_image": "shopify://shop_images/black-theme-gym-related-landscape-backgroud-image.png",
-        "hero_title": "Hydrate <b>Boldly.</b><br>Anywhere, Every Day.",
-        "hero_description": "Premium insulated steel bottles built for hot Indian summers and cold mornings.",
-        "primary_button_label": "Shop All Water Bottle",
-        "primary_button_link": "shopify://collections/all",
-        "secondary_button_label": "View Bestsellers",
-        "secondary_button_link": "shopify://collections/all",
-        "section_bottom_spacing_desktop": 0,
-        "section_bottom_spacing_mobile": 0
+        "headline_part1": "Hydrate",
+        "headline_part2": "Boldly.",
+        "subheadline": "Anywhere, Every Day.",
+        "description": "Premium insulated bottles built for hot Indian summers and cold mornings.",
+        "btn_primary_text": "Shop All Water Bottles",
+        "btn_primary_link": "shopify://collections/all",
+        "btn_secondary_text": "View Bestsellers",
+        "btn_secondary_link": "shopify://collections/all",
+        "hero_image": "shopify://shop_images/ChatGPT_Image_Feb_17_2026_06_35_52_PM.png"
       }
     },
     "featured_bottles_section": {
@@ -96,10 +100,13 @@
           }
         }
       },
-      "block_order": ["bottle_1", "bottle_2", "bottle_3"],
+      "block_order": [
+        "bottle_1",
+        "bottle_2",
+        "bottle_3"
+      ],
       "settings": {
         "section_title": "Featured Bottles",
-        "section_background_image": "shopify://shop_images/c4fdb7fbced4bd0c24bd3d04b1379370870ef6a0.png",
         "background_color": "#1a1a1a",
         "section_padding_desktop": 60,
         "section_padding_mobile": 40
@@ -133,7 +140,12 @@
           }
         }
       },
-      "block_order": ["feature_1", "feature_2", "feature_3", "feature_4"],
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4"
+      ],
       "settings": {
         "title": "Why Choose [BOLDSTUFF] Bottles?",
         "button_text": "Shop Now",
@@ -144,7 +156,6 @@
         "stars_image": "shopify://shop_images/1df1532763ba0cbb0bdfc39ac7c35ce15ca9fcf2.png",
         "trust_platform": "on Amazon",
         "trust_info": "rated by over 10,000 happy customers",
-        "bg_image": "shopify://shop_images/Screenshot_2026-02-02_at_3.20.21_PM.png",
         "bg_color": "#111111",
         "overlay_color": "#000000",
         "overlay_opacity": 20,
@@ -182,7 +193,11 @@
           }
         }
       },
-      "block_order": ["testimonial_1", "testimonial_2", "testimonial_3"],
+      "block_order": [
+        "testimonial_1",
+        "testimonial_2",
+        "testimonial_3"
+      ],
       "settings": {
         "title": "What our Customers say",
         "stars_image": "shopify://shop_images/1df1532763ba0cbb0bdfc39ac7c35ce15ca9fcf2.png",
@@ -223,7 +238,11 @@
           }
         }
       },
-      "block_order": ["shop", "support", "legal"],
+      "block_order": [
+        "shop",
+        "support",
+        "legal"
+      ],
       "settings": {
         "description_heading": "Built for Everyday Headlife",
         "description_text": "From the hustle to calls ti everything wired, sweet freestyle comfort for those who hustle.",
@@ -253,7 +272,7 @@
     }
   },
   "order": [
-    "hero_banner_boldstuff",
+    "boldstuff_hero_white",
     "featured_bottles_section",
     "why_choose_boldstuff",
     "boldstuff_testimonials",

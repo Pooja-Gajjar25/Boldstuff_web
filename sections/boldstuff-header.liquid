@@ -5,10 +5,10 @@
 
 {% style %}
   :root {
-    --header-bg-color: #000000;
-    --header-accent-color: {{ section.settings.accent_color | default: '#ff5722' }};
-    --header-text-color: #ffffff;
-    --header-border-color: #333333;
+    --header-bg-color: #ffffff;
+    --header-accent-color: {{ section.settings.accent_color | default: '#4697A0' }};
+    --header-text-color: #000000;
+    --header-border-color: #e5e5e5;
   }
 
   .boldstuff-header {
@@ -16,88 +16,60 @@
     font-family: 'Inter', sans-serif;
     z-index: 1000;
     position: relative;
+    background: var(--header-bg-color);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   }
 
   .boldstuff-section-divider {
-    width: 60%;
-    height: 4px;
-    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
-    box-shadow: 0 0 15px rgba(255,255,255,0.4);
-    position: absolute;
-    bottom: 0;
-    left: 20%;
-    z-index: 99;
-  }
-
-  .boldstuff-section-divider::after {
-    content: "";
-    position: absolute;
-    top: 4px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: rgba(255,255,255,0.2);
+    display: none;
   }
 
   /* Announcement Bar */
   .header-announcement-bar {
-    background-color: #111;
-    color: #fff;
-    padding: 10px 0;
-    font-size: 13px;
+    background-color: #f8f8f8;
+    color: #111;
+    padding: 8px 0;
+    font-size: 12px;
     font-weight: 500;
+    border-bottom: 1px solid #eee;
   }
 
   .header-announcement-bar .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 40px;
-    max-width: 1200px;
+    gap: 20px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 15px;
-    flex-wrap: wrap;
-  }
-
-  .announcement-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    white-space: nowrap;
-  }
-
-  .announcement-icon {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
+    padding: 0 20px;
   }
 
   /* Top Bar */
   .header-top-bar {
-    background-color: var(--header-bg-color);
-    color: var(--header-text-color);
-    padding: 8px 0;
-    font-size: 13px;
-    border-bottom: 1px solid var(--header-border-color);
+    background-color: #fff;
+    color: #666;
+    padding: 6px 0;
+    font-size: 12px;
+    border-bottom: 1px solid #f0f0f0;
   }
 
   .header-top-bar .container {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 20px;
   }
 
   .top-bar-item {
     margin-left: 20px;
-    color: var(--header-text-color);
+    color: #666;
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 8px;
-    transition: color 0.3s;
+    gap: 6px;
+    transition: color 0.2s;
   }
 
   .top-bar-item:hover {
@@ -106,58 +78,54 @@
 
   /* Main Header */
   .header-main-bar {
-    background: rgba(0, 0, 0, 0.85); /* Dark background matching the theme */
-    {% if section.settings.bg_image != blank %}
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    {% endif %}
-    backdrop-filter: blur(10px);
-    padding: 18px 0;
-    color: var(--header-text-color);
-    position: relative;
+    padding: 15px 0;
+    background: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
   }
 
   .header-main-bar .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 20px;
   }
 
-  /* Logo Styling to match Image 1 */
+  /* Logo */
   .header-logo .logo-text {
-    font-size: 26px;
-    font-weight: 900;
+    font-size: 24px;
+    font-weight: 800;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #000;
     text-decoration: none;
-    letter-spacing: 0.5px;
+    letter-spacing: -0.5px;
     display: flex;
     align-items: center;
   }
 
   .header-logo .logo-text span {
     color: var(--header-accent-color);
-    margin-left: 2px;
   }
 
   .header-logo img {
-    max-height: 45px;
-    display: block;
+    height: 35px;
     width: auto;
   }
 
-  /* Navigation with vertical separators */
-  .header-nav {
+  /* Center Pill: Combined Nav + Search */
+  .header-center-pill {
     display: flex;
     align-items: center;
+    background-color: #f3f4f6; /* Light grey pill bg */
+    border-radius: 6px;
+    padding: 4px 6px 4px 15px;
+    flex: 0 1 700px; /* Width constraint */
+    justify-content: space-between;
+    margin: 0 20px;
   }
 
-  .header-nav-list {
+  .header-nav-inline ul {
     display: flex;
     list-style: none;
     margin: 0;
@@ -165,134 +133,131 @@
     align-items: center;
   }
 
-  .header-nav-item {
-    display: flex;
-    align-items: center;
-  }
-
   .header-nav-link {
-    color: var(--header-text-color);
+    color: #555;
     text-decoration: none;
     font-size: 13px;
-    font-weight: 600;
-    padding: 5px 12px;
+    font-weight: 500;
+    padding: 6px 10px;
     position: relative;
-    transition: color 0.3s;
-    letter-spacing: 0.5px;
+    white-space: nowrap;
+    transition: color 0.2s;
   }
 
-  .header-nav-link:hover, .header-nav-link.active {
-    color: var(--header-text-color);
+  .header-nav-link:hover {
+    color: #000;
   }
 
-  .header-nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 12px;
-    right: 12px;
-    height: 2.5px;
-    background-color: var(--header-accent-color);
-    transform: scaleX(0);
-    transition: transform 0.3s;
+  .header-nav-link.active {
+    color: #000;
+    font-weight: 600;
   }
 
   .header-nav-link.active::after {
-    transform: scaleX(1);
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background-color: var(--header-accent-color);
   }
 
   .nav-separator {
-    color: #444;
-    font-size: 14px;
-    font-weight: 300;
-    opacity: 0.6;
+    color: #ccc;
+    font-size: 12px;
+    margin: 0 2px;
   }
 
-  /* Actions (Search, Cart) */
+  /* Embedded Search Input */
+  .header-search-inline {
+    display: flex;
+    align-items: center;
+    background: #e5e7eb; /* Slightly darker grey for input area? Or match pill? Screenshot looks slightly distinct or just an input box */
+    /* Screenshot: Search looks like a standard input on the right side */
+    background: #fff; /* White background for search input to stand out from pill? No, screenshot looks like light grey input on light grey background maybe? */
+    /* Looking at screenshot again: The search part has a border or is a slightly different shade. Let's make it simple. */
+    background: rgba(255,255,255,0.5);
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-left: 15px;
+    min-width: 200px;
+  }
+
+  .header-search-inline form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .header-search-inline input {
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    color: #333;
+    width: 100%;
+    outline: none;
+  }
+
+  .header-search-inline button {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #888;
+    cursor: pointer;
+  }
+
+  /* Right Actions */
   .header-actions {
     display: flex;
     align-items: center;
     gap: 15px;
   }
 
-  .search-pill-wrapper {
-    display: flex;
-    align-items: center;
-    border: 1px solid #444;
-    border-radius: 4px;
-    padding: 4px 10px;
-    background: rgba(255, 255, 255, 0.03);
-    margin-right: 5px;
-  }
-
-  .search-pill-wrapper input {
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 12px;
-    outline: none;
-    width: 120px;
-  }
-
-  .search-pill-wrapper i {
-    font-size: 12px;
-    color: #fff;
-    margin-right: 8px;
-  }
-
   .action-icon {
-    font-size: 18px;
-    color: var(--header-text-color);
+    color: #000;
+    font-size: 20px;
     text-decoration: none;
     position: relative;
-    transition: color 0.3s;
-  }
-
-  .action-icon:hover {
-    color: var(--header-accent-color);
   }
 
   .cart-count-badge {
     position: absolute;
-    top: -8px;
-    right: -10px;
-    background-color: var(--header-accent-color);
-    color: white;
+    top: -5px;
+    right: -8px;
+    background: var(--header-accent-color);
+    color: #fff;
     font-size: 10px;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 800;
   }
 
-  /* Mobile Responsive */
   .mobile-menu-trigger {
     display: none;
+    font-size: 20px;
+    color: #000;
     cursor: pointer;
-    font-size: 22px;
-    color: #fff;
   }
 
   @media (max-width: 991px) {
-    .header-top-bar { display: none; }
-    .header-nav { display: none; }
-    .search-pill-wrapper { display: none; }
+    .header-center-pill { display: none; } /* Hide complex nav on mobile */
     .mobile-menu-trigger { display: block; }
-    .header-main-bar { padding: 12px 0; }
+    .header-top-bar { display: none; }
   }
 {% endstyle %}
 
 <div class="boldstuff-header" id="section-{{ section.id }}">
-  <!-- Announcement Bar -->
+  <!-- Announcement -->
   {% if section.blocks.size > 0 %}
     <div class="header-announcement-bar">
       <div class="container">
         {% for block in section.blocks %}
           {% if block.type == 'announcement' %}
-            <div class="announcement-item" {{ block.shopify_attributes }}>
+            <div class="announcement-item">
               {% if block.settings.icon != blank %}
                 <img
                   src="{{ block.settings.icon | image_url: width: 40 }}"
@@ -311,20 +276,21 @@
     </div>
   {% endif %}
 
+  <!-- Top Bar (Optional) -->
   {% if section.settings.show_top_bar %}
     <div class="header-top-bar">
       <div class="container">
-        <a href="{{ routes.search_url }}" class="top-bar-item"> <i class="fa fa-search"></i> Search </a>
-        <a href="{{ routes.account_url }}" class="top-bar-item"> <i class="fa fa-user"></i> Account Us </a>
-        <a href="{{ routes.cart_url }}" class="top-bar-item"> <i class="fa fa-shopping-cart"></i> Cart </a>
+        <a href="{{ routes.account_url }}" class="top-bar-item">Account</a>
+        <a href="{{ routes.cart_url }}" class="top-bar-item">Cart</a>
       </div>
     </div>
   {% endif %}
 
+  <!-- Main Bar -->
   <div class="header-main-bar">
     <div class="container">
-      <!-- Left side: Mobile Toggle & Logo -->
-      <div style="display: flex; align-items: center; gap: 15px;">
+      <!-- Left: Mobile Menu & Logo -->
+      <div style="display:flex; align-items:center; gap:15px;">
         <div class="mobile-menu-trigger hidden-lg-up">
           <i class="fa fa-bars"></i>
         </div>
@@ -345,47 +311,53 @@
         </div>
       </div>
 
-      <!-- Center side: Navigation -->
-      <nav class="header-nav hidden-md-down">
-        <ul class="header-nav-list">
-          <span class="nav-separator">|</span>
-          {% for link in section.settings.menu.links %}
-            <li class="header-nav-item">
-              <a href="{{ link.url }}" class="header-nav-link {% if link.active %}active{% endif %}">
-                {{ link.title | upcase }}
-              </a>
-              <span class="nav-separator">|</span>
-            </li>
-          {% endfor %}
-        </ul>
-      </nav>
+      <!-- Center: Combined Pill -->
+      <div class="header-center-pill hidden-md-down">
+        <nav class="header-nav-inline">
+          <ul>
+            {% for link in section.settings.menu.links %}
+              <li>
+                <a href="{{ link.url }}" class="header-nav-link {% if link.active %}active{% endif %}">
+                  {{ link.title }}
+                </a>
+              </li>
+              {% unless forloop.last %}
+                <li class="nav-separator">|</li>
+              {% endunless %}
+            {% endfor %}
+          </ul>
+        </nav>
 
-      <!-- Right side: Actions -->
-      <div class="header-actions">
-        <div class="search-pill-wrapper hidden-sm-down">
-          <i class="fa fa-search"></i>
-          <input type="text" placeholder="Search">
+        <div class="header-search-inline">
+          <form action="{{ routes.search_url }}" method="get" role="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+            <input type="search" name="q" placeholder="Search" value="{{ search.terms | escape }}">
+            <input type="hidden" name="type" value="product">
+            <input type="hidden" name="options[prefix]" value="last">
+          </form>
         </div>
+      </div>
 
+      <!-- Right: Actions -->
+      <div class="header-actions">
+        <!-- Search icon for mobile -->
         <a href="{{ routes.search_url }}" class="action-icon hidden-lg-up">
           <i class="fa fa-search"></i>
         </a>
 
+        <a href="{{ routes.account_url }}" class="action-icon">
+          <i class="fa fa-user-o"></i>
+          <!-- Outline user icon -->
+        </a>
+
         <a href="{{ routes.cart_url }}" class="action-icon">
-          <i class="fa fa-shopping-cart"></i>
+          <i class="fa fa-shopping-bag"></i>
           {% if cart.item_count > 0 %}
             <span class="cart-count-badge">{{ cart.item_count }}</span>
           {% endif %}
         </a>
-
-        {% if section.settings.button_text != blank %}
-          <a href="{{ section.settings.button_link }}" class="header-cta-button hidden-md-down">
-            {{ section.settings.button_text }}
-          </a>
-        {% endif %}
       </div>
     </div>
-    <div class="boldstuff-section-divider"></div>
   </div>
 </div>
 
@@ -405,69 +377,31 @@
       "label": "Logo Image"
     },
     {
-      "type": "image_picker",
-      "id": "bg_image",
-      "label": "Header Background Image"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Section Title (Optional)",
-      "default": "Boldstuff Header"
-    },
-    {
       "type": "link_list",
       "id": "menu",
-      "label": "Main Navigation Menu",
+      "label": "Menu",
       "default": "main-menu"
     },
     {
       "type": "color",
       "id": "accent_color",
-      "label": "Accent Color (Logo & Underline)",
-      "default": "#ff5722"
-    },
-    {
-      "type": "header",
-      "content": "CTA Button Settings"
-    },
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "CTA Button Text",
-      "info": "Optional button in header"
-    },
-    {
-      "type": "url",
-      "id": "button_link",
-      "label": "CTA Button Link"
+      "label": "Accent Color",
+      "default": "#4697A0"
     }
   ],
   "blocks": [
     {
       "type": "announcement",
-      "name": "Announcement Item",
+      "name": "Announcement",
       "settings": [
-        {
-          "type": "image_picker",
-          "id": "icon",
-          "label": "Icon (Image/SVG)"
-        },
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Text",
-          "default": "Announcement text"
-        }
+        { "type": "text", "id": "text", "label": "Text" },
+        { "type": "image_picker", "id": "icon", "label": "Icon" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Boldstuff Header",
-      "settings": {
-        "show_top_bar": true
-      }
+      "name": "Boldstuff Header"
     }
   ]
 }
