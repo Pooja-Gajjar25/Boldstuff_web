@@ -27,10 +27,11 @@
       <div class="gallery-main">
         <img
           id="main-product-image"
-          src="{{ featured_image | image_url: width: 800 }}"
+          src="{{ featured_image | image_url: width: 1200 }}"
           alt="{{ product.title }}"
-          width="800"
+          width="1200"
           height="800"
+          style="transition: transform 0.2s ease-out;"
         >
       </div>
     </div>
@@ -366,6 +367,8 @@
     border-radius: 12px;
     overflow: hidden;
     aspect-ratio: 1;
+    cursor: zoom-in;
+    position: relative;
   }
 
   .gallery-main img {
@@ -749,9 +752,31 @@
         this.classList.add('active');
 
         const img = this.querySelector('img');
-        mainImage.src = img.src.replace('width=120', 'width=800');
+        // Load higher resolution for better zoom quality
+        mainImage.src = img.src.replace('width=120', 'width=1200');
       });
     });
+
+    // Zoom Functionality
+    const galleryMain = document.querySelector('.gallery-main');
+
+    if (galleryMain && mainImage) {
+      galleryMain.addEventListener('mousemove', function (e) {
+        if (window.matchMedia('(hover: none)').matches) return;
+
+        const { left, top, width, height } = this.getBoundingClientRect();
+        const x = ((e.clientX - left) / width) * 100;
+        const y = ((e.clientY - top) / height) * 100;
+
+        mainImage.style.transformOrigin = `${x}% ${y}%`;
+        mainImage.style.transform = 'scale(2)';
+      });
+
+      galleryMain.addEventListener('mouseleave', function () {
+        mainImage.style.transformOrigin = 'center center';
+        mainImage.style.transform = 'scale(1)';
+      });
+    }
 
     // Variant selector
     const variantButtons = document.querySelectorAll('.variant-button');

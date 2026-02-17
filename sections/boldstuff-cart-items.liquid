@@ -364,6 +364,44 @@
       height: 100px;
     }
   }
+
+  /* Loading State */
+  .cart-quantity-btn.loading,
+  .cart-remove-btn.loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+  }
+
+  .cart-quantity-btn.loading > *,
+  .cart-remove-btn.loading > * {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .cart-quantity-btn.loading::after,
+  .cart-remove-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -10px;
+    border: 2px solid rgba(255, 87, 34, 0.3);
+    border-top-color: #ff5722;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 </style>
 
 <div

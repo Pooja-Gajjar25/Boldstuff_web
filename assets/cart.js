@@ -5,7 +5,7 @@ class CartRemoveButton extends HTMLElement {
       event.preventDefault();
       const cartItems = this.closest("cart-items");
       if (cartItems) {
-        cartItems.updateQuantity(this.dataset.index, 0);
+        cartItems.updateQuantity(this.dataset.index, 0, "delete");
       }
     });
   }
@@ -94,7 +94,7 @@ class CartItems extends HTMLElement {
   }
 
   updateQuantity(line, quantity, name) {
-    this.enableLoading(line);
+    this.enableLoading(line, name);
 
     const body = JSON.stringify({
       line,
@@ -183,18 +183,26 @@ class CartItems extends HTMLElement {
       .querySelector(selector).innerHTML;
   }
 
-  enableLoading(line) {
-    document
-      .getElementById("main-cart-items")
-      .classList.add("cart__items--disabled");
-    this.querySelectorAll(`#CartItem-${line} .loading-overlay`).forEach(
-      (overlay) => overlay.classList.remove("hidden"),
-    );
+  enableLoading(line, name) {
+    const cartItem = document.getElementById(`CartItem-${line}`);
+    if (!cartItem) return;
+
+    if (name === "plus" || name === "minus") {
+      const btn = cartItem.querySelector(`button[name="${name}"]`);
+      if (btn) btn.classList.add("loading");
+    } else if (name === "delete") {
+      const btn = cartItem.querySelector(".cart-remove-btn");
+      if (btn) btn.classList.add("loading");
+    }
+
     document.activeElement.blur();
     this.lineItemStatusElement.setAttribute("aria-hidden", false);
   }
 
   disableLoading() {
+    document
+      .querySelectorAll(".loading")
+      .forEach((btn) => btn.classList.remove("loading"));
     document
       .getElementById("main-cart-items")
       .classList.remove("cart__items--disabled");
