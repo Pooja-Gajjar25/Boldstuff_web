@@ -1,3 +1,92 @@
+<style>
+  /* Sidebar White Theme Overrides */
+  .normal-sidebar,
+  .sidebar_content,
+  .left-column.facets,
+  .categories-menu,
+  .panel-group .panel-custom {
+    background-color: #fcfcfc !important; /* White/Light Grey Background */
+    color: #333333 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .facets__heading,
+  .block-heading,
+  .sidebar-title,
+  .panel-title a {
+    color: #000000 !important;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    text-transform: capitalize !important;
+    border-bottom: none !important;
+  }
+
+  .facets__summary span {
+    color: #333 !important;
+    font-weight: 600 !important;
+  }
+
+  .facets__disclosure {
+    border-bottom: 1px solid #eee !important;
+    padding-bottom: 15px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .facet-checkbox {
+    color: #555 !important;
+  }
+
+  /* Checkbox Override */
+  .facet-checkbox input[type='checkbox'] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .facet-checkbox input[type='checkbox']:checked {
+    background-color: #4697a0 !important; /* Teal */
+    border-color: #4697a0 !important;
+  }
+
+  .facet-checkbox input[type='checkbox']:checked::after {
+    content: '✔'; /* Simple check */
+    color: #fff;
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .facet-checkbox svg {
+    display: none !important; /* Hide default SVG check */
+  }
+
+  /* Price Range Overrides */
+  .field {
+    background: #f9f9f9 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px;
+    color: #333 !important;
+  }
+  .field__input {
+    color: #333 !important;
+  }
+  .field__currency {
+    color: #555 !important;
+  }
+  .field__label {
+    color: #777 !important;
+  }
+</style>
 {% assign i = 1 %}
 {%- for block in section.blocks -%}
   {%- case block.type -%}

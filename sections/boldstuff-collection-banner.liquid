@@ -4,19 +4,12 @@
       <div class="collection-banner__main-content">
         {%- if section.settings.show_breadcrumbs -%}
           <nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
-            <a href="{{ routes.root_url }}" title="Home">
-              <i class="fa fa-home"></i>
-              <span>Home</span>
-            </a>
-            <span aria-hidden="true" class="breadcrumb__separator">
-              <i class="fa fa-angle-right"></i>
-            </span>
+            <a href="{{ routes.root_url }}" title="Home">Home</a>
+            <span aria-hidden="true" class="breadcrumb__separator">/</span>
             <a href="{{ routes.collections_url }}" title="Shop">Shop</a>
 
             {%- if collection.handle -%}
-              <span aria-hidden="true" class="breadcrumb__separator">
-                <i class="fa fa-angle-right"></i>
-              </span>
+              <span aria-hidden="true" class="breadcrumb__separator">/</span>
               <span>{{ collection.title }}</span>
             {%- endif -%}
           </nav>
@@ -66,7 +59,17 @@
                   {%- else -%}
                     {%- case block.settings.icon_name -%}
                       {%- when 'truck' -%}
-                        {% render 'icons' with 'shipping' %}
+                        <!-- Custom Truck Icon -->
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
                       {%- when 'shield-check' -%}
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M12 2L4 5V11C4 16.19 7.41 20.94 12 22C16.59 20.94 20 16.19 20 11V5L12 2ZM10 15.5L6.5 12L7.91 10.59L10 12.67L16.09 6.58L17.5 8L10 15.5Z" fill="currentColor"/>
@@ -76,9 +79,28 @@
                           <path d="M12 21.5C15.59 21.5 18.5 18.59 18.5 15C18.5 10.5 12 3 12 3C12 3 5.5 10.5 5.5 15C5.5 18.59 8.41 21.5 12 21.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                       {%- when 'shield' -%}
-                        {% render 'icons' with 'shield' %}
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
                       {%- else -%}
-                        {% render 'icons' with block.settings.icon_name -%}
+                        <!-- Default Fallback -->
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <circle cx="12" cy="12" r="10"></circle>
+                        </svg>
                     {%- endcase -%}
                   {%- endif -%}
                 </div>
@@ -90,9 +112,16 @@
 
           {%- if section.settings.show_rating -%}
             <div class="bottom-bar__item rating-item">
-              <i class="fa fa-star rating-star-large"></i>
-              <span class="rating-value">{{ section.settings.rating_value }}</span>
-              <i class="fa fa-star rating-star-small"></i>
+              {%- for i in (1..5) -%}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="rating-star-icon"
+                >
+                  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                </svg>
+              {%- endfor -%}
               <div class="rating-info">
                 <span class="rating-label">Rated</span>
                 <span class="rating-count">by {{ section.settings.rating_count }}+</span>
@@ -118,7 +147,9 @@
                   </option>
                 {%- endfor -%}
               </select>
-              <i class="fa fa-chevron-down"></i>
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" class="icon-chevron-down">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </div>
           </div>
         {%- endif -%}
@@ -130,16 +161,15 @@
 <style>
   #boldstuff-collection-banner-{{ section.id }} {
     position: relative;
-    background-color: #111;
+    background-color: #ffffff; /* WHITE Background */
+    /* Removed heavy gradient to match white theme */
     {% if section.settings.bg_image != blank %}
-      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ section.settings.bg_image | image_url: width: 2000 }}');
-    {% else %}
-       background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     {% endif %}
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: #ffffff;
+    color: #333333; /* Dark text */
     overflow: hidden;
   }
 
@@ -150,50 +180,67 @@
   }
 
   .collection-banner__content-wrapper {
-    padding: 80px 0 40px;
+    padding: 60px 0 40px;
+    text-align: center; /* Centering content per screenshot */
   }
 
   .collection-banner__main-content {
     max-width: 900px;
+    margin: 0 auto;
   }
 
   .breadcrumb {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     font-size: 14px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    opacity: 0.8;
+    justify-content: center; /* Center breadcrumbs */
+    gap: 8px;
+    color: #768c91; /* Muted Teal/Grey Breadcrumb Text matching screenshot */
+    font-family: var(--font-body-family);
   }
 
-  .breadcrumb a, .breadcrumb span {
-    color: #ffffff;
+  .breadcrumb a {
+    color: #768c91;
     text-decoration: none;
     font-weight: 400;
   }
 
+  .breadcrumb span {
+    color: #768c91;
+  }
+
+  .breadcrumb__separator {
+      margin: 0 4px;
+      font-size: 12px;
+  }
+
   .collection-banner__title {
-    font-size: 48px;
-    font-weight: 700;
-    margin: 0 0 20px 0;
-    letter-spacing: -1px;
-    color: #ffffff;
+    font-family: 'Playfair Display', serif; /* Serif Font */
+    font-size: 42px;
+    font-weight: 400; /* Regular weight often looks bolder in serif */
+    margin: 0 0 15px 0;
+    line-height: 1.2;
+    color: #000000; /* Black Title */
+    letter-spacing: -0.01em;
   }
 
   .collection-banner__description {
+    font-family: var(--font-body-family); /* Sans-Serif */
     font-size: 16px;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.8);
-    max-width: 750px;
+    color: #666666; /* Grey Description */
+    max-width: 700px;
+    margin: 0 auto;
+    font-weight: 400;
   }
 
-  /* Bottom Feature Bar Styling */
+  /* Bottom Feature Bar Styling - Updated for White Theme */
   .collection-banner__bottom-bar {
-    background: #1f2027;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 20px 0;
-    backdrop-filter: blur(10px);
+    background: #f9f9f9; /* Video Light Grey/White */
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+    padding: 15px 0;
   }
 
   .bottom-bar__inner {
@@ -213,7 +260,7 @@
   .bottom-bar__item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     padding: 5px 0;
   }
 
@@ -223,15 +270,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.9;
+    color: #4697A0; /* Teal Icon */
   }
 
   .feature-item__icon svg {
     max-width: 100%;
     max-height: 100%;
-    fill: none;
     stroke: currentColor;
-    stroke-width: 2;
   }
 
   .feature-item__icon svg[fill="currentColor"] {
@@ -240,61 +285,53 @@
   }
 
   .item__text {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 600;
     white-space: nowrap;
-    opacity: 0.9;
+    color: #333333;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   .bottom-bar__separator {
     width: 1px;
-    height: 24px;
-    background: rgba(255, 255, 255, 0.2);
+    height: 16px;
+    background: #dddddd;
     margin: 0 20px;
   }
 
-  /* Rating styling to match UI */
+  /* Rating styling */
   .rating-item {
-    gap: 8px;
+    gap: 4px;
+    color: #FFB800; /* Gold Stars */
   }
 
-  .rating-star-large {
-    color: #ffb800;
-    font-size: 22px;
-  }
-
-  .rating-star-small {
-    color: #ffb800;
-    font-size: 12px;
-    margin-top: -2px;
-  }
-
-  .rating-value {
-    font-weight: 700;
-    font-size: 18px;
-    color: #ffffff;
+  .rating-star-icon {
+    width: 16px;
+    height: 16px;
   }
 
   .rating-info {
     display: flex;
     flex-direction: column;
     line-height: 1.1;
+    margin-left: 5px;
   }
 
   .rating-label {
     font-size: 11px;
-    font-weight: 600;
-    color: #ffffff;
-    opacity: 0.9;
+    font-weight: 700;
+    color: #111;
+    text-transform: uppercase;
   }
 
   .rating-count {
     font-size: 10px;
-    opacity: 0.6;
+    color: #666;
     white-space: nowrap;
   }
 
-  /* Sort styling to match UI */
+  /* Sort styling */
   .bottom-bar__sort {
     display: flex;
     align-items: center;
@@ -303,46 +340,48 @@
   }
 
   .sort-label {
-    font-size: 14px;
-    opacity: 0.7;
+    font-size: 13px;
+    color: #555;
+    font-weight: 500;
     white-space: nowrap;
   }
 
   .sort-dropdown-wrapper {
     position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    padding: 8px 35px 8px 15px;
-    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 6px 30px 6px 12px;
+    background: #fff;
     cursor: pointer;
     transition: all 0.2s ease;
   }
 
   .sort-dropdown-wrapper:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.4);
+    border-color: #bbb;
   }
 
   .sort-select {
     background: transparent;
     border: none;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 600;
+    color: #333;
+    font-size: 13px;
+    font-weight: 500;
     appearance: none;
     -webkit-appearance: none;
     cursor: pointer;
     outline: none;
+    width: 100%;
   }
 
-  .sort-dropdown-wrapper i {
+  .sort-dropdown-wrapper .icon-chevron-down {
     position: absolute;
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 12px;
+    width: 10px;
+    height: 6px;
+    color: #333;
     pointer-events: none;
-    opacity: 0.8;
   }
 
   @media (max-width: 1024px) {
@@ -354,17 +393,30 @@
 
     .bottom-bar__sort {
         width: 100%;
-        justify-content: flex-end;
+        justify-content: space-between;
+    }
+
+    .sort-dropdown-wrapper {
+        flex: 1;
     }
   }
 
   @media (max-width: 767px) {
     .collection-banner__title {
-      font-size: 36px;
+      font-size: 32px;
+    }
+
+    .collection-banner__content-wrapper {
+        padding: 40px 0 30px;
     }
 
     .bottom-bar__features-wrapper {
         gap: 15px;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 5px;
+        width: 100%;
+        flex-wrap: nowrap;
     }
 
     .bottom-bar__separator {
@@ -373,6 +425,10 @@
 
     .hide-mobile {
         display: none;
+    }
+
+    .item__text {
+        font-size: 12px;
     }
   }
 </style>
@@ -392,7 +448,7 @@
 
 {% schema %}
 {
-  "name": "Premium Collection Banner",
+  "name": "Collection Banner",
   "tag": "section",
   "class": "collection-banner-section",
   "settings": [
@@ -484,7 +540,7 @@
   ],
   "presets": [
     {
-      "name": "Premium Collection Banner",
+      "name": "Collection Banner",
       "blocks": [
         { "type": "feature", "settings": { "text": "Leakproof", "icon_name": "truck" } },
         { "type": "feature", "settings": { "text": "24hr Insulated", "icon_name": "shield-check" } },
