@@ -499,25 +499,41 @@
                     </button>
                   </noscript>
 
-                  <button
-                    type="submit"
-                    id="checkout"
-                    class="cart-checkout-btn"
-                    name="checkout"
-                    {% if cart == empty %}
-                      disabled
-                    {% endif %}
-                    form="cart"
-                  >
-                    {{ 'sections.cart.checkout' | t }}
-                  </button>
+                  {% if customer %}
+                    <!-- ✅ Logged-in: normal checkout -->
+                    <button
+                      type="submit"
+                      id="checkout"
+                      class="cart-checkout-btn"
+                      name="checkout"
+                      {% if cart == empty %}
+                        disabled
+                      {% endif %}
+                      form="cart"
+                    >
+                      {{ 'sections.cart.checkout' | t }}
+                    </button>
+                  {% else %}
+                    <!-- 🔒 Guest: redirect to login then checkout -->
+                    <a
+                      href="{{ routes.account_login_url }}?return_url=/checkout"
+                      id="checkout-login-btn"
+                      class="cart-checkout-btn cart-checkout-login-btn"
+                      {% if cart == empty %}
+                        style="pointer-events:none; opacity:0.5;"
+                      {% endif %}
+                    >
+                      🔒 Login to Checkout
+                    </a>
+                    <p class="cart-login-notice">You must be logged in to proceed to checkout</p>
+                  {% endif %}
 
                   <a href="{{ routes.all_products_collection_url }}" class="cart-continue-shopping">
                     {{ 'general.continue_shopping' | t }}
                   </a>
                 </div>
 
-                {% if additional_checkout_buttons %}
+                {% if additional_checkout_buttons and customer %}
                   <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
                     {{ content_for_additional_checkout_buttons }}
                   </div>
@@ -568,6 +584,26 @@
     });
   });
 </script>
+
+<style>
+  /* Login to Checkout button - styled same as checkout btn but as a link */
+  .cart-checkout-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  /* Login notice text below button */
+  .cart-login-notice {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    margin: -8px 0 12px;
+    padding: 0;
+  }
+</style>
 
 {% schema %}
 {

@@ -1187,3 +1187,67 @@ color:#a5a4a4;
   .template-customers-register .customer.register .new-account{
   font-size: 13px;
   }
+/* =========================================
+   BOLDSTUFF CUSTOM ACCOUNT STYLES
+   Force all account-related buttons to Theme Green #4697A0
+   ========================================= */
+
+/* Shared Styles for Account Buttons */
+.customer.login button,
+.customer.login .btn,
+.customer.register button,
+.customer.register .btn,
+.customer.reset-password button,
+.customer.reset-password .btn,
+.customer.account .my_account_detail .btn,
+.customer.account .my_account_detail a.btn,
+.customer.addresses .add_btn button,
+.customer.addresses .add_btn .btn,
+.customer.addresses .add_btn .button {
+  background-color: #4697A0 !important;
+  border-color: #4697A0 !important;
+  color: #ffffff !important;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Hover Effects */
+.customer.login button:hover,
+.customer.login .btn:hover,
+.customer.register button:hover,
+.customer.register .btn:hover,
+.customer.reset-password button:hover,
+.customer.reset-password .btn:hover,
+.customer.account .my_account_detail .btn:hover,
+.customer.account .my_account_detail a.btn:hover,
+.customer.addresses .add_btn button:hover,
+.customer.addresses .add_btn .btn:hover,
+.customer.addresses .add_btn .button:hover {
+  background-color: #3a7f88 !important; /* Slightly darker */
+  border-color: #3a7f88 !important;
+  box-shadow: 0 4px 14px rgba(70, 151, 160, 0.4) !important;
+  color: #ffffff !important;
+}
+
+/* Specific Tweaks for Layout */
+
+/* Login: Ensure full width and spacing */
+.customer.login button,
+.customer.login .btn {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Reset Password: Spacing */
+.customer.reset-password button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Account Page: View Addresses Button */
+.customer.account .my_account_detail .btn {
+  margin-top: 15px;
+  display: inline-block;
+}
