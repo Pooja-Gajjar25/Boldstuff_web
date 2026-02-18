@@ -116,19 +116,23 @@
       ],
       "settings": {
         "show_description": true,
-        "background_image": "shopify://shop_images/833b68a8a56e8d43e55ec7c3d4c5700bf7c61805.png",
+        "background_color": "#ffffff",
         "overlay_opacity": 0,
-        "title_color": "#ffffff",
+        "title_color": "#232323",
         "hide_product_title": true,
         "brand_text": "BOLDSTUFF",
-        "brand_color": "#ff6b35",
+        "brand_color": "#4697a0",
         "title_suffix": "Insulated Stainless Steel Water Bottle",
         "rating_stars_image": "shopify://shop_images/1df1532763ba0cbb0bdfc39ac7c35ce15ca9fcf2_18aa9d91-476f-441d-9146-a9354dc0ac71.png",
         "rating_platform_image": "shopify://shop_images/Screenshot_2026-02-09_at_6.08.27_PM-removebg-preview.png",
         "description": "Keep drinks hot & cold for hours. Built for everyday hydration.",
         "show_amazon_badge": true,
         "amazon_stars_icon": "shopify://shop_images/1df1532763ba0cbb0bdfc39ac7c35ce15ca9fcf2_18aa9d91-476f-441d-9146-a9354dc0ac71.png",
-        "trust_badge_icon": "shopify://shop_images/dropped-image_1.png"
+        "trust_badge_icon": "shopify://shop_images/dropped-image_1.png",
+        "text_color": "#000000",
+        "secondary_text_color": "#4a4a4a",
+        "accent_color": "#4697a0",
+        "price_color": "#000000"
       }
     },
     "why_choose_section": {
@@ -173,11 +177,11 @@
         "trust_label": "",
         "trust_platform": "",
         "trust_info": "",
-        "bg_image": "shopify://shop_images/7d5b23365bfd98cbede57eb10f1189e9541d2162.png",
-        "bg_color": "#111111",
-        "overlay_color": "#000000",
+        "bg_image": "shopify://shop_images/ChatGPT_Image_Feb_18_2026_02_32_45_PM.png",
+        "bg_color": "#ffffff",
+        "overlay_color": "#ffffff",
         "overlay_opacity": 0,
-        "padding_top": 85,
+        "padding_top": 90,
         "padding_bottom": 85,
         "padding_top_mobile": 65,
         "padding_bottom_mobile": 65
@@ -235,10 +239,14 @@
       ],
       "settings": {
         "section_title": "Built for Every Adventure",
-        "background_color": "#0a0a0a",
-        "background_image": "shopify://shop_images/d7d33d81522b88b68ca498b3166e8b342dc779c2.png",
+        "background_color": "#f8f8f8",
         "section_padding_desktop": 60,
-        "section_padding_mobile": 40
+        "section_padding_mobile": 40,
+        "section_title_color": "#000000",
+        "card_background_color": "#dcdcdc",
+        "card_text_color": "#000000",
+        "button_background_color": "#4697a0",
+        "button_text_color": "#FFFFFF"
       }
     }
   },

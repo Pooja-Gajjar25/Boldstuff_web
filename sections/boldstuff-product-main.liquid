@@ -131,17 +131,23 @@
       <!-- Add to Cart & Buy Now -->
       <div class="product-actions">
         {%- form 'product', product, id: 'product-form', class: 'product-form' -%}
-          <input type="hidden" name="id" value="{{ current_variant.id }}">
+          <input type="hidden" id="atc-variant-id" name="id" value="{{ current_variant.id }}">
 
           <button
-            type="submit"
+            type="button"
             name="add"
-            class="btn btn-add-to-cart"
+            class="atc-button btn btn-add-to-cart add-to-cart-js"
+            data-variantid="{{ current_variant.id }}"
             {% unless current_variant.available %}
               disabled
             {% endunless %}
           >
-            Add to Cart
+            <span class="btn-text">Add to Cart</span>
+            <div class="loading-overlay__spinner">
+              <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+              </svg>
+            </div>
           </button>
 
           <button type="button" class="btn btn-buy-now">Buy Now</button>
@@ -171,15 +177,15 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="#3a3a3a" stroke="#555"></path>
-              <path d="M9 12l2 2 4-4" stroke="#999"></path>
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="transparent" stroke="{{ section.settings.accent_color | default: '#4697A0' }}"></path>
+              <path d="M9 12l2 2 4-4" stroke="{{ section.settings.accent_color | default: '#4697A0' }}"></path>
             </svg>
           {%- endif -%}
         </div>
         <span class="badge-text">Free Shipping</span>
-        <span class="badge-separator">|</span>
+        <span class="badge-separator" style="color: #ddd;">|</span>
         <span class="badge-text">Easy Returns</span>
-        <span class="badge-separator">|</span>
+        <span class="badge-separator" style="color: #ddd;">|</span>
         <span class="badge-text">Secure Checkout</span>
       </div>
     </div>
@@ -240,7 +246,7 @@
                       style="object-fit: contain; margin-top: 2px;"
                     >
                   {%- else -%}
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6b35" stroke-width="2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{ section.settings.accent_color | default: '#4697A0' }}" stroke-width="2">
                       <polyline points="20 6 9 17 4 12"/>
                     </svg>
                   {%- endif -%}
@@ -290,14 +296,14 @@
 
 <style>
   .boldstuff-product-main {
-    background: #0a0a0a;
-    {% if section.settings.background_image != blank %}
+  background: {{ section.settings.background_color }};
+      {% if section.settings.background_image != blank %}
       background-image: url('{{ section.settings.background_image | image_url: width: 2000 }}');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     {% endif %}
-    color: #fff;
+    color: {{ section.settings.text_color | default: '#000000' }};
     padding: 40px 20px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     position: relative;
@@ -352,7 +358,7 @@
 
   .thumbnail.active,
   .thumbnail:hover {
-    border-color: #ff6b35;
+    border-color: {{ section.settings.accent_color | default: '#4697A0' }};
   }
 
   .thumbnail img {
@@ -403,24 +409,24 @@
   }
 
   .stars {
-    color: #ff6b35;
+    color: {{ section.settings.accent_color | default: '#4697A0' }};
     font-size: 18px;
     letter-spacing: 2px;
   }
 
   .rating-text {
-    color: #999;
+    color: {{ section.settings.secondary_text_color | default: '#4a4a4a' }};
     font-size: 14px;
   }
 
   .rating-text strong {
-    color: #fff;
+    color: {{ section.settings.text_color | default: '#000000' }};
   }
 
   .product-price {
     font-size: 48px;
     font-weight: 700;
-    color: #fff;
+    color: {{ section.settings.price_color }};
   }
 
   .currency {
@@ -428,7 +434,7 @@
   }
 
   .product-description {
-    color: #ccc;
+    color: {{ section.settings.secondary_text_color | default: '#4a4a4a' }};
     font-size: 16px;
     line-height: 1.6;
     margin: 0;
@@ -463,13 +469,13 @@
   }
 
   .variant-group input[type='radio']:checked + .variant-button {
-    background: #ff6b35;
-    border-color: #ff6b35;
+    background: {{ section.settings.accent_color | default: '#4697A0' }};
+    border-color: {{ section.settings.accent_color | default: '#4697A0' }};
     color: #fff;
   }
 
   .variant-button:hover {
-    border-color: #ff6b35;
+    border-color: {{ section.settings.accent_color | default: '#4697A0' }};
   }
 
   /* Product Actions */
@@ -497,21 +503,36 @@
   }
 
   .btn-add-to-cart {
-    background: #ff6b35;
+    background: {{ section.settings.accent_color | default: '#4697A0' }};
     color: #fff;
   }
 
   .btn-add-to-cart:hover {
-    background: #ff5722;
+    background: {{ section.settings.accent_color | default: '#4697A0' | color_darken: 10 }};
     transform: translateY(-2px);
   }
 
   .btn-add-to-cart:disabled {
-    background: #555;
+    background: #ccc;
     cursor: not-allowed;
     transform: none;
+    box-shadow: none;
   }
 
+  .btn-add-to-cart .loading-overlay__spinner {
+    width: 20px;
+    height: 20px;
+    display: none;
+  }
+  .btn-add-to-cart .loading-overlay__spinner .path {
+    stroke: #ffffff;
+  }
+  .btn-add-to-cart.loading .btn-text {
+    display: none;
+  }
+  .btn-add-to-cart.loading .loading-overlay__spinner {
+    display: inline-block;
+  }  
   .btn-buy-now {
     background: transparent;
     color: #fff;
@@ -540,13 +561,13 @@
   }
 
   .badge-text {
-    color: #ccc;
+    color: {{ section.settings.secondary_text_color | default: '#4a4a4a' }};
     font-size: 15px;
     font-weight: 400;
   }
 
   .badge-separator {
-    color: #555;
+    color: {{ section.settings.secondary_text_color | default: '#4a4a4a' }};
     font-size: 14px;
     margin: 0 2px;
   }
@@ -572,23 +593,23 @@
   .glass-line-bottom {
     display: block;
     width: 100%;
-    height: 2px;
+    height: 1px;
     background: linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.3) 20%,
-      rgba(255, 255, 255, 0.6) 50%,
-      rgba(255, 255, 255, 0.3) 80%,
-      rgba(255, 255, 255, 0) 100%
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.05) 20%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.05) 80%,
+      rgba(0, 0, 0, 0) 100%
     );
-    opacity: 0.8;
+    opacity: 1;
   }
 
   .feature-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #fff;
+    color: {{ section.settings.text_color | default: '#000000' }};
     font-size: 15px;
     font-weight: 400;
   }
@@ -625,7 +646,7 @@
     font-size: 24px;
     font-weight: 700;
     margin: 0 0 10px 0;
-    color: #fff;
+    color: {{ section.settings.text_color | default: '#000000' }};
   }
 
   .details-list {
@@ -639,7 +660,7 @@
     align-items: flex-start;
     gap: 12px;
     padding: 6px 0;
-    color: #ccc;
+    color: {{ section.settings.secondary_text_color | default: '#4a4a4a' }};
     font-size: 15px;
     line-height: 1.6;
   }
@@ -653,7 +674,7 @@
     background: #3a3a3a;
     padding: 15px 20px;
     border-radius: 8px;
-    color: #ccc;
+    color: #ffffff;
     font-size: 14px;
     font-weight: 700;
     display: inline-block;
@@ -665,7 +686,7 @@
   }
 
   .specs-table tr {
-    border-bottom: 1px solid #2a2a2a;
+    border-bottom: 1px solid #ddd;
   }
 
   .specs-table td {
@@ -674,13 +695,13 @@
   }
 
   .spec-label {
-    color: #999;
+    color: {{ section.settings.secondary_text_color | default: '#4a4a4a' }};
     font-weight: 600;
     width: 40%;
   }
 
   .spec-value {
-    color: #fff;
+    color: {{ section.settings.text_color | default: '#000000' }};
   }
 
   /* Mobile Responsive */
@@ -781,6 +802,37 @@
     // Variant selector
     const variantButtons = document.querySelectorAll('.variant-button');
     const dynamicCapacityTitle = document.getElementById('dynamic-capacity-title');
+    const atcButton = document.querySelector('.atc-button');
+    const variantIdInput = document.getElementById('atc-variant-id');
+    const productVariants = {{ product.variants | json }};
+
+    function updateVariant() {
+      const selectedOptions = Array.from(document.querySelectorAll('.variant-selector input[type="radio"]:checked'))
+        .map(radio => radio.value);
+      
+      const matchedVariant = productVariants.find(variant => {
+        return variant.options.every((option, index) => option === selectedOptions[index]);
+      });
+
+      if (matchedVariant) {
+        atcButton.dataset.variantid = matchedVariant.id;
+        variantIdInput.value = matchedVariant.id;
+        
+        if (matchedVariant.available) {
+          atcButton.disabled = false;
+          atcButton.querySelector('.btn-text').textContent = 'Add to Cart';
+        } else {
+          atcButton.disabled = true;
+          atcButton.querySelector('.btn-text').textContent = 'Sold Out';
+        }
+
+        // Update Price
+        const priceContainer = document.querySelector('.product-price');
+        if (priceContainer) {
+          priceContainer.innerHTML = `<span class="currency">₹</span>${(matchedVariant.price / 100).toFixed(2).replace('.00', '')}`;
+        }
+      }
+    }
 
     variantButtons.forEach((button) => {
       button.addEventListener('click', function () {
@@ -794,6 +846,8 @@
             dynamicCapacityTitle.textContent = this.textContent.trim();
           }
         }
+
+        updateVariant();
       });
     });
   });
@@ -814,6 +868,12 @@
       "label": "Background Image"
     },
     {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
       "type": "range",
       "id": "overlay_opacity",
       "min": 0,
@@ -827,7 +887,7 @@
       "type": "color",
       "id": "title_color",
       "label": "Product Title Color",
-      "default": "#ffffff"
+      "default": "#000000"
     },
     {
       "type": "checkbox",
@@ -845,7 +905,7 @@
       "type": "color",
       "id": "brand_color",
       "label": "Brand Name Color",
-      "default": "#ff6b35"
+      "default": "#4697A0"
     },
     {
       "type": "text",
@@ -892,6 +952,38 @@
       "type": "image_picker",
       "id": "trust_badge_icon",
       "label": "Trust Badge Icon"
+    },
+    {
+      "type": "header",
+      "content": "PDP Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Primary Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "secondary_text_color",
+      "label": "Secondary Text Color",
+      "default": "#4a4a4a"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#4697A0"
+    },
+    {
+      "type": "header",
+      "content": "Price Styling"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price Color",
+      "default": "#000000"
     }
   ],
   "blocks": [

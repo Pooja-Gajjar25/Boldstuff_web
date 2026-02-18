@@ -15,9 +15,18 @@
           </nav>
         {%- endif -%}
 
+        {%- liquid
+          assign results = collection
+          if template.name == 'search'
+            assign results = search
+          endif
+        -%}
+
         <h1 class="collection-banner__title">
           {%- if section.settings.title != blank -%}
             {{ section.settings.title }}
+          {%- elsif template.name == 'search' -%}
+            {{ 'general.search.search' | t }}: {{ search.terms }}
           {%- else -%}
             {{ collection.title }}
           {%- endif -%}
@@ -127,32 +136,12 @@
                 <span class="rating-count">by {{ section.settings.rating_count }}+</span>
               </div>
             </div>
-            <div class="bottom-bar__separator hide-mobile"></div>
           {%- endif -%}
         </div>
 
-        {%- if section.settings.show_sort -%}
-          <div class="bottom-bar__sort">
-            <span class="sort-label">Sort by</span>
-            <div class="sort-dropdown-wrapper">
-              <select name="sort_by" class="sort-select" id="SortBy-Banner">
-                {%- for option in collection.sort_options -%}
-                  <option
-                    value="{{ option.value }}"
-                    {%- if option.value == collection.sort_by -%}
-                      selected="selected"
-                    {%- endif -%}
-                  >
-                    {{ option.name }}
-                  </option>
-                {%- endfor -%}
-              </select>
-              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" class="icon-chevron-down">
-                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-        {%- endif -%}
+        {%- comment -%}
+          Sort dropdown removed per user request to center features
+        {%- endcomment -%}
       </div>
     </div>
   </div>
@@ -245,7 +234,7 @@
 
   .bottom-bar__inner {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     gap: 30px;
   }
@@ -253,8 +242,9 @@
   .bottom-bar__features-wrapper {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
-    flex: 1;
+    flex: 0 1 auto;
   }
 
   .bottom-bar__item {
@@ -313,9 +303,9 @@
 
   .rating-info {
     display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-    margin-left: 5px;
+    align-items: center;
+    gap: 5px;
+    margin-left: 8px;
   }
 
   .rating-label {

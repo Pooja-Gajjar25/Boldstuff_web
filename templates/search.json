@@ -63,12 +63,14 @@
           }
         },
         "sidebar_filters": {
-          "type": "filter",
-          "settings": {}
+          "type": "custom_filter",
+          "settings": {
+            "title": "Filters",
+            "button_label": "Clear Filters"
+          }
         }
       },
       "block_order": [
-        "sidebar_categories",
         "sidebar_filters"
       ],
       "settings": {

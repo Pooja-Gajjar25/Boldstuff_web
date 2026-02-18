@@ -8,7 +8,11 @@
   <link id="ModelViewerStyle" rel="stylesheet" href="https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css" media="print" onload="this.media='all'">
   <link id="ModelViewerOverride" rel="stylesheet" href="{{ 'component-model-viewer-ui.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
-
+<style>
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.section_bg_color }};
+  }
+</style>
   <div class="row grid">
     <div class="grid__item product__media-wrapper col-lg-6 col-md-6 col-sm-12 col-xs-12">
       <slider-component class="slider-mobile-gutter{% if section.settings.enable_sticky_product %} product--media--sticky{% endif %}">
@@ -732,7 +736,13 @@
       "id": "enable_video_looping",
       "default": false,
       "label": "Enable Video Looping"
-    }
+    },
+    {
+  "type": "color",
+  "id": "section_bg_color",
+  "label": "Section Background Color",
+  "default": "#000000"
+}
   ],
   "blocks": [
     {

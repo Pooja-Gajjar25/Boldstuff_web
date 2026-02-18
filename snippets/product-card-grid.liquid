@@ -88,16 +88,23 @@
       </div>
 
       <div class="card-add-to-cart">
-        {%- form 'product',
-          product_card_product,
-          id: product_form_id,
-          class: 'form',
-          novalidate: 'novalidate',
-          data-type: 'add-to-cart-form'
-        -%}
-          <input type="hidden" name="id" value="{{ product_card_product.selected_or_first_available_variant.id }}">
-          <button type="submit" name="add" class="btn-add-to-cart">ADD TO CART</button>
-        {%- endform -%}
+        {%- if product_card_product.selected_or_first_available_variant.available -%}
+          <button
+            type="button"
+            name="add"
+            class="btn-add-to-cart add-to-cart-js"
+            data-variantid="{{ product_card_product.selected_or_first_available_variant.id }}"
+          >
+            <span class="btn-text">ADD TO CART</span>
+            <div class="loading-overlay__spinner">
+              <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+              </svg>
+            </div>
+          </button>
+        {%- else -%}
+          <button type="button" name="add" class="btn-add-to-cart" disabled>SOLD OUT</button>
+        {%- endif -%}
       </div>
     </div>
   </div>
@@ -106,12 +113,14 @@
 <style>
   .boldstuff-card-wrapper {
     background: #ffffff; /* White background */
-    border-radius: 4px;
+    border-radius: 8px;
     overflow: hidden;
     height: 100%;
     transition: transform 0.3s, box-shadow 0.3s;
     border: none;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
   }
   .boldstuff-card-wrapper:hover {
     transform: translateY(-5px);
@@ -129,6 +138,8 @@
     overflow: hidden;
     background: #f4f6f8; /* Light Grey/Blue Tint Background matching image */
     padding: 20px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
   .card-image-link {
     display: block;
@@ -253,11 +264,25 @@
     justify-content: center;
     transition: background 0.3s;
     text-transform: uppercase;
-    border-radius: 2px;
+    border-radius: 0 0 8px 8px;
     letter-spacing: 0.5px;
     box-shadow: 0 2px 5px rgba(70, 151, 160, 0.2);
   }
   .btn-add-to-cart:hover {
     background: #387c84;
+  }
+  .btn-add-to-cart .loading-overlay__spinner {
+    width: 20px;
+    height: 20px;
+    display: none;
+  }
+  .btn-add-to-cart .loading-overlay__spinner .path {
+    stroke: #ffffff;
+  }
+  .btn-add-to-cart.loading .btn-text {
+    display: none;
+  }
+  .btn-add-to-cart.loading .loading-overlay__spinner {
+    display: inline-block;
   }
 </style>

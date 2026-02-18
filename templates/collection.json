@@ -89,8 +89,7 @@
       "disabled": true,
       "name": "Sidebar Filter",
       "settings": {
-        "title": "Filters",
-        "button_label": "Clear Filters"
+        "title": "Filters"
       }
     }
   },
